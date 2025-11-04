@@ -1,0 +1,749 @@
+---
+title: "Data Partitioning and Feature Engineering"
+date: 09/29/2023
+date-modified: last-modified
+date-format: long
+author:
+  - name: Nakul R. Padalkar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+format:
+  html:
+    theme: [cosmo, theme/theme.scss]
+    html-math-method: 
+      method: katex
+      number-equations: true
+      add-to-equation: section
+    toc: true
+    code-overflow: wrap
+    number-sections: true
+    self-contained: true
+bibliography: ../references.bib
+editor: 
+  markdown: 
+    wrap: 65
+---
+
+# Importing Data and Packages
+
+The `dplyr` package is used for data manipulation and the
+`ggplot2` package is used for data visualization. These are
+frequently used packages in machine learning and have a rich code
+library available on their website.
+
+```{r packageimport}
+#| message: false
+#| warning: false
+#| error: false
+
+# Helper packages
+library(dplyr)     # for data manipulation
+library(ggplot2)   # for awesome graphics
+library(gt)
+```
+
+## Modeling Process packages
+
+```{r modelingprocess}
+#| message: false
+#| warning: false
+#| error: false
+
+library(rsample)  # for resampling procedures
+library(caret)    # for resampling and model training
+library(h2o)      # for resampling and model training
+```
+
+### `h20` library
+
+H2O is a fully open-source, distributed in-memory
+machine-learning platform with linear scalability. H2O supports
+the most widely used statistical & machine learning algorithms
+including gradient-boosted machines, generalized linear models,
+deep learning and more. H2O also has an industry-leading AutoML
+functionality that automatically runs through all the algorithms
+and their hyperparameters to produce a leaderboard of the best
+models. The H2O platform is used by over 18,000 organizations
+globally and is extremely popular in both the R & Python
+communities.
+
+```{r h20}
+# h20 set up
+
+h2o.no_progress() # turn off h20
+h2o.init()        # launch h20
+```
+
+## Loading and Importing Data
+
+We first need to load the dataset from csv. In real world
+scenario, this will be a database connection.
+
+```{r loadcsv}
+# Read your dataset
+ames <-read.csv("../data/AmesHousing2.csv")
+# ames <- AmesHousing::make_ames()
+```
+
+we need to convert the original dataset into an H20 object (to
+run the models)
+
+```{r dataimport}
+ames.h2o0 <-as.h2o(ames)
+
+head(ames$SalePrice)  # response variable
+target <- 'SalePrice'
+predictors <- setdiff(colnames(ames), target)
+```
+
+Let's see what the data looks like by looking at the first few
+rows of the dataset.
+
+```{r datapeak}
+library(kableExtra)
+kable(head(ames), "html") %>% kable_styling("striped") %>% scroll_box(width = "100%")
+# head(ames)
+```
+
+Now let the summary of the dataset
+
+```{r datasum}
+library(gtsummary)
+summary(ames)
+```
+
+Let's see a better table for the summary
+
+```{r datagtsum}
+ ames %>% 
+ gtsummary::tbl_summary(
+  ) %>% 
+  gtsummary::bold_labels() %>% 
+  gtsummary::as_kable_extra(
+    format = "html",
+    longtable = TRUE,
+    linesep = ""
+    ) %>%
+  kableExtra::kable_styling(
+      position = "left",
+      latex_options = c("striped", "repeat_header"),
+      stripe_color = "gray!15"
+    )
+
+```
+
+## Variable separation
+
+The dataset contains both numeric and categorical variables. We
+need to separate them for further analysis. This is especially
+important for feature engineering.
+
+```{r variableseperation}
+num_vars<-colnames(ames[sapply(ames, is.numeric) == TRUE])
+cat_vars<-colnames(ames[sapply(ames, is.character) == TRUE])
+```
+
+## Side note on text and variable outputs
+
+There are two ways we can use the variables from the r code in
+the text. The first one is by using `stmt` output using `print`
+and the other is using `r` output.
+
+### Statement output
+
+```{r textoutput}
+stmt <- paste("There are", length(num_vars), "numerical features and", length(cat_vars), "categorical features" )
+print(stmt, na.print = NULL)
+```
+
+### `r` output
+
+There are `r length(num_vars)` *numerical features* and
+`r length(cat_vars)` *categorical features* in this dataset.
+
+# Resampling Methods
+
+## Test Set Approach
+
+There are multiple ways to split your data in R (four ways shown
+below)Simple Random Sampling is one of them.
+
+### Using base R
+
+```{r testsetbase}
+set.seed(123)  # for reproducibility
+index_1 <- sample(1:nrow(ames), round(nrow(ames) * 0.8))
+train_1 <- ames[index_1, ]
+test_1  <- ames[-index_1, ]
+
+# kable(head(train), "html") %>% kable_styling("striped") %>% scroll_box(width = "100%")
+print(dim(train_1))
+print(dim(test_1))
+
+```
+
+### Using `caret` package
+
+```{r testsetcaret}
+set.seed(123)  # for reproducibility
+index_2 <- createDataPartition(ames$SalePrice, p = 0.7, 
+                               list = FALSE)
+train_2 <- ames[index_2, ]
+test_2  <- ames[-index_2, ]
+```
+
+### Using `rsample` package
+
+```{r testsetrsample}
+
+
+set.seed(123)  # for reproducibility
+split_1  <- initial_split(ames, prop = 0.7)
+train_3  <- training(split_1)
+test_3   <- testing(split_1)
+```
+
+### Using h2o package
+
+```{r testseth2o}
+split_2 <- h2o.splitFrame(ames.h2o0, ratios = 0.7, 
+                          seed = 123)
+train_4 <- split_2[[1]]
+test_4  <- split_2[[2]]
+```
+
+## The Validation Set Approach
+
+Draw a sample of size `nrow(ames)` from the numbers 1 to 3 (with
+replacement). You want approximately 70% of the sample to be 1
+and the remaining 30% to be equally split between 2 and 3.
+
+```{r validationset}
+set.seed(123)
+part <-sample(1:3, size=nrow(ames), prob=c(0.7, 0.15, 0.15), replace=TRUE)
+```
+
+We can also create training, validation, and testing sets from
+the original data frame directly.
+
+```{r validationset2}
+train_5 <-ames[part == 1, ] #subset ames to training indices only
+valid_5 <-ames[part == 2, ]
+test_5 <-ames[part == 3, ] 
+```
+
+## Stratified Random Sampling
+
+The easiest way to perform stratified sampling on a response
+variable is to use the `rsample` package, where you specify the
+response variable to strata. The following illustrates that in
+our original employee attrition data we have an imbalanced
+response (No: 84%, Yes: 16%). By enforcing stratified sampling,
+both our training and testing sets have approximately equal
+response distributions.
+
+Let's import Job Attrition data from the `rsample` package.
+
+```{r importattrition}
+#| message: false
+#| warning: false
+#| error: false
+
+# Job attrition data
+library(rsample)
+library(modeldata)
+churn <- attrition %>% 
+  mutate_if(is.ordered, .funs = factor, ordered = FALSE)
+churn.h2o <- as.h2o(churn)
+```
+
+### Original response distribution
+
+```{r originalresponse}
+t(table(churn$Attrition)) %>% prop.table() %>% round(4) %>% kbl(format = "html",table.attr = "style='width:30%;'") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width = F, position = "center") 
+```
+
+### Stratified sampling with the `rsample` package
+
+```{r stratifiedsampling}
+set.seed(123)
+split_strat  <- initial_split(churn, prop = 0.7, 
+                              strata = "Attrition")
+train_strat  <- training(split_strat)
+test_strat   <- testing(split_strat)
+
+split <- initial_split(ames, prop = 0.7, 
+                       strata = "SalePrice")
+ames_train  <- training(split)
+ames_test   <- testing(split)
+
+```
+
+### Consistent response ratio between train & test
+
+```{r traintable}
+library(dplyr)
+library(kableExtra)
+
+train_strat$Attrition %>%
+  table() %>%
+  t() %>%
+  prop.table() %>%
+  round(4) %>%
+  knitr::kable(format = "html", table.attr = "style='width:30%;'") %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = F, 
+    position = "center"
+  )
+```
+
+Now Test Dataframe
+
+```{r testtable}
+t(table(test_strat$Attrition)) %>% prop.table() %>% round(4) %>% knitr::kable(format = "html", table.attr = "style='width:30%;'") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width = F, position = "center") 
+```
+
+# Feature Engineering
+
+Feature engineering is the process of transforming raw data into
+informative features that better represent the underlying
+patterns in the data, aiming to improve the performance of
+machine learning models. By leveraging domain knowledge,
+statistical techniques, and creative transformations,
+practitioners craft new features, select relevant ones, or refine
+existing variables to make algorithms more effective and
+efficient. This process often plays a crucial role in enhancing
+model accuracy, generalization, and interpretability
+[@heatonEmpiricalAnalysisFeature2016].
+
+## Loading packages
+
+```{r loadpackagesfe}
+#| message: false
+#| warning: false
+#| error: false
+
+library(dplyr)    # for data manipulation
+library(ggplot2)  # for awesome graphics
+library(visdat)   # for additional visualizations
+
+# Feature engineering packages
+library(caret)    # for various ML tasks
+library(recipes)  # for feature engineering tasks
+```
+
+## Transformation
+
+Let's create a histogram of the SalePrice variable to understand
+the distribution of the variable.
+
+```{r makehist}
+hist(ames$SalePrice, col ='blue')
+```
+
+It seems like the variable is skewed. We can apply a
+transformation to normalize the data to stick to the normality
+assumption. Let's also calculate the moments of the variable to
+understand how much data is skewed. Also, this looks ugly; can we
+make it look better?
+
+```{r prettyhist}
+#| fig-align: center
+#| fig-width: 6.5
+#| fig-height: 4
+#| fig-caption: "Histogram of SalePrice"
+
+library(ggplot2)
+# color =  color of the histogram border
+library(ggplot2)
+library(scales)
+
+ggplot(ames, aes(x = SalePrice)) +
+  geom_histogram(aes(y = after_stat(density)), fill = "#336699", color = "black", alpha = 0.65, bins = 25) + 
+  labs(x = "Sale Price", y = "Density", title="Histogram of Sale Price") +
+  scale_x_continuous(labels = label_comma(accuracy = 1)) +
+  # scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0, face = "bold", size = 14),  # Left-align (hjust = 0) and bold the title
+    axis.title.x = element_text(size = 10, color = "black", face="bold"),
+    axis.title.y = element_text(size = 10, color = "black", face="bold"),
+    axis.text.x = element_text(size = 8, color = "black"),
+    axis.text.y = element_text(size = 8, color = "black")
+  )
+
+```
+
+```{r skewness}
+# install.packages("moments")
+library(moments)
+saleprice_skew <- skewness(ames$SalePrice)
+```
+
+Skewness is $`r saleprice_skew` (>1)$, which indicates that data
+is positively or right skewed.
+
+## Variable Transformation
+
+### Log Transformation
+
+Transform the variable to a log transformation (natural log of
+variable)
+
+```{r logtransformation}
+ln_sales <-log(ames$SalePrice)
+
+hist(ln_sales, col='blue', breaks = 40, main = "Histogram of Log Sale Price", xlab = "Log Sale Price", ylab = "Frequency")
+
+log_sales = skewness(ln_sales)
+```
+
+The distribution appears to conform to a normal distribution. The
+skewness value is `r log_sales`. The transformation has caused
+the distribution to become slightly negatively skewed. However,
+the variable's distribution (output) is now closer to 0.
+
+### Square Root Transformation
+
+```{r sqroottransformation}
+sqt_sales <- sqrt(ames$SalePrice)
+hist(sqt_sales, col='blue')
+
+sq_skewness<- skewness(sqt_sales)
+```
+
+The distribution is not as normal as that of log transformation.
+The skewness value is `r sq_skewness`, which means data is
+moderately positively skewed and performs worse than log
+transformation.
+
+### Cube-Root Transformation
+
+```{r cuberoottransformation}
+cbt_sales <- (ames$SalePrice)^(1/3)
+hist(cbt_sales, col='blue')
+cbt_skewnes <- skewness(cbt_sales)
+```
+
+The data distribution is worse than log transformation but better
+than square root. The skewness value is `r cbt_skewnes`, meaning
+data is positively skewed and performs better than square root
+(you may use log transformation).
+
+### Box-Cox Transformation
+
+```{r olssummary}
+# | message: false
+# load package
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+
+m.ols <- lm(SalePrice ~ Gr.Liv.Area, data=ames)
+ols_summ <- summary(m.ols)
+
+tab_model(m.ols)
+```
+
+```{r boxcox}
+library(MASS)
+bc <- boxcox(m.ols)
+
+str(bc)
+(bc.power <- bc$x[which.max(bc$y)])
+```
+$$
+y_{transform}= (y^{\lambda}-1)/\lambda
+$$
+We need to transform the response variable accordingly and
+re-compute the linear model with this transformed variable. We
+can write a function corresponding to the formula:
+
+```{r transformfunction}
+BCTransform <- function(y, lambda=0) {
+  if (lambda == 0L) { log(y) }
+  else { (y^lambda - 1) / lambda }
+}
+
+#Reverse Transformation
+BCTransformInverse <- function(yt, lambda=0) {
+  if (lambda == 0L) { exp(yt) }
+  else { exp(log(1 + lambda * yt)/lambda) }
+}
+
+ames$SalePrice.bc <- BCTransform(ames$SalePrice, bc.power)
+hist(ames$SalePrice.bc, breaks=30); rug(ames$SalePrice.bc)
+SPbc_skewness <- skewness(ames$SalePrice.bc)
+
+summary(m.ols.bc <- lm(SalePrice.bc ~ Gr.Liv.Area, data=ames))
+```
+
+## Feature Scaling
+
+Let's look at one of the continuous variables, `Living Area`. We
+want to scale the feature. In general, feature scaling refers to
+the process of standardizing the range of data features. Since
+the content of raw data values varies widely, in some machine
+learning algorithms, objective functions will not work properly
+without normalization.
+
+We can perform `Min-Max` scaling or `Z-score` scaling. Min-Max
+Scaling transforms the data to a range between 0 and 1. Z-score
+scaling transforms the data into a mean of 0 and a standard
+deviation of 1.
+
+The formula for Min-Max scaling is:
+
+$$
+\begin{align}
+x_{scaled} = \frac{x - x_{min}}{x_{max} - x_{min}}
+\end{align}
+$$
+
+The formula for Z-score scaling is:
+
+$$
+\begin{align}
+z = \frac{x - \mu}{\sigma}
+\end{align}
+$$
+
+where $x$ is the original feature vector, $\mu$ is the mean of
+that feature vector, and $\sigma$ is its standard deviation.
+
+```{r featurescaling}
+G <-ames$Gr.Liv.Area
+A <-ames$Lot.Area
+max_A <- max(A)
+min_A <- min(A)
+max_G <- max(G)
+min_G <- min(G)
+```
+
+The range of `Gr.Liv.Area` is `r min_G` to `r max_G`. The range
+of `Lot.Area` is `r min_A` to `r max_A`.
+
+### Min-Max Scaling
+
+```{r minmaxscaling}
+Gr.Liv.Area_N = (G-min_G)/(max_G-min_G)
+Lot.Area_N = (A-min_A)/(max_A-min_A)
+
+minmaxscaler <-cbind.data.frame(ames, Gr.Liv.Area_N, Lot.Area_N)
+head(minmaxscaler)
+```
+
+### Standardize (z scores)
+
+```{r zscore}
+z_Gr.Liv.Area <- (ames$Gr.Liv.Area -mean(ames$Gr.Liv.Area))/sd(ames$Gr.Liv.Area)
+z_Lot.Area <-(ames$Lot.Area -mean(ames$Lot.Area))/sd(ames$Lot.Area)
+
+zscore <-cbind.data.frame(ames, z_Gr.Liv.Area, z_Lot.Area)
+head(zscore)
+```
+
+## Feature Construction
+
+### Unsupervised Binning
+
+Automatic Binning can be used to determine the number of bins to
+be created. The bins are created based on the distribution of the
+data. The bins are created so that the data points in each bin
+are more similar and the data points in different bins are less
+similar.
+
+```{r unsupervisedbinning}
+
+summary(ames$Overall.Qual)
+count(ames, Overall.Qual)
+
+Overall.Qual_Bin <- cut(ames$Overall.Qual, breaks=4)
+head(Overall.Qual_Bin)
+```
+
+### Manual binning
+
+We need to know the min and max values. For example, say `min=1`
+and `max=10` then the bins will be `0-5`, `5-6`, `6-7`, `7-10`.
+
+```{r manualbinning}
+Overall.Qual_MBin <- cut(ames$Overall.Qual, breaks = c(0, 5, 6, 7, 10))
+barchart(Overall.Qual_MBin, main = "Overall Quality Manual Binning")
+```
+
+Sometimes, features will contain levels that have very few
+observations. For example, there are 28 unique neighborhoods
+represented in the Ames housing data, but several of them have
+fewer observations than the others.
+
+```{r neighborhood}
+count(train_1, Neighborhood) %>% arrange(n) %>% head() %>% kbl() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width = F, position = "center") 
+```
+
+In the above examples, we may want to collapse all levels
+observed in less than 10% of the training sample into an "other"
+category. We can use `step_other()` to do so. For example,
+`Screen.Porch` has 92% values recorded as zero (zero square
+footage meaning no screen porch), and the remaining 8% have
+unique dispersed values.
+
+```{r}
+
+library(flextable)
+arrange(count(train_1, Screen.Porch),n) %>% flextable()
+```
+
+### Standardize and Normalize
+
+```{r stdnorm}
+# Normalize all numeric columns
+recipe(SalePrice ~ ., data = train_1) %>%
+    step_YeoJohnson(all_numeric())    
+
+##standardize
+
+# train_1 %>%
+#     step_center(all_numeric(), -all_outcomes()) %>%
+#     step_scale(all_numeric(), -all_outcomes())
+```
+
+### Lump levels for two features
+
+```{r lumping}
+# lumping <- recipe(SalePrice ~ ., data = train_1) %>%
+#   step_other(Neighborhood, threshold = 0.01, 
+#              other = "other") %>%
+#   step_other(Screen.Porch, threshold = 0.1, 
+#              other = ">0")
+
+lumping <- recipe(SalePrice ~ ., data = train_1) %>%
+  step_mutate(Screen.Porch = factor(ifelse(Screen.Porch > 0, ">0", "0"))) %>%
+  step_other(Neighborhood, threshold = 0.01, other = "other") %>%
+  step_other(Screen.Porch, threshold = 0.1, other = ">0")
+```
+
+
+#### Modified Code
+
+1. `recipe(Sale_Price ~ ., data = train_1)`:  
+  1. Initialization remains similar but uses Sale_Price as the outcome instead of `SalePrice`.  
+2. `step_mutate(Screen.Porch = factor(ifelse(Screen.Porch > 0, ">0", "0")))`:
+  1. This new step converts the numeric Screen.Porch variable into a binary categorical variable. If the value in `Screen.Porch` is greater than 0, it's labeled as ">0", otherwise "0".
+3. `step_other(Neighborhood, threshold = 0.01, other = "other")`:
+  1. This step remains unchanged from the original code.
+4. `step_other(Screen.Porch, threshold = 0.1, other = ">0")`:
+  1. Similar to the original code, but applied on the newly created binary categorical `Screen.Porch`.
+
+
+### Apply this blueprint
+
+```{r applyblueprint}
+apply_2_training <- prep(lumping, training = train_1) %>%
+  bake(train_1)
+```
+
+### New distribution of Neighborhood
+
+```{r}
+count(apply_2_training, Neighborhood) %>% arrange(n) %>% flextable()
+```
+
+### New distribution of Screen.Porch
+
+```{r}
+count(apply_2_training, Screen.Porch) %>% arrange(n) %>% flextable()
+```
+
+### Variable Encoding
+
+The categorical variables are very often found in data while conducting data analysis and ML(machine learning). The Data which can be classified into categories or groups, such as colors or job titles is generally called as categorical data. The categorical variables must be encoded into numerical values in order to be used in statistical analysis or ML models.
+
+**Warning: Dummies package is no longer available in R repository**.
+
+#### Using `fastDummies` package
+
+We can create dummy variables for all cat variables in the dataset
+```{r fastdumm}
+library(fastDummies)
+ames_train_dummies <- dummy_cols(train_1, select_columns = NULL, remove_first_dummy = TRUE)
+ames_test_dummies <- dummy_cols(test_1, select_columns = NULL, remove_first_dummy = TRUE)
+
+```
+
+#### One-hot encoding (`caret`)
+```{r}
+# Create dummy variables transformation
+dummies <- dummyVars(SalePrice ~ ., data = ames)
+
+# Apply transformation to dataset
+ames_dummies <- data.frame(predict(dummies, newdata = ames))
+```
+
+#### Label encoding (`caret`)
+
+```{r}
+# Identify columns with class 'factor'
+factor_columns <- sapply(ames, is.factor)
+
+# Apply label encoding on those columns
+ames[factor_columns] <- lapply(ames[factor_columns], function(x) as.numeric(as.factor(x)))
+
+```
+
+Here, we only had one class variable for multiple class variables, convert all into factors first. Apply the above R code to simultaneously get various categories.
+
+## Missing Values
+
+### #Missing data visualization 
+
+Let's look at all missingness in Ames dataset
+
+```{r misdat}
+library(visdat)
+
+vis_miss(AmesHousing::ames_raw, cluster = TRUE)
+
+```
+
+Missing value imputation Features where null / missing values are less than 40% for categorical variables are replaced with mode which is value whose frequency is maximum.
+
+```{r}
+
+Mode = function(x){
+  ta = table(x)
+  tam = max(ta)
+  mod = names(ta)[ta==tam]
+  return(mod)
+}
+
+```
+
+Identify numeric variables and treat them with mean value if any missing / null values exists
+
+```{r}
+for (col_name in colnames(ames[sapply(ames, is.factor) == TRUE])) {
+  
+  if (sum(is.na(ames[[col_name]])) > 0) {
+    ames[col_name][is.na(ames[col_name])] <- Mode(ames[[col_name]])
+    stmt <- paste('Null values of', col_name, ' feature has been replaced by mode value ', 
+                  Mode(ames[[col_name]]))
+    print(stmt, na.print = NULL)
+  }
+}
+```
+
+
+$$
+\begin{align}
+log(SalePrice) = \beta_{o}+\beta_{1}X_{1}\\
+SalePrice = e^{\beta_{o}+\beta_{1}X_{1}}\\
+SalePrice = B e^{\beta_{1}X_{1}}\\
+\end{align}
+$$
+
+# References

@@ -1,0 +1,55 @@
+---
+title: "Statistical Learning Lecture Notes"
+author: "Nakul R. Padalkar"
+date: 07/10/2022
+date-modified: today
+date-format: long
+format:
+  html:
+    code-overflow: wrap
+    number-sections: true
+    number-depth: 4
+    toc: true
+    toc-depth: 3
+    html-math-method: 
+      method: katex
+      number-equations: true
+      add-to-equation: section
+    theme: [cosmo, theme/theme.scss]
+---
+
+## Example Table
+
+```{r}
+#| eval: true
+#| message: false
+#| warning: false
+#| echo: true
+library(tidyverse)
+library(kableExtra)
+
+tbl <- tribble(
+  ~"pos_neg",  ~"<8", ~"8-10", ~">10",
+  "Negative", 95, 23, 45,
+  "Positive", 49, 22, 25,
+  )
+```
+
+```{r}
+#| tbl-cap: Test
+#| label: tbl-test
+
+tbl %>% 
+  janitor::adorn_totals(where = c("row", "col")) %>%
+  kable(
+    longtable = TRUE,
+    booktabs = TRUE,
+    linesep = "",
+    align = c("l", "c", "c", "c", "c"),
+    col.names = c("", names(.)[-1]),
+  ) %>%
+  add_header_above(c(" " = 1, "Inoculum volume (mL)" = 3, " " = 1), bold = TRUE) %>%
+  row_spec(0, bold = TRUE) %>%
+  column_spec(1, bold = TRUE) %>%
+  column_spec(2:4, width = "3em")
+```

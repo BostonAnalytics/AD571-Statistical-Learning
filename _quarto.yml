@@ -1,0 +1,41 @@
+project:
+  type: website
+
+website:
+  title: "Statistical Learning Lecture Notes"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - text: Module 1
+        menu:
+          - href: M1/M1LN1.qmd
+            text: Lecture Note 01
+          - href: M1/M1LN2.qmd
+            text: Lecture Note 02
+      - text: Module 2
+        menu:
+          - href: M2/M2LN1.qmd
+            text: Lecture Note 01
+          - href: M2/M2LN2.qmd
+            text: Lecture Note 02
+
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    html-math-method: 
+      method: katex
+    number-equations: true
+    number-sections: true
+    toc: true
+    code-overflow: wrap
+    grid:
+      sidebar-width: 200px
+      body-width: 900px
+      margin-width: 200px
+      gutter-width: 1.5rem
+
+
