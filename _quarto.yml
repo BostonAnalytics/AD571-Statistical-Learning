@@ -24,8 +24,7 @@ website:
 format:
   html:
     theme:
-      - cosmo
-      - theme.scss
+      - theme
     html-math-method: 
       method: katex
     number-equations: true
@@ -38,4 +37,14 @@ format:
       margin-width: 200px
       gutter-width: 1.5rem
 
-
+bibliography: references.bib
+tbl-cap-location: top
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: '**arabic**'
+  title-delim: "**:**"
+  tbl-title: '**Table**'
+  tbl-labels: '**arabic**'
+editor: 
+  markdown: 
+    wrap: 65

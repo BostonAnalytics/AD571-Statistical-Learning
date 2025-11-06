@@ -2,319 +2,66 @@
 <table style="text-align:center"><caption><strong>Simple Linear Model</strong></caption>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
-<tr><td style="text-align:left"></td><td>SalePrice</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Lot.Frontage</td><td>-84.42088<sup>*</sup> (-168.94220, 0.10045)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.95763</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.05042</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.Area</td><td>0.52307<sup>***</sup> (0.31859, 0.72755)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 5.01379</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.000001</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ShapeIR2</td><td>8,117.05100<sup>*</sup> (-812.18100, 17,046.28000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.78169</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.07496</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ShapeIR3</td><td>-29,053.66000<sup>***</sup> (-45,017.04000, -13,090.28000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -3.56717</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00037</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ShapeReg</td><td>1,530.75000 (-1,663.36000, 4,724.86000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.93930</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.34770</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ConfigCulDSac</td><td>8,251.54900<sup>**</sup> (1,532.03200, 14,971.07000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.40683</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01619</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ConfigFR2</td><td>-4,731.23600 (-13,100.98000, 3,638.50300)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.10793</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.26803</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ConfigFR3</td><td>-1,200.73600 (-18,370.64000, 15,969.16000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -0.13707</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.89100</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Lot.ConfigInside</td><td>1,915.98800 (-1,707.76700, 5,539.74300)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.03629</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.30020</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Land.SlopeMod</td><td>11,087.45000<sup>***</sup> (4,388.77000, 17,786.12000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 3.24407</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00120</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Land.SlopeSev</td><td>-5,028.89200 (-23,686.26000, 13,628.47000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -0.52829</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.59736</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodBlueste</td><td>2,819.96000 (-23,763.19000, 29,403.11000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.20791</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.83532</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodBrDale</td><td>8,823.58100 (-11,667.90000, 29,315.06000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.84396</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.39880</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodBrkSide</td><td>-11,468.41000 (-29,119.02000, 6,182.19700)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.27348</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.20300</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodClearCr</td><td>-13,632.73000 (-32,820.92000, 5,555.46800)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.39250</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.16393</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodCollgCr</td><td>-11,971.54000 (-27,423.42000, 3,480.33600)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.51851</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.12905</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodCrawfor</td><td>8,524.80200 (-8,318.54200, 25,368.14000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.99198</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.32133</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodEdwards</td><td>-22,681.15000<sup>***</sup> (-38,926.42000, -6,435.87600)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.73644</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00627</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodGilbert</td><td>-20,581.13000<sup>**</sup> (-36,707.13000, -4,455.13000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.50144</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01245</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodGreens</td><td>15,836.51000 (-11,127.59000, 42,800.60000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.15112</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.24983</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodGrnHill</td><td>130,061.10000<sup>***</sup> (70,675.59000, 189,446.60000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 4.29255</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00002</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodIDOTRR</td><td>-15,760.57000<sup>*</sup> (-33,898.73000, 2,377.58600)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.70305</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.08872</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodLandmrk</td><td>10,970.53000 (-49,298.42000, 71,239.48000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.35676</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.72131</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodMeadowV</td><td>6,785.24800 (-11,858.04000, 25,428.54000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.71333</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.47573</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodMitchel</td><td>-17,505.57000<sup>**</sup> (-33,925.46000, -1,085.68400)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.08956</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.03679</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodNAmes</td><td>-14,862.30000<sup>*</sup> (-30,812.96000, 1,088.35000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.82623</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.06797</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodNoRidge</td><td>36,241.03000<sup>***</sup> (18,525.26000, 53,956.79000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 4.00949</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00007</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodNPkVill</td><td>4,562.31700 (-17,541.94000, 26,666.57000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.40454</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.68587</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodNridgHt</td><td>48,350.85000<sup>***</sup> (33,036.85000, 63,664.84000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 6.18819</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodNWAmes</td><td>-19,989.76000<sup>**</sup> (-36,432.31000, -3,547.22000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.38280</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01728</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodOldTown</td><td>-17,286.82000<sup>**</sup> (-34,413.07000, -160.56650)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.97834</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.04803</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodSawyer</td><td>-15,924.98000<sup>*</sup> (-32,504.81000, 654.83900)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.88255</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.05991</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodSawyerW</td><td>-19,407.73000<sup>**</sup> (-35,589.62000, -3,225.83900)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.35068</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01884</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodSomerst</td><td>8,604.93300 (-6,578.63100, 23,788.50000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.11076</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.26681</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodStoneBr</td><td>53,257.01000<sup>***</sup> (36,275.32000, 70,238.71000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 6.14673</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodSWISU</td><td>-16,399.20000<sup>*</sup> (-35,528.48000, 2,730.08000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.68024</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.09307</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodTimber</td><td>-12.97331 (-17,017.55000, 16,991.60000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -0.00150</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.99881</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">NeighborhoodVeenker</td><td>3,409.32900 (-16,679.05000, 23,497.71000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.33264</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.73945</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Bldg.Type2fmCon</td><td>-5,963.46800 (-16,294.87000, 4,367.93800)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.13133</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.25806</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Bldg.TypeDuplex</td><td>-2,540.91000 (-15,085.22000, 10,003.40000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -0.39700</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.69142</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Bldg.TypeTwnhs</td><td>-45,105.03000<sup>***</sup> (-56,086.96000, -34,123.09000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -8.04997</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Bldg.TypeTwnhsE</td><td>-32,507.15000<sup>***</sup> (-39,552.44000, -25,461.85000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -9.04331</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.Style1.5Unf</td><td>10,473.11000 (-6,311.75700, 27,257.97000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.22294</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.22150</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.Style1Story</td><td>11,722.86000<sup>***</sup> (4,828.52700, 18,617.19000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 3.33265</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00088</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.Style2.5Fin</td><td>-27,978.77000<sup>**</sup> (-55,135.97000, -821.58150)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.01926</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.04360</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.Style2.5Unf</td><td>-5,404.63300 (-21,315.42000, 10,506.16000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -0.66577</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.50564</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.Style2Story</td><td>-7,450.43500<sup>**</sup> (-13,608.96000, -1,291.90800)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.37112</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01783</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.StyleSFoyer</td><td>13,046.92000<sup>**</sup> (2,510.04300, 23,583.79000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.42686</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01532</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">House.StyleSLvl</td><td>3,711.62500 (-4,850.44600, 12,273.70000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.84964</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.39564</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Overall.Qual</td><td>13,476.23000<sup>***</sup> (11,688.02000, 15,264.44000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 14.77061</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Overall.Cond</td><td>5,166.65000<sup>***</sup> (3,701.26600, 6,632.03400)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 6.91044</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Year.Built</td><td>373.42820<sup>***</sup> (248.86100, 497.99550)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 5.87559</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Year.Remod.Add</td><td>97.81441<sup>*</sup> (-2.31705, 197.94590)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.91461</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.05569</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">FoundationCBlock</td><td>-2,616.14400 (-8,575.75300, 3,343.46500)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -0.86038</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.38969</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">FoundationPConc</td><td>4,500.01300 (-2,149.97000, 11,150.00000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.32630</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.18490</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">FoundationSlab</td><td>1,620.10900 (-12,437.13000, 15,677.35000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.22589</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.82132</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">FoundationStone</td><td>8,033.56600 (-12,084.04000, 28,151.17000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.78267</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.43392</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">FoundationWood</td><td>-15,525.36000 (-45,800.65000, 14,749.93000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -1.00508</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.31499</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Bsmt.Unf.SF</td><td>5.37722 (-1.28092, 12.03537)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.58290</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.11361</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">BaseLivArea</td><td>25.56636<sup>***</sup> (19.11498, 32.01775)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 7.76719</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">X2nd.Flr.SF</td><td>12.75196<sup>**</sup> (2.11889, 23.38504)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.35053</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01885</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Gr.Liv.Area</td><td>41.53372<sup>***</sup> (33.28478, 49.78267)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 9.86849</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Full.Bath</td><td>6,028.74500<sup>***</sup> (1,999.69500, 10,057.79000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.93273</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00340</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Half.Bath</td><td>2,826.39400 (-1,090.75800, 6,743.54700)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.41420</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.15747</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Bedroom.AbvGr</td><td>-3,959.60400<sup>***</sup> (-6,466.27700, -1,452.93000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -3.09601</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00199</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Kitchen.AbvGr</td><td>-13,962.13000<sup>**</sup> (-25,470.64000, -2,453.61500)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -2.37783</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.01751</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">TotRms.AbvGrd</td><td>2,363.35600<sup>***</sup> (586.58330, 4,140.12900)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.60703</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00921</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Fireplaces</td><td>5,213.14800<sup>***</sup> (2,644.78400, 7,781.51300)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 3.97825</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00008</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Garage.Area</td><td>21.43800<sup>***</sup> (12.95246, 29.92354)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 4.95168</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.000001</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">X3Ssn.Porch</td><td>49.54326 (-10.19677, 109.28330)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.62543</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.10424</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Screen.Porch</td><td>59.53482<sup>***</sup> (36.20862, 82.86101)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 5.00236</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.000001</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Sale.ConditionAdjLand</td><td>3,777.04400 (-18,825.20000, 26,379.29000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.32753</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.74331</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Sale.ConditionAlloca</td><td>1,632.42900 (-13,542.48000, 16,807.34000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 0.21084</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.83304</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Sale.ConditionFamily</td><td>6,853.62800 (-5,018.08700, 18,725.34000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.13150</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.25799</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Sale.ConditionNormal</td><td>6,389.47000<sup>**</sup> (936.73780, 11,842.20000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.29667</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.02175</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Sale.ConditionPartial</td><td>23,977.05000<sup>***</sup> (16,433.02000, 31,521.08000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 6.22932</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>-961,415.00000<sup>***</sup> (-1,232,806.00000, -690,023.50000)</td></tr>
-<tr><td style="text-align:left"></td><td>t = -6.94325</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.00000</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>2,051</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.86705</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.86193</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>29,329.89000 (df = 1974)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>169.38410<sup>***</sup> (df = 76; 1974)</td></tr>
+<tr><td style="text-align:left"></td><td>quality</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">fixed.acidity</td><td>0.015</td></tr>
+<tr><td style="text-align:left"></td><td>(-0.037, 0.068)</td></tr>
+<tr><td style="text-align:left"></td><td>t = 0.574</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.567</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">volatile.acidity</td><td>-1.057<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(-1.323, -0.790)</td></tr>
+<tr><td style="text-align:left"></td><td>t = -7.780</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">citric.acid</td><td>-0.177</td></tr>
+<tr><td style="text-align:left"></td><td>(-0.502, 0.147)</td></tr>
+<tr><td style="text-align:left"></td><td>t = -1.070</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.285</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">chlorides</td><td>-1.779<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(-2.686, -0.872)</td></tr>
+<tr><td style="text-align:left"></td><td>t = -3.845</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.0002</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">free.sulfur.dioxide</td><td>0.003</td></tr>
+<tr><td style="text-align:left"></td><td>(-0.001, 0.008)</td></tr>
+<tr><td style="text-align:left"></td><td>t = 1.368</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.172</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">total.sulfur.dioxide</td><td>-0.004<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(-0.005, -0.002)</td></tr>
+<tr><td style="text-align:left"></td><td>t = -4.444</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.00001</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">density</td><td>-11.025</td></tr>
+<tr><td style="text-align:left"></td><td>(-49.319, 27.269)</td></tr>
+<tr><td style="text-align:left"></td><td>t = -0.564</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.573</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">pH</td><td>-0.383<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(-0.777, 0.010)</td></tr>
+<tr><td style="text-align:left"></td><td>t = -1.908</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.057</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">sulphates</td><td>0.794<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.556, 1.033)</td></tr>
+<tr><td style="text-align:left"></td><td>t = 6.527</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">alcohol</td><td>0.292<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.244, 0.341)</td></tr>
+<tr><td style="text-align:left"></td><td>t = 11.878</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>15.096</td></tr>
+<tr><td style="text-align:left"></td><td>(-22.377, 52.569)</td></tr>
+<tr><td style="text-align:left"></td><td>t = 0.790</td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.430</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>1,279</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.369</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.364</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>0.648 (df = 1268)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>74.295<sup>***</sup> (df = 10; 1268)</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>

@@ -13,7 +13,6 @@ author:
         state: MA
 format:
   html:
-    theme: [cosmo, theme/theme.scss]
     toc: true
     code-overflow: wrap
     number-sections: true
@@ -567,24 +566,16 @@ p
 
 
 # Equations
-
+for class explaination only, not part of the analysis.
 ## Causal 
 
 $$
 \begin{align}
 ln(y) &= \beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2} \implies y= e^{\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}}\\
-\sqrt{y} &=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}\implies y = (\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2})^2== b_0^2+b_1^2+2*b1b2\\
+\sqrt{y} &=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}\implies y = (\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2})^2== \beta_0^2+\beta_1^2+2*\beta_1\beta_2\\
 \sqrt[3]{y} &=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}\\
 cnt &= 161.807 +85.5765 *temp +	314.3430 *atemp - 275.1803 *hum+ 43.000* windspeed\\
 log(cnt) &= 1.9205 +	0.043330139 *temp +	1.287265532 *atemp - 0.979846625 *hum+ * windspeed\\
 then\; my\; Y\; is
 \end{align}
 $$
-
-
-Intercept	1.92058028
-temp	0.043330139
-atemp	1.287265532
-hum	-0.979846625
-windspeed	0.246232091
-

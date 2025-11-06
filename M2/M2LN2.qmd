@@ -1,0 +1,630 @@
+---
+title: "Multiple Linear Regression"
+subtitle: "Red Wine Quality Prediction"
+date: 09/29/2023
+date-modified: last-modified
+date-format: long
+author:
+  - name: Nakul R. Padalkar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+format:
+  html:
+    toc: true
+    code-overflow: wrap
+    number-sections: true
+    self-contained: true
+tbl-cap-location: top
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: '**arabic**'
+  title-delim: "**:**"
+  tbl-title: '**Table**'
+  tbl-labels: '**arabic**'
+editor: 
+  markdown: 
+    wrap: 65
+knitr:
+  opts_chunk: 
+    collapse: false
+    comment: "#>"
+    fig.path: "figure/"
+    fig.align: "center"
+    fig.dpi: 200
+    dev: "png"
+    echo: true
+    message: false
+    warning: true
+    tidy: false
+    tidy.opts: 
+      blank: false
+      width.cutoff: 60
+      wrap: 60
+---
+
+# Setting up the environment
+
+
+```{r importlibs}
+library(gdata)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(corrplot)
+library(kableExtra)
+library(flextable)
+library(tidyverse)
+library(stringr)
+library(lubridate)
+library(scales)
+library(graphics)
+library(caret)
+library(psych)
+library(ggcorrplot)
+library(PerformanceAnalytics)
+
+```
+
+
+# Importing Red Wine Quality Dataset
+
+The goal is to model red wine quality based on physicochemical characteristics.
+
+```{r importdata}
+redDF <- read.csv("../data/winequality-red.csv",sep=",")
+head(redDF) %>% kbl()
+
+```
+
+# Preparing for Machine Learning
+
+Let's perform the exploratory data analysis and prepare the data for machine learning. Use scatter plots, histograms, correlation values, and p-value. You can use the `pairs.panels` function in `psych` library and `ggcorrplot` to get pairwise correlations among variables, but I will use the `PerformanceAnalytics` package.
+
+## Using Standard `Psych` Package
+
+```{r expdata_psych}
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 8
+#| warning: false
+#| fig-cap: Pairs plot of red wine dataset with psych
+library(psych)
+pairs.panels(redDF)
+```
+
+## Using `GGalley` Package
+
+```{r expdata_ggalley}
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 8
+#| warning: false
+#| fig-cap: Pairs plot of red wine dataset with GGally
+
+library(GGally)
+ggpairs(redDF, columns = c("fixed.acidity", "volatile.acidity", "citric.acid", "residual.sugar", "chlorides", "free.sulfur.dioxide", "total.sulfur.dioxide", "density", "pH", "sulphates", "alcohol"),
+        aes(color = as.factor(quality), alpha = 0.5),
+        upper = list(continuous = wrap("cor", size = 2.5)))+ scale_colour_brewer(palette = "Set3",type = 'div',direction = 1)
+```
+
+## Correlation Matrix with `GGcorrplot` Package
+
+```{r expdata_corrplot}
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 8
+#| warning: false
+#| fig-cap: Correlation plot of red wine dataset
+
+ggcorrplot(redDF %>% cor(),
+  hc.order = TRUE, type = "lower",
+  lab = TRUE,
+  digits = 2,
+  ggtheme = ggplot2::theme_light(),
+)
+
+```
+
+## Correlation Matrix with base Package
+
+```{r expdata_corr_plot}
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 8
+#| warning: false
+#| fig-cap: Correlation plot of red wine dataset basic
+chart.Correlation(redDF, hist = T)
+```
+
+## Target variable distribution
+
+```{r target}
+summary(redDF$quality)
+```
+
+```{r freqtab}
+#| results: 'asis'
+#| tbl-cap: Frequency table of quality
+
+feqtab <- as_flextable(table(redDF$quality))
+feqtab
+```
+
+The dependent variable seems ordinal; hence, linear regression is unsuitable for this problem.
+
+### Correlation Values
+
+Strong correlation values $>0.60$ between some variables. We'll verify this again in the assumptions section.
+
+## Data Preparation
+
+### Checking for Missing Values
+
+```{r check_missing_values}
+redDF %>% is.na() %>% colSums()
+```
+
+I am using the `naniar` package to check for missing values and plot them.
+
+```{r check_missing_values_nanair}
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 8
+#| warning: false
+#| fig-cap: Missing value plot of red wine dataset
+
+# Load the required libraries
+library(naniar)
+
+# Create a missing value plot
+vis_miss(redDF)
+```
+
+### Checking for Outliers
+Let's perform an outlier analysis using the `boxplot` function. This will output the outlier numbers and will provide the boxplot for each variable.
+
+```{r check_outliers_number}
+# Specify the variable for which you want to find outliers
+variable_of_interest <- redDF$fixed.acidity
+
+# Calculate the boxplot statistics
+boxplot_stats <- boxplot.stats(variable_of_interest)
+
+# Get the indexes of outliers
+outlier_indexes <- which(variable_of_interest %in% boxplot_stats$out)
+```
+
+Here are the outlier indexes: `r outlier_indexes`
+
+
+```{r check_outliers}
+#| fig-align: center
+#| fig-width: 9
+#| fig-height: 8
+#| warning: false
+#| fig-cap: Outlier plot of red wine dataset
+
+# Load the required libraries
+library(reshape2)
+
+melted_data <- reshape2::melt(redDF, id.vars = 'quality')
+
+# Create a grouped box plot
+ggplot(melted_data, aes(x = variable, y = value)) +
+  geom_boxplot(aes(fill = as.factor(quality))) +
+  labs(title = "Grouped Box Plot of Variables vs. Quality") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab("Variable")
+
+```
+
+### Train/test Split
+
+```{r train_test_split}
+set.seed(1)
+sampleSize <- round(nrow(redDF)*0.8)
+idx <- sample(seq_len(sampleSize), size = sampleSize)
+
+X.train_red <- redDF[idx,]
+X.test_red <- redDF[-idx,]
+# X.test_red.y <- X.test_red
+# X.test_red <- subset(X.test_red, select = -c(quality) )
+
+rownames(X.train_red) <- NULL
+rownames(X.test_red) <- NULL
+```
+
+# Modeling
+
+## Building the Initial Model
+
+We won't consider 'residual sugar' for our analysis.
+
+```{r initial_model, results='asis'}
+
+model_red1 <- lm(quality ~ fixed.acidity + volatile.acidity + citric.acid + chlorides + free.sulfur.dioxide + 
+                   total.sulfur.dioxide + density + pH + sulphates + alcohol, 
+                 data = X.train_red)
+stargazer::stargazer(model_red1, type = "html", out = "regression.html" ,title = "Simple Linear Model", ci=TRUE, single.row = FALSE, no.space = FALSE, align = TRUE, digits=3, font.size = "small",  report = "vc*stp")
+```
+
+## Model Assumptions
+
+### Checking Normality of Residuals
+
+```{r check_normality}
+CheckNormal <- function(model) {
+  hist(model$residuals, breaks = 30)
+  shaptest <- shapiro.test(model$residuals)
+  print(shaptest)
+  if (shaptest$p.value <= 0.05) {
+    print("H0 rejected: the residuals are NOT distributed normally")
+  } else {
+    print("H0 failed to reject: the residuals ARE distributed normally")
+  }
+}
+CheckNormal(model = model_red1)
+```
+
+### Checking Homoscedasticity
+
+```{r check_homoscedasticity}
+library(lmtest)
+CheckHomos <- function(model){
+  plot(model$fitted.values, model$residuals)
+  abline(h = 0, col = "red")
+  BP <- bptest(model)
+  print(BP)
+  if (BP$p.value <= 0.05) {
+    print("H0 rejected: Error variance spreads INCONSTANTLY/generating patterns (Heteroscedasticity)")
+  } else {
+    print("H0 failed to reject: Error variance spreads CONSTANTLY (Homoscedasticity)")
+  }
+}
+CheckHomos(model = model_red1)
+```
+
+### Checking Multicollinearity
+
+```{r check_multicollinearity}
+library(car)
+vif(model_red1) %>% kbl()
+```
+
+## Model Improvements
+
+### Outlier Diagnosis
+
+```{r outlier_diagnosis}
+par(mfrow=c(2,2))
+lapply(c(1,2,4,5), 
+       function(x) plot(model_red1, 
+                        which = x,
+                        cook.levels = c(0.05, 0.1))) %>% invisible()
+```
+
+### Removing Influential Observations and Model Rerun
+
+```{r model_rerun}
+#| results: 'asis'
+to.rm <- c(78,202,245,274,1161)
+X.train_red <- X.train_red[-to.rm,]
+rownames(X.train_red) <- NULL
+model_red2 <- lm(quality ~ fixed.acidity + volatile.acidity + citric.acid + chlorides + 
+                   free.sulfur.dioxide + total.sulfur.dioxide + density + pH + sulphates + alcohol, 
+                 data = X.train_red)
+
+stargazer::stargazer(model_red1,model_red2, type = "html" ,title = "Regression Models for Red Wine Dataset", ci=TRUE, single.row = FALSE, no.space = FALSE, align = TRUE, digits=5, font.size = "small",  report = "vc*stp")
+```
+
+### Model Comparison
+```{r model_comparison}
+ad.r.sq1 <- summary(model_red1)$adj.r.squared
+ad.r.sq2 <- summary(model_red2)$adj.r.squared
+```
+
+Adjusted R-squared for 1st and the second models are `r ad.r.sq1` and `r ad.r.sq2`, respectively. The difference between both is `r round(ad.r.sq2-ad.r.sq1, 5)*100`%. 
+
+
+# Feature Selection
+
+## Use stepwise algorithm: Forward, Backward and Step-wise
+
+First, let's define the start and stop thresholds for the algorithm. We will also use the `regsubset` function from the leaps package to perform the stepwise regression.
+
+
+
+```{r featureselection}
+model_redAlc <- lm(quality ~ alcohol, data = X.train_red)
+model_redAll <- lm(quality ~ ., data = X.train_red)
+```
+
+### Backward Approach
+
+#### Variable Selection Sequence
+
+The variable selection dataframe below will show which variables were forced in and/or forced out for the backward approach.
+
+```{r reg_back}
+OLS.regback <- leaps::regsubsets(quality ~ ., X.train_red,
+    method = "backward", nvmax = 11)
+OLSregbacksum <- summary(OLS.regback)
+Varselect <- data.frame(Forcein = OLSregbacksum$obj$force.in,
+    Forceout = OLSregbacksum$obj$force.out)
+
+Varselect %>%
+    kbl() %>%
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center", font_size = 9)
+```
+
+#### Model Output Matrix
+
+We also need to see the variables included in each model. The table below will show that model 1 only includes `alcohol` while model 2 includes `volatile.acidity` and `alcohol`.
+
+```{r reg_back2}
+exhselect <- data.frame(OLSregbacksum$outmat)
+exhselect %>%
+    kbl() %>%
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center", font_size = 9)
+```
+
+Now, let's look at the detailed model measurement metrics, including
+The $R^2$, Adjusted-$R^2$, Mellow’s $Cp$, $AIC$, and $BIC$. These can be directly extracted from the OLS regression summary we have created in the first step.
+
+#### $R^2$
+
+```{r rsqmat}
+#| results: 'asis'
+#| fig-align: center
+#| tab-align: center
+#| tab-cap: R-squared for each model
+#| 
+rsqmat <- data.frame(t(OLSregbacksum$rsq))
+rsqmat %>%
+    kbl() %>%
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center", font_size = 9)
+```
+
+#### Adjusted $R^2$
+
+```{r adjr2mat}
+#| results: 'asis'
+#| fig-align: center
+#| tab-align: center
+#| tab-cap: Adjusted R-squared for each model
+adjr2mat <- data.frame(t(OLSregbacksum$adjr2))
+adjr2mat %>%
+    kbl() %>%
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center", font_size = 9)
+```
+
+#### Mellow’s Cp
+```{r mellowcp}
+#| results: 'asis'
+#| fig-align: center
+#| tab-align: center
+#| tab-cap: Mellow's Cp for each model
+cpmat <- data.frame(t(OLSregbacksum$cp))
+cpmat %>%
+    kbl() %>%
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center", font_size = 9)
+
+```
+
+#### Bayesian Information Criterion (BIC)
+
+```{r bic}
+#| results: 'asis'
+#| fig-align: center
+#| tab-align: center
+#| tab-cap: BIC for each model
+#| 
+bicmat <- data.frame(t(OLSregbacksum$bic))
+bicmat %>%
+    kbl() %>%
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center", font_size = 9)
+```
+
+#### Combining the Model Output Matrices
+
+```{r combmat}
+# Combine the four data frames into one
+combined_df <- data.frame(
+  R2 = unlist(rsqmat),
+  Adj_R2 = unlist(adjr2mat),
+  Mellow_Cp = unlist(cpmat),
+  BIC = unlist(bicmat)
+)
+
+# Create a kable table with all the values
+kable(combined_df, format = "html", col.names = c("R-sq.", "Adj R-sq.", "Mellow's Cp", "BIC")) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 9)
+```
+
+
+#### Diagnostic plots for the Backward Selection
+
+```{r diagplot}
+#| fig-align: center
+#| fig-width: 9
+#| fig-height: 9
+#| warning: false
+#| fig-cap: Backward Selection Diagnostic Plots
+#| 
+par(mfrow = c(2, 2))
+plot(OLSregbacksum$rss, xlab = "Number of Variables\n(a)", ylab = "RSS",
+    type = "l", lwd = 1.5, cex.main = 1.15, cex.lab = 1, cex.axis = 1.05,
+    font.axis = 2, font.lab = 2, main = "Number of Variables Vs. RSS",
+    panel.first = grid(nx = NULL, ny = NULL, col = "gray", lty = 2))
+
+plot(OLSregbacksum$adjr2, xlab = "Number of Variables\n(b)",
+    ylab = "Adjusted RSq", type = "l", lwd = 1.5, main = "Number of Variables Vs. Adjusted R2",
+    cex.main = 1.15, cex.lab = 1, cex.axis = 1.05, font.axis = 2,
+    font.lab = 2, panel.first = grid(nx = NULL, ny = NULL, col = "gray",
+        lty = 2))
+points(6, OLSregbacksum$adjr2[6], col = "#336699", cex = 2, pch = 20)
+
+plot(OLSregbacksum$cp, xlab = "Number of Variables\n(c)", ylab = "Cp",
+    type = "l", lwd = 1.5, cex.main = 1.15, cex.lab = 1, cex.axis = 1.05,
+    font.axis = 2, font.lab = 2, main = "Number of Variables Vs. Mellow's Cp",
+    panel.first = grid(nx = NULL, ny = NULL, col = "gray", lty = 2))
+points(6, OLSregbacksum$cp[6], col = "#336699", cex = 2, pch = 20)
+
+plot(OLSregbacksum$bic, xlab = "Number of Variables\n(d)", ylab = "BIC",
+    type = "l", lwd = 1.5, cex.main = 1.15, cex.lab = 1, cex.axis = 1.05,
+    font.axis = 2, font.lab = 2, main = "Number of Variables Vs. BIC",
+    panel.first = grid(nx = NULL, ny = NULL, col = "gray", lty = 2))
+points(6, OLSregbacksum$bic[6], col = "#336699", cex = 2, pch = 20)
+```
+
+#### Best Model from Backward Selection
+
+```{r bestmodel}
+# Find the model with the lowest BIC value
+best_model_index <- which.min(OLSregbacksum$bic)
+
+# Get the best model
+best_model <- coef(OLS.regback, id = best_model_index)
+
+# Extract the coefficients from the best model and remove the intercept term from the coefficients
+best_coefficients <- round(unname(best_model)[-1], 4)
+
+# Get the variable names from your redDF dataframe
+variable_names <- names(best_model)[-1]
+
+# Extract the intercept coefficient separately
+intercept_coefficient <- round(unname(best_model)[1], 4)
+
+# Define the named_coefficients variable
+named_coefficients <- setNames(best_coefficients, variable_names)
+
+# Create the LaTeX equation
+equation <- paste("y =", intercept_coefficient, "+", paste(named_coefficients, variable_names, sep = " * ", collapse = " + "), "")
+```
+
+$`r equation`$
+
+### Forward Approach
+
+Following the `leaps::regsubsets` function, we will use the `forward` approach by changing `method = "backward"` to `method = "forward"` to select the best model. Make sure to change all `OLS.regback` to `OLS.regfwd` and related variables.
+
+**Caution: Running all three subset selection methods in one file will result in longer run times/knit times.**
+
+### Best Subset Approach
+
+Following the `leaps::regsubsets` function, we will use the `best` approach by changing `method = "backward"` to `method = "best"` to select the best model. Make sure to change all `OLS.regback` to `OLS.regbest` and related variables.
+
+**Caution: Running all three subset selection methods in one file will result in longer run times/knit times.**
+
+# Check model performance
+## Prepare performance indicator function
+
+```{r performance_indicator, results='asis'}
+# library(MLmetrics)
+# indicator <- function(model, y_pred, y_true) {
+#   adj.r.sq <- summary(model)$adj.r.squared
+#   mse <- MSE(y_pred, y_true)
+#   rmse <- RMSE(y_pred, y_true)
+#   mae <- MAE(y_pred, y_true)
+#   print(paste0("Adjusted R-squared: ", round(adj.r.sq, 4)))
+#   print(paste0("MSE: ", round(mse, 4)))
+#   print(paste0("RMSE: ", round(rmse, 4)))
+#   print(paste0("MAE: ", round(mae, 4)))
+# }
+# 
+# indicator(model = model.both_red, y_pred = model.both_red$fitted.values, y_true = X.train_red$quality)
+
+best_model_back <-  lm(quality~ volatile.acidity + chlorides+ total.sulfur.dioxide+                 pH+            sulphates  +            alcohol, data=X.train_red)
+stargazer::stargazer(best_model_back, type = "html",title = "Backward Selection Best Model", ci=TRUE, single.row = TRUE, no.space = FALSE, align = TRUE, digits=4, font.size = "small",  report = "vc*stp")
+
+```
+
+We compare these predictions from the training set to the test set.
+
+```{r compare_predictions}
+# metrics <- function(y_pred, y_true){
+#   mse <- MSE(y_pred, y_true)
+#   rmse <- RMSE(y_pred, y_true)
+#   mae <- MAE(y_pred, y_true)
+#   corPredAct <- cor(y_pred, y_true)
+#   print(paste0("MSE: ", round(mse, 6)))
+#   print(paste0("RMSE: ", round(rmse, 6)))
+#   print(paste0("MAE: ", round(mae, 6)))
+#   print(paste0("Correlation: ", round(corPredAct, 6)))
+#   print(paste0("R^2 between y_pred & y_true: ", round(corPredAct^2, 6)))
+# }
+# 
+# metrics(y_pred = model.both_red$fitted.values, y_true = X.train_red$quality)
+# 
+# redPredict.both <- predict(model.both_red, newdata = X.test_red)
+# metrics(y_pred = redPredict.both, y_true = X.test_red$quality)
+
+# Predict on the test data
+predictions <- predict(best_model_back, newdata = X.test_red)
+
+```
+
+### Plot between Predicted vs. actual values in training set
+
+```{r plot_predictions}
+# redFitted.both <- data.frame(qualityPred = model.both_red$fitted.values,
+#                              qualityAct = X.train_red$quality)
+# ggplot(redFitted.both, aes(x = qualityPred, y = qualityAct)) +
+#   geom_point(aes(color = as.factor(qualityAct)), show.legend = F) +
+#   geom_smooth(method = "lm", se = F) +
+#   labs(title = "Predicted vs Actual Values Using Train Dataset", x = "Predicted quality", y = "Actual quality")
+
+```
+
+### Plot between Predicted vs. actual values in test set
+
+```{r plot_predictions_test}
+# redPredict.bothDF <- data.frame(qualityPred = redPredict.both, qualityAct = X.test_red$quality)
+# ggplot(redPredict.bothDF, aes(x = qualityPred, y = qualityAct)) +
+#   geom_point(aes(color = as.factor(qualityAct)), show.legend = F) +
+#   geom_smooth(method = "lm", se = F) +
+#   labs(title = "Predicted vs Actual Values Using Test Dataset", x = "Predicted quality", y = "Actual quality")
+# Add the predicted values to your test data (X.test_red)
+
+X.test_red$predicted_quality <- predictions
+
+# Load the necessary libraries
+library(ggplot2)
+
+# Create a scatterplot to visualize the predicted values vs. actual values
+ggplot(X.test_red, aes(x = quality, y = predicted_quality)) +
+  geom_point() +
+  labs(title = "Actual vs. Predicted Quality",
+       x = "Actual Quality",
+       y = "Predicted Quality") +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  theme_minimal()
+```
+
+# Equations
+
+## Causal 
+
+$$
+\begin{align}
+ln(y) &= \beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2} \implies y= e^{\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}}\\
+\sqrt{y} &=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}\implies y = (\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2})^2== b_0^2+b_1^2+2*b1b2\\
+\sqrt[3]{y} &=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}\\
+cnt &= 161.807 +85.5765 *temp +	314.3430 *atemp - 275.1803 *hum+ 43.000* windspeed\\
+causal &= 161.807 +85.5765 *temp +	314.3430 *atemp - 275.1803 *hum+ 43.000* windspeed\\
+Registerd &= 161.807 +85.5765 *temp +	314.3430 *atemp - 275.1803 *hum+ 43.000* windspeed
+\end{align}
+$$
+
+lm1 = lm(BC_cnt~.-causal-registered-instant-cnt, data=train)
+
+# References

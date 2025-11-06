@@ -12,7 +12,6 @@ author:
         state: MA
 format:
   html:
-    theme: [cosmo, theme/theme.scss]
     html-math-method: 
       method: katex
       number-equations: true
