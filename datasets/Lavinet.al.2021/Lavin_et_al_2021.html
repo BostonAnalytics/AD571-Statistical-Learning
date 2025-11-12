@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Charles P. Lavin, Geoffrey P. Jones, David H. Williamson, Hugo B. Harrison">
+<meta name="dcterms.date" content="2022-05-10">
+
+<title>Minimum size limits and the reproductive value of numerous, young, mature female fish – Statistical Learning Lecture Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-1118c0f6abfc1c15b4cf62daf5015217.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Statistical Learning Lecture Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-module-1" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Module 1</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-module-1">    
+        <li>
+    <a class="dropdown-item" href="../../M1/M1LN1.html">
+ <span class="dropdown-text">Lecture Note 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../M1/M1LN2.html">
+ <span class="dropdown-text">Lecture Note 02</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-module-2" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Module 2</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-module-2">    
+        <li>
+    <a class="dropdown-item" href="../../M2/M2LN1.html">
+ <span class="dropdown-text">Lecture Note 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../M2/M2LN2.html">
+ <span class="dropdown-text">Lecture Note 02</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-module-3" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Module 3</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-module-3">    
+        <li>
+    <a class="dropdown-item" href="../../M3/M3LN1.html">
+ <span class="dropdown-text">Lecture Note 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../M3/M3LN2.qmd">
+ <span class="dropdown-text">Lecture Note 02</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link active" data-scroll-target="#load-packages"><span class="header-section-number">1</span> Load packages</a>
+  <ul class="collapse">
+  <li><a href="#for-the-purpose-of-this-study-we-explicitly-define-nyffs-as-fish-25-cm-38-cm-tl-below-msl-of-coral-trout-observed-in-unfished-populations-ntmrs-in-the-keppel-islands-between-2007-and-2013." id="toc-for-the-purpose-of-this-study-we-explicitly-define-nyffs-as-fish-25-cm-38-cm-tl-below-msl-of-coral-trout-observed-in-unfished-populations-ntmrs-in-the-keppel-islands-between-2007-and-2013." class="nav-link" data-scroll-target="#for-the-purpose-of-this-study-we-explicitly-define-nyffs-as-fish-25-cm-38-cm-tl-below-msl-of-coral-trout-observed-in-unfished-populations-ntmrs-in-the-keppel-islands-between-2007-and-2013."><span class="header-section-number">1.1</span> For the purpose of this study we explicitly define NYFFs as fish 25 cm-38 cm TL (below MSL), of coral trout observed in unfished populations (NTMRs) in the Keppel Islands between 2007 and 2013.</a></li>
+  <li><a href="#number-of-nymff-vs-number-of-above-msl-from-uvc" id="toc-number-of-nymff-vs-number-of-above-msl-from-uvc" class="nav-link" data-scroll-target="#number-of-nymff-vs-number-of-above-msl-from-uvc"><span class="header-section-number">1.2</span> number of NYMFF vs number of above-MSL from UVC</a></li>
+  <li><a href="#the-alternative-hypothesis-is-that-the-density-and-biomass-of-coral-trout-in-blue-zones-is-less-than-in-green-zones." id="toc-the-alternative-hypothesis-is-that-the-density-and-biomass-of-coral-trout-in-blue-zones-is-less-than-in-green-zones." class="nav-link" data-scroll-target="#the-alternative-hypothesis-is-that-the-density-and-biomass-of-coral-trout-in-blue-zones-is-less-than-in-green-zones."><span class="header-section-number">1.3</span> The alternative hypothesis is that the density and biomass of coral trout in blue zones is less than in green zones.</a></li>
+  <li><a href="#gof" id="toc-gof" class="nav-link" data-scroll-target="#gof"><span class="header-section-number">1.4</span> GoF</a></li>
+  <li><a href="#figure-2" id="toc-figure-2" class="nav-link" data-scroll-target="#figure-2"><span class="header-section-number">1.5</span> Figure 2</a></li>
+  <li><a href="#calculating-the-likely-reproductive-success-of-above-msl-sized-fish-38-cm-tl-versus-fish-below-the-msl-38" id="toc-calculating-the-likely-reproductive-success-of-above-msl-sized-fish-38-cm-tl-versus-fish-below-the-msl-38" class="nav-link" data-scroll-target="#calculating-the-likely-reproductive-success-of-above-msl-sized-fish-38-cm-tl-versus-fish-below-the-msl-38"><span class="header-section-number">1.6</span> Calculating the likely reproductive success of above MSL-sized fish (&gt;38 cm TL) versus fish below the MSL (&lt;=38)</a></li>
+  <li><a href="#from-this-relationship-we-estimate-the-likely-reproductive-success-of-fish-above-the-msl-38-cm-tl-is-5.4-times-greater-than-that-of-nymfs-95-ci-4.6-6.8." id="toc-from-this-relationship-we-estimate-the-likely-reproductive-success-of-fish-above-the-msl-38-cm-tl-is-5.4-times-greater-than-that-of-nymfs-95-ci-4.6-6.8." class="nav-link" data-scroll-target="#from-this-relationship-we-estimate-the-likely-reproductive-success-of-fish-above-the-msl-38-cm-tl-is-5.4-times-greater-than-that-of-nymfs-95-ci-4.6-6.8."><span class="header-section-number">1.7</span> From this relationship, we estimate the likely reproductive success of fish above the MSL (38 cm TL) is 5.4 times greater than that of NYMFs (95% CI [4.6, 6.8]).</a></li>
+  <li><a href="#calculating-the-length-that-displays-the-highest-replenishment-contribution" id="toc-calculating-the-length-that-displays-the-highest-replenishment-contribution" class="nav-link" data-scroll-target="#calculating-the-length-that-displays-the-highest-replenishment-contribution"><span class="header-section-number">1.8</span> Calculating the length that displays the highest replenishment contribution</a></li>
+  <li><a href="#peak-39.1-95-ci-36.9-41" id="toc-peak-39.1-95-ci-36.9-41" class="nav-link" data-scroll-target="#peak-39.1-95-ci-36.9-41"><span class="header-section-number">1.9</span> peak 39.1 (95% CI [36.9, 41])</a></li>
+  <li><a href="#contribution-of-nymffs-to-local-replenishment" id="toc-contribution-of-nymffs-to-local-replenishment" class="nav-link" data-scroll-target="#contribution-of-nymffs-to-local-replenishment"><span class="header-section-number">1.10</span> Contribution of NYMFFs to local replenishment</a></li>
+  <li><a href="#nymfs-contribute-36-95-ci-3140-of-juvenile-fish-that-recruited-to-the-island-group" id="toc-nymfs-contribute-36-95-ci-3140-of-juvenile-fish-that-recruited-to-the-island-group" class="nav-link" data-scroll-target="#nymfs-contribute-36-95-ci-3140-of-juvenile-fish-that-recruited-to-the-island-group"><span class="header-section-number">1.11</span> NYMFs contribute 36% 95 CI [31,40] of juvenile fish that recruited to the island group</a></li>
+  <li><a href="#contributions-of-above-msl-fish-equal-to-that-of-sub-msl-fish" id="toc-contributions-of-above-msl-fish-equal-to-that-of-sub-msl-fish" class="nav-link" data-scroll-target="#contributions-of-above-msl-fish-equal-to-that-of-sub-msl-fish"><span class="header-section-number">1.12</span> Contributions of above-MSL fish equal to that of sub-MSL fish</a></li>
+  <li><a href="#figure-3" id="toc-figure-3" class="nav-link" data-scroll-target="#figure-3"><span class="header-section-number">1.13</span> Figure 3</a></li>
+  </ul></li>
+  <li><a href="#supplementary-figure" id="toc-supplementary-figure" class="nav-link" data-scroll-target="#supplementary-figure"><span class="header-section-number">2</span> Supplementary Figure</a>
+  <ul class="collapse">
+  <li><a href="#s1" id="toc-s1" class="nav-link" data-scroll-target="#s1"><span class="header-section-number">2.1</span> S1</a></li>
+  <li><a href="#s2" id="toc-s2" class="nav-link" data-scroll-target="#s2"><span class="header-section-number">2.2</span> S2</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Minimum size limits and the reproductive value of numerous, young, mature female fish</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Charles P. Lavin, Geoffrey P. Jones, David H. Williamson, Hugo B. Harrison </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 10, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="load-packages" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Load packages</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#library(grid)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#library(ggplotify)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#library(ggord)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fitdistrplus)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(KScorrect)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnvStats)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>summarise <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>summarise</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#fonts for figures</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#library(extrafont)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#font_import()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>#A. DATA INPUT ##1. Data: Sampled adults used for parentage analysis</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Adults_used_for_parentage_in_each_period.csv"</span>, <span class="at">header =</span> T)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>samp<span class="fl">.1</span> <span class="ot">=</span> samp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span> <span class="fu">is.na</span>(TL)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(ID, <span class="at">.keep_all =</span> T) <span class="sc">%&gt;%</span>  <span class="co">#remove duplicate IDs</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TL =</span> TL <span class="sc">/</span> <span class="dv">10</span>)  <span class="co">#Convert to 'cm'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>samp.TL <span class="ot">=</span> samp<span class="fl">.1</span>[,<span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#number of NYMFFs sampled</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>samp.NYM <span class="ot">=</span> samp.TL <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TL<span class="sc">&gt;=</span><span class="dv">25</span> <span class="sc">&amp;</span> TL<span class="sc">&lt;=</span><span class="dv">38</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#above MSL fish sampled</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>samp.MSL <span class="ot">=</span> samp.TL <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TL<span class="sc">&gt;</span><span class="dv">38</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#average size at sample</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>samp<span class="fl">.1</span> <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(TL), <span class="at">se =</span> <span class="fu">sd</span>(TL)<span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     mean        se
+1 49.5594 0.3521813</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(samp<span class="fl">.1</span><span class="sc">$</span>TL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  29.00   41.77   47.85   49.56   55.00   78.10 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#location (reef) of samples</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>parent.loc <span class="ot">&lt;-</span> samp<span class="fl">.1</span> <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(ID, REEF) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Parent =</span> ID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>##2. Data: Parentage assignments</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>parent_size.raw <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Total_parent_offspring_assignments.csv"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">##Step-wise size re-calculation from assigned parent's sampling FL (mm) to spawning TL (cm)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>parent_size <span class="ot">=</span> parent_size.raw <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculating parent's sample TL (cm) from sample FL (mm), using  equation from Harrison et al. 2012 and Williamson et al. 2016</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Parent_sample_TL_cm =</span> ((Parent_sample_FL_mm<span class="sc">*</span><span class="fl">0.1</span>)<span class="sc">-</span><span class="fl">0.24069</span>)<span class="sc">/</span><span class="fl">0.9375</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculating parent's sample SL (cm) from sample FL (mm), using Equation 1, from Ferreira &amp; Russ (1992)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SL_cm_sampling_parent =</span> <span class="sc">-</span><span class="fl">0.4236+0.8565</span><span class="sc">*</span>Parent_sample_FL_mm<span class="sc">*</span><span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculating parent's age from sample SL (cm), using Equation 2, from Ferreira &amp; Russ (1992)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Parent_sampling_age =</span> (<span class="fu">log</span>(<span class="sc">-</span>SL_cm_sampling_parent<span class="sc">/</span><span class="dv">60</span><span class="sc">+</span><span class="dv">1</span>)<span class="sc">/-</span><span class="fl">0.206</span>)<span class="sc">-</span><span class="fl">0.945</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#converting parent sample / juvenile spawning date to DMY format (lubridate)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample_date =</span> <span class="fu">dmy</span>(Parent_sample_date),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">spawn_date =</span> <span class="fu">dmy</span>(Juvenile_spawn_date)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#calculating the difference in time from parent sampling to juvenile spawning, in years</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date_diff_years =</span> (sample_date<span class="sc">-</span>spawn_date)<span class="sc">/</span><span class="dv">365</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#calculating parent's age at spawning, by adding/subtracting time difference from parent's sampling age</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Parent_spawning_age =</span> <span class="fu">as.numeric</span>(Parent_sampling_age <span class="sc">-</span> Date_diff_years)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#calculating parent's SL (cm) at time of spawning from spawning age, using Equation 3, from Ferreira &amp; Russ (1992) </span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Parent_spawning_SL_cm =</span> (<span class="dv">60</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.206</span><span class="sc">*</span>(Parent_spawning_age<span class="fl">+0.945</span>))))) <span class="sc">%&gt;%</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#converting parent's SL (cm) at time of spawning to FL (cm) at time of spawning, using the inverse of Equation 1 from Ferreira &amp; Russ (1992)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Parent_spawning_FL_cm =</span> (Parent_spawning_SL_cm<span class="fl">+0.4236</span>)<span class="sc">/</span><span class="fl">0.8565</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#converting parent's FL (cm) at time of spawning to TL (cm) at time of spawning, using equation Eq. 4 from Harrison et al. 2012 and Williamson et al. 2016</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Parent_spawning_TL_cm =</span> (Parent_spawning_FL_cm<span class="fl">-0.24069</span>)<span class="sc">/</span><span class="fl">0.9375</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#getting rid of 11 NAs, 3 non-computable values</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(Parent_spawning_TL_cm) <span class="sc">%&gt;%</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Parent_spawning_TL_cm<span class="sc">&gt;</span><span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(parent.loc, <span class="at">by =</span> <span class="st">"Parent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `Parent_sampling_age = (log(-SL_cm_sampling_parent/60 +
+  1)/-0.206) - 0.945`.
+Caused by warning in `log()`:
+! NaNs produced</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>parent_size <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(REEF, Sample_group) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="fu">spread</span>(<span class="at">key =</span> Sample_group, <span class="at">value =</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'REEF'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+# Groups:   REEF [4]
+  REEF              C     D
+  &lt;chr&gt;         &lt;int&gt; &lt;int&gt;
+1 Clam Bay         18    20
+2 Egg Rock         15    20
+3 Halfway Green    12     9
+4 Middle Is         9     8</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>parent_size <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Parent_spawning_TL_cm), <span class="at">se =</span> <span class="fu">sd</span>(Parent_spawning_TL_cm)<span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mean      se
+1 52.01623 1.18707</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(parent_size<span class="sc">$</span>Parent_spawning_TL_cm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  25.13   43.46   54.28   52.02   61.08   74.75 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of NYMFFs assigned to offspring</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>parent_size <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Parent_spawning_TL_cm <span class="sc">&lt;=</span> <span class="dv">38</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   P_maculatus  Offspring     Parent Sample_group Parent_sample_date
+1            2 Plec06_B02 Plec21_D07            C         11/05/2012
+2           11 Plec07_C01 Plec04_D01            C         03/03/2009
+3           21 Plec08_D03 Plec04_B01            C         28/02/2009
+4           25 Plec08_E03 Plec04_F03            C         03/03/2009
+5           26 Plec08_E07 Plec04_A10            C         28/02/2009
+6           30 Plec08_H01 Plec28_C06            C         20/05/2012
+7           32 Plec09_B02 Plec04_E05            C         03/03/2009
+8           36 Plec09_D12 Plec21_B07            C         10/05/2012
+9           37 Plec09_E04 Plec24_B07            C         26/05/2012
+10          42 Plec10_A10 Plec23_D07            C         21/05/2012
+11          61 Plec11_F05 Plec05_F05            C         27/01/2008
+12          99 Plec45_A03 Plec54_A02            D         05/08/2013
+13         102 Plec45_B01 Plec24_E09            D         28/05/2012
+14         105 Plec45_D07 Plec46_A05            D         28/05/2012
+   Parent_sample_FL_mm Juvenile_spawn_date Parent_sample_TL_cm
+1             529.7600          30/07/2008            56.25100
+2             386.3566          30/10/2007            40.95463
+3             338.5554          22/01/2008            35.85584
+4             386.3566          20/01/2008            40.95463
+5             338.5554          27/12/2007            35.85584
+6             520.1998          21/03/2008            55.23124
+7             338.5554          28/08/2008            35.85584
+8             481.9589          25/11/2008            51.15221
+9             481.9589          10/12/2008            51.15221
+10            481.9589          20/12/2008            51.15221
+11            313.0000          02/05/2008            33.12993
+12            386.3566          16/03/2012            40.95463
+13            386.3566          22/10/2011            40.95463
+14            315.0000          29/10/2011            33.34326
+   SL_cm_sampling_parent Parent_sampling_age sample_date spawn_date
+1               44.95034            5.768541  2012-05-11 2008-07-30
+2               32.66784            2.871896  2009-03-03 2007-10-30
+3               28.57367            2.194313  2009-02-28 2008-01-22
+4               32.66784            2.871896  2009-03-03 2008-01-20
+5               28.57367            2.194313  2009-02-28 2007-12-27
+6               44.13151            5.511356  2012-05-20 2008-03-21
+7               28.57367            2.194313  2009-03-03 2008-08-28
+8               40.85618            4.600459  2012-05-10 2008-11-25
+9               40.85618            4.600459  2012-05-26 2008-12-10
+10              40.85618            4.600459  2012-05-21 2008-12-20
+11              26.38485            1.867465  2008-01-27 2008-05-02
+12              32.66784            2.871896  2013-08-05 2012-03-16
+13              32.66784            2.871896  2012-05-28 2011-10-22
+14              26.55615            1.892265  2012-05-28 2011-10-29
+   Date_diff_years Parent_spawning_age Parent_spawning_SL_cm
+1   3.7835616 days            1.984979              27.18884
+2   1.3424658 days            1.529431              23.96063
+3   1.1041096 days            1.090203              20.54769
+4   1.1178082 days            1.754088              25.59051
+5   1.1753425 days            1.018971              19.96450
+6   4.1671233 days            1.344233              22.55914
+7   0.5123288 days            1.681984              25.07560
+8   3.4575342 days            1.142925              20.97385
+9   3.4602740 days            1.140185              20.95181
+10  3.4191781 days            1.181281              21.28099
+11 -0.2630137 days            2.130478              28.15769
+12  1.3890411 days            1.482855              23.61319
+13  0.6000000 days            2.271896              29.07194
+14  0.5808219 days            1.311443              22.30539
+   Parent_spawning_FL_cm Parent_spawning_TL_cm          REEF
+1               32.23869              34.13120      Clam Bay
+2               28.46962              30.11086      Clam Bay
+3               24.48487              25.86045      Clam Bay
+4               30.37257              32.14068      Clam Bay
+5               23.80397              25.13416      Clam Bay
+6               26.83332              28.36547      Clam Bay
+7               29.77139              31.49942      Clam Bay
+8               24.98242              26.39118 Halfway Green
+9               24.95670              26.36375 Halfway Green
+10              25.34103              26.77370      Clam Bay
+11              33.36986              35.33778      Clam Bay
+12              28.06397              29.67816      Egg Rock
+13              34.43729              36.47637      Clam Bay
+14              26.53705              28.04945      Clam Bay</code></pre>
+</div>
+</div>
+<p>##3. Data: Surveyed population (UVC) ##a. size distribution</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gki.abundance <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"Great_Keppel_Island_Coral_Trout_Abundance_data.csv"</span>) </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#focal NTMRs</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ntmr <span class="ot">=</span> gki.abundance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span> FORK.LENGTH) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(ABUNDANCE) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">2007</span>,<span class="dv">2013</span>,<span class="dv">1</span>), ZONE <span class="sc">==</span> <span class="st">"NTR"</span>, SITE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"GK5"</span>, <span class="st">"GK6"</span>, <span class="st">"M1"</span>, <span class="st">"M2"</span>, <span class="st">"M3"</span>, <span class="st">"M4"</span>, <span class="st">"H1"</span>, <span class="st">"H2"</span>))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Green zones (NTMRs)</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>green <span class="ot">=</span> gki.abundance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span> FORK.LENGTH) <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(ABUNDANCE) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">2007</span>,<span class="dv">2013</span>,<span class="dv">1</span>), ZONE <span class="sc">==</span> <span class="st">"NTR"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#for fit.distribution.gamma</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>final_survey <span class="ot">=</span> green <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TOTAL.LENGTH <span class="sc">&gt;=</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(TOTAL.LENGTH) </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"fit.distribution.gamma.R"</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>green.zones <span class="ot">&lt;-</span> <span class="fu">fit.distribution.gamma</span>(green <span class="sc">%&gt;%</span> <span class="fu">pull</span>(TOTAL.LENGTH), <span class="at">boot =</span> <span class="dv">99</span>, <span class="at">range =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ntmr.zones <span class="ot">&lt;-</span> <span class="fu">fit.distribution.gamma</span>(ntmr <span class="sc">%&gt;%</span> <span class="fu">pull</span>(TOTAL.LENGTH), <span class="at">boot =</span> <span class="dv">99</span>, <span class="at">range =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Blue zones (fished)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>blue <span class="ot">=</span> gki.abundance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span> FORK.LENGTH) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(ABUNDANCE) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">2007</span>,<span class="dv">2013</span>,<span class="dv">1</span>), ZONE <span class="sc">==</span> <span class="st">"FISHED"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>blue.zones <span class="ot">&lt;-</span> <span class="fu">fit.distribution.gamma</span>(blue <span class="sc">%&gt;%</span> <span class="fu">pull</span>(TOTAL.LENGTH), <span class="at">boot =</span> <span class="dv">99</span>, <span class="at">range =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>##b. Defining NYMFFs</p>
+<section id="for-the-purpose-of-this-study-we-explicitly-define-nyffs-as-fish-25-cm-38-cm-tl-below-msl-of-coral-trout-observed-in-unfished-populations-ntmrs-in-the-keppel-islands-between-2007-and-2013." class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="for-the-purpose-of-this-study-we-explicitly-define-nyffs-as-fish-25-cm-38-cm-tl-below-msl-of-coral-trout-observed-in-unfished-populations-ntmrs-in-the-keppel-islands-between-2007-and-2013."><span class="header-section-number">1.1</span> For the purpose of this study we explicitly define NYFFs as fish 25 cm-38 cm TL (below MSL), of coral trout observed in unfished populations (NTMRs) in the Keppel Islands between 2007 and 2013.</h2>
+</section>
+<section id="number-of-nymff-vs-number-of-above-msl-from-uvc" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="number-of-nymff-vs-number-of-above-msl-from-uvc"><span class="header-section-number">1.2</span> number of NYMFF vs number of above-MSL from UVC</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ntmr.NYMF <span class="ot">=</span> ntmr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TOTAL.LENGTH <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> TOTAL.LENGTH <span class="sc">&lt;=</span> <span class="dv">38</span>) <span class="co">#369</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ntmr.BOF <span class="ot">=</span> ntmr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TOTAL.LENGTH <span class="sc">&gt;</span> <span class="dv">38</span>) <span class="co"># 474 individuals above MSL</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dv">369</span><span class="sc">/</span>(<span class="dv">369</span><span class="sc">+</span><span class="dv">474</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4377224</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">474</span><span class="sc">/</span>(<span class="dv">369</span><span class="sc">+</span><span class="dv">474</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5622776</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#100 indiv. less &lt; 25 cm TL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>##C. Density and biomass</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gki.density <span class="ot">=</span> gki.abundance <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(YEAR <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">2007</span>,<span class="dv">2013</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(REGION, YEAR, REEF, SITE, ZONE) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total.fish =</span> <span class="fu">sum</span>(ABUNDANCE) <span class="sc">/</span> <span class="dv">1500</span> <span class="sc">*</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span>    <span class="co">#divide by 5 for the average per transect; (divide by 1500 for per square metre reef, optional); divide by 1500 * 10000 for ha; transect are 50m * 6m belt transects</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(REGION, YEAR, REEF, SITE, ZONE) <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(total.fish, <span class="at">na.rm =</span> T),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> <span class="fu">sd</span>(total.fish, <span class="at">na.rm =</span> T)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>())) <span class="sc">%&gt;%</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">"density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'REGION', 'YEAR', 'REEF', 'SITE'. You can
+override using the `.groups` argument.
+`summarise()` has grouped output by 'REGION', 'YEAR', 'REEF', 'SITE'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gki.biomass <span class="ot">&lt;-</span> gki.abundance <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(YEAR <span class="sc">%in%</span> <span class="fu">seq</span>(<span class="dv">2007</span>,<span class="dv">2013</span>,<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">biomass =</span> (<span class="fl">0.0118</span> <span class="sc">*</span> FORK.LENGTH<span class="sc">^</span><span class="fl">3.06</span>) <span class="sc">*</span> ABUNDANCE) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(REGION, YEAR, REEF, SITE, ZONE, N.TRANSECT) <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total.biomass =</span> <span class="fu">sum</span>(biomass) <span class="sc">/</span> <span class="dv">1500</span> <span class="sc">*</span><span class="dv">10000</span> <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(REGION, YEAR, REEF, SITE, ZONE) <span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(total.biomass, <span class="at">na.rm =</span> T) ,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> <span class="fu">sd</span>(total.biomass, <span class="at">na.rm =</span> T)<span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()) ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">"biomass"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'REGION', 'YEAR', 'REEF', 'SITE', 'ZONE'.
+You can override using the `.groups` argument.
+`summarise()` has grouped output by 'REGION', 'YEAR', 'REEF', 'SITE'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plot.density <span class="ot">=</span>  <span class="fu">ggplot</span>(gki.density, <span class="fu">aes</span>(<span class="at">x =</span> ZONE, <span class="at">y =</span> mean, <span class="at">fill =</span> ZONE) ) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"skyblue"</span>, <span class="st">"lightgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">expression</span>(Density <span class="sc">~</span> (individuals.ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>.ya<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})), <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>plot.biomass <span class="ot">=</span>  <span class="fu">ggplot</span>(gki.biomass, <span class="fu">aes</span>(<span class="at">x =</span> ZONE, <span class="at">y =</span> mean, <span class="at">fill =</span> ZONE) ) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"skyblue"</span>, <span class="st">"lightgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">expression</span>(Biomass <span class="sc">~</span> (kg.ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>}<span class="sc">~</span>.ya<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})), <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(plot.density, plot.biomass)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mean <span class="sc">~</span> ZONE, <span class="at">data =</span> gki.biomass )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  mean by ZONE
+t = -5.0745, df = 55.888, p-value = 4.601e-06
+alternative hypothesis: true difference in means between group FISHED and group NTR is not equal to 0
+95 percent confidence interval:
+ -122.46628  -53.14023
+sample estimates:
+mean in group FISHED    mean in group NTR 
+            65.76166            153.56491 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mean <span class="sc">~</span> ZONE, <span class="at">data =</span> gki.density )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  mean by ZONE
+t = -3.6027, df = 64.55, p-value = 0.0006128
+alternative hypothesis: true difference in means between group FISHED and group NTR is not equal to 0
+95 percent confidence interval:
+ -119.47058  -34.24665
+sample estimates:
+mean in group FISHED    mean in group NTR 
+            94.72868            171.58730 </code></pre>
+</div>
+</div>
+</section>
+<section id="the-alternative-hypothesis-is-that-the-density-and-biomass-of-coral-trout-in-blue-zones-is-less-than-in-green-zones." class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="the-alternative-hypothesis-is-that-the-density-and-biomass-of-coral-trout-in-blue-zones-is-less-than-in-green-zones."><span class="header-section-number">1.3</span> The alternative hypothesis is that the density and biomass of coral trout in blue zones is less than in green zones.</h2>
+<p>#B. FIT DISTRIBUTIONS ##Testing to determine distribution of assigned, sampled and surveyed data, Gamma, Weibull, lnorm, normal</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>final_sample <span class="ot">=</span> samp<span class="fl">.1</span><span class="sc">$</span>TL</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>final_assign <span class="ot">=</span> parent_size<span class="sc">$</span>Parent_spawning_TL_cm</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>final_survey <span class="ot">=</span> green <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TOTAL.LENGTH <span class="sc">&gt;=</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(TOTAL.LENGTH) </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co">#gamma</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>fit_g <span class="ot">=</span> <span class="fu">fitdist</span>(final_assign, <span class="st">"gamma"</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>fit_gs <span class="ot">=</span> <span class="fu">fitdist</span>(final_sample, <span class="st">"gamma"</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>fit_gsu <span class="ot">=</span> <span class="fu">fitdist</span>(final_survey, <span class="st">"gamma"</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co">#weibull</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>fit_w <span class="ot">=</span> <span class="fu">fitdist</span>(final_assign, <span class="st">"weibull"</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>fit_ws <span class="ot">=</span> <span class="fu">fitdist</span>(final_sample, <span class="st">"weibull"</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>fit_wsu <span class="ot">=</span> <span class="fu">fitdist</span>(final_survey, <span class="st">"weibull"</span>)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co">#lognorm</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>fit_ln <span class="ot">=</span> <span class="fu">fitdist</span>(final_assign, <span class="st">"lnorm"</span>)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>fit_lns <span class="ot">=</span> <span class="fu">fitdist</span>(final_sample, <span class="st">"lnorm"</span>)</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>fit_lnu <span class="ot">=</span> <span class="fu">fitdist</span>(final_survey, <span class="st">"lnorm"</span>)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co">#normal dist</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>fit_norm <span class="ot">=</span> <span class="fu">fitdist</span>(final_assign, <span class="st">"norm"</span>)</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>fit_norms <span class="ot">=</span> <span class="fu">fitdist</span>(final_sample, <span class="st">"norm"</span>)</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>fit_normsu <span class="ot">=</span> <span class="fu">fitdist</span>(final_survey, <span class="st">"norm"</span>)</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="co">#dens plot results, assign</span></span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>plot.legend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"gamma"</span>, <span class="st">"Norm"</span>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="fu">denscomp</span>(<span class="fu">list</span>(fit_w, fit_g, fit_ln, fit_norm), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="fu">cdfcomp</span> (<span class="fu">list</span>(fit_w, fit_g, fit_ln, fit_norm), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="fu">qqcomp</span>  (<span class="fu">list</span>(fit_w, fit_g, fit_ln, fit_norm), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="fu">ppcomp</span>  (<span class="fu">list</span>(fit_w, fit_g, fit_ln, fit_norm), <span class="at">legendtext =</span> plot.legend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dens plot results, sample</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plot.legend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"gamma"</span>, <span class="st">"Norm"</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">denscomp</span>(<span class="fu">list</span>(fit_ws, fit_gs, fit_lns, fit_norms), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cdfcomp</span> (<span class="fu">list</span>(fit_ws, fit_gs, fit_lns, fit_norms), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qqcomp</span>  (<span class="fu">list</span>(fit_ws, fit_gs, fit_lns, fit_norms), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ppcomp</span>  (<span class="fu">list</span>(fit_ws, fit_gs, fit_lns, fit_norms), <span class="at">legendtext =</span> plot.legend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dens plot results, survey</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>plot.legend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"gamma"</span>, <span class="st">"Norm"</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">denscomp</span>(<span class="fu">list</span>(fit_wsu, fit_gsu, fit_lnu, fit_normsu), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cdfcomp</span> (<span class="fu">list</span>(fit_wsu, fit_gsu, fit_lnu, fit_normsu), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qqcomp</span>  (<span class="fu">list</span>(fit_wsu, fit_gsu, fit_lnu, fit_normsu), <span class="at">legendtext =</span> plot.legend)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ppcomp</span>  (<span class="fu">list</span>(fit_wsu, fit_gsu, fit_lnu, fit_normsu), <span class="at">legendtext =</span> plot.legend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="gof" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="gof"><span class="header-section-number">1.4</span> GoF</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cullen-frey graphs</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">descdist</span>(final_assign, <span class="at">discrete=</span><span class="cn">FALSE</span>, <span class="at">boot=</span><span class="dv">999</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>summary statistics
+------
+min:  25.13416   max:  74.75047 
+median:  54.28199 
+mean:  52.01623 
+estimated sd:  12.50656 
+estimated skewness:  -0.3079307 
+estimated kurtosis:  2.431511 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">descdist</span>(final_sample, <span class="at">discrete=</span><span class="cn">FALSE</span>, <span class="at">boot=</span><span class="dv">999</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>summary statistics
+------
+min:  29   max:  78.1 
+median:  47.85 
+mean:  49.5594 
+estimated sd:  10.39979 
+estimated skewness:  0.5495241 
+estimated kurtosis:  2.553092 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">descdist</span>(final_survey, <span class="at">discrete=</span><span class="cn">FALSE</span>, <span class="at">boot=</span><span class="dv">999</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>summary statistics
+------
+min:  25   max:  75 
+median:  40 
+mean:  39.93704 
+estimated sd:  9.129451 
+estimated skewness:  0.7667203 
+estimated kurtosis:  4.057796 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#GOF</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gofstat</span>(<span class="fu">list</span>(fit_g,fit_w,fit_ln, fit_norm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Goodness-of-fit statistics
+                             1-mle-gamma 2-mle-weibull 3-mle-lnorm 4-mle-norm
+Kolmogorov-Smirnov statistic   0.1045561    0.05487865   0.1161641 0.07670817
+Cramer-von Mises statistic     0.2002282    0.04908793   0.2925477 0.08356458
+Anderson-Darling statistic     1.4162176    0.38164422   2.0415899 0.60482656
+
+Goodness-of-fit criteria
+                               1-mle-gamma 2-mle-weibull 3-mle-lnorm 4-mle-norm
+Akaike's Information Criterion     887.223      874.8883    894.4605   878.8280
+Bayesian Information Criterion     892.642      880.3074    899.8796   884.2471</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gofstat</span>(<span class="fu">list</span>(fit_gs,fit_ws,fit_lns, fit_norms))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Goodness-of-fit statistics
+                             1-mle-gamma 2-mle-weibull 3-mle-lnorm 4-mle-norm
+Kolmogorov-Smirnov statistic  0.08452659      0.122803  0.07462747  0.1046532
+Cramer-von Mises statistic    0.99021155      2.567614  0.70566255  1.8649261
+Anderson-Darling statistic    6.07626978     15.633106  4.47003674 11.2342275
+
+Goodness-of-fit criteria
+                               1-mle-gamma 2-mle-weibull 3-mle-lnorm 4-mle-norm
+Akaike's Information Criterion    6506.728      6623.567    6493.291   6561.702
+Bayesian Information Criterion    6516.270      6633.109    6502.833   6571.244</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gofstat</span>(<span class="fu">list</span>(fit_wsu, fit_gsu, fit_lnu, fit_normsu))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Goodness-of-fit statistics
+                             1-mle-weibull 2-mle-gamma 3-mle-lnorm 4-mle-norm
+Kolmogorov-Smirnov statistic     0.1482097   0.1298382   0.1207537  0.1433345
+Cramer-von Mises statistic       3.9341221   2.6147527   2.5954233  3.1404259
+Anderson-Darling statistic      23.1983207  14.1082626  14.0898131 17.3949718
+
+Goodness-of-fit criteria
+                               1-mle-weibull 2-mle-gamma 3-mle-lnorm 4-mle-norm
+Akaike's Information Criterion      7010.511    6849.305    6836.602   6922.626
+Bayesian Information Criterion      7020.230    6859.024    6846.321   6932.345</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gofTest</span>(final_assign, <span class="at">test =</span> <span class="st">"proucl.ks.gamma"</span>, <span class="at">distribution =</span> <span class="st">"gamma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$distribution
+[1] "Gamma"
+
+$dist.abb
+[1] "gamma"
+
+$distribution.parameters
+    shape     scale 
+15.491482  3.357731 
+
+$n.param.est
+[1] 2
+
+$estimation.method
+[1] "MLE"
+
+$statistic
+       D 
+0.104576 
+
+$sample.size
+[1] 111
+
+$parameters
+  n 
+111 
+
+$crit.vals
+D.0.01 D.0.05 D.0.10 
+ 0.101  0.086  0.079 
+
+$p.value
+[1] "&lt; 0.01"
+
+$alternative
+[1] "True cdf does not equal the\n                                 Gamma Distribution."
+
+$method
+[1] "ProUCL Kolmogorov-Smirnov Gamma GOF"
+
+$data
+  [1] 67.27691 34.13120 44.00804 48.27401 41.26721 46.70354 42.36070 30.11086
+  [9] 53.32181 55.97854 42.02968 64.76385 40.72151 41.65723 47.50820 48.43608
+ [17] 69.35693 25.86045 58.36713 55.90554 43.56587 32.14068 25.13416 55.05517
+ [25] 39.56401 28.36547 43.34517 31.49942 61.42790 48.10650 73.68859 26.39118
+ [33] 26.36375 44.83618 53.14025 26.77370 68.10569 50.11321 54.54413 67.39068
+ [41] 50.70613 50.54039 56.57694 60.66145 63.74639 46.33781 44.89776 39.00261
+ [49] 54.80825 50.91519 56.74544 41.81591 35.33778 46.48189 50.20546 47.32501
+ [57] 64.56048 66.40035 60.76790 38.35251 59.27342 66.41338 63.84887 72.84290
+ [65] 43.81508 42.83209 74.75047 44.76803 65.56685 62.06945 56.26847 61.33487
+ [73] 50.30320 55.26019 66.34532 58.37754 38.81531 45.10728 56.27980 41.86181
+ [81] 60.81599 53.52513 74.30155 55.56163 29.67816 71.72826 56.57739 36.47637
+ [89] 43.25693 58.16423 28.04945 54.28199 64.57238 65.15074 57.32783 55.50672
+ [97] 59.86530 49.19200 60.14931 72.77836 69.38729 57.48234 58.38332 54.38285
+[105] 62.66461 63.96333 63.74473 58.91574 44.96311 50.92457 72.11841
+
+$data.name
+[1] "final_assign"
+
+$bad.obs
+[1] 0
+
+attr(,"class")
+[1] "gof"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gofTest</span>(final_sample, <span class="at">test =</span> <span class="st">"proucl.ks.gamma"</span>, <span class="at">distribution =</span> <span class="st">"gamma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in ks.test.default(x, "pgamma", shape = shape, scale = scale): ties
+should not be present for the one-sample Kolmogorov-Smirnov test</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$distribution
+[1] "Gamma"
+
+$dist.abb
+[1] "gamma"
+
+$distribution.parameters
+    shape     scale 
+23.531264  2.106109 
+
+$n.param.est
+[1] 2
+
+$estimation.method
+[1] "MLE"
+
+$statistic
+         D 
+0.08459704 
+
+$sample.size
+[1] 872
+
+$parameters
+  n 
+872 
+
+$crit.vals
+D.0.01 D.0.05 D.0.10 
+ 0.037  0.032  0.029 
+
+$p.value
+[1] "&lt; 0.01"
+
+$alternative
+[1] "True cdf does not equal the\n                                 Gamma Distribution."
+
+$method
+[1] "ProUCL Kolmogorov-Smirnov Gamma GOF"
+
+$data
+  [1] 29.0000 31.0000 30.5000 31.0000 31.0000 32.0000 32.4000 32.1000 32.9000
+ [10] 33.0000 32.9000 33.0000 32.5000 33.0000 33.0000 33.3000 33.6000 34.0000
+ [19] 33.8000 33.5000 34.2000 35.0000 34.5000 34.5125 34.5000 34.7000 35.0000
+ [28] 35.0000 35.5000 35.0000 34.9000 35.4000 36.0000 35.9000 35.5000 36.6000
+ [37] 36.6000 36.1000 37.2000 36.5000 37.5000 37.0000 37.5000 37.4000 37.5000
+ [46] 37.8000 38.1000 37.2000 38.2000 37.8000 38.0000 38.0000 38.0000 37.9000
+ [55] 38.5000 38.5000 39.0000 39.1000 39.8000 38.7000 38.0000 39.0000 39.0000
+ [64] 39.6000 39.1000 39.0000 39.5000 39.5000 39.6000 39.3000 39.1000 39.0000
+ [73] 39.0000 39.2000 39.2000 39.5000 40.1000 39.6000 39.5000 39.2000 41.0000
+ [82] 39.8000 41.0000 40.4000 40.1000 41.1000 40.8000 41.9000 41.2000 40.9000
+ [91] 41.0000 41.0000 41.5000 41.0000 41.0000 41.0000 41.0000 41.5000 42.0000
+[100] 41.9000 42.8000 41.0000 41.7000 41.7000 41.5000 41.7000 43.0000 42.4000
+[109] 42.0000 42.2000 40.2000 42.1000 42.7000 41.8000 42.5000 42.0000 42.2000
+[118] 42.0000 42.5000 42.5000 42.8000 42.3000 42.8000 43.1000 43.1000 43.0000
+[127] 42.1000 43.0000 43.3000 43.0000 44.0000 43.7000 43.9000 43.6000 43.4000
+[136] 43.8000 44.5000 45.0000 45.0000 44.0000 44.0000 44.2000 44.6000 44.8000
+[145] 43.2000 44.7000 45.0000 44.5000 45.4000 45.5000 44.5000 44.0000 45.0000
+[154] 45.1000 45.4000 45.5000 46.1000 46.0000 46.0000 46.4000 47.1000 46.0000
+[163] 46.0000 47.1000 46.5000 47.0000 47.2000 46.5000 47.0000 47.0000 47.5000
+[172] 47.0000 47.2000 46.0000 47.7000 47.7000 47.7000 47.4000 48.6000 48.5000
+[181] 48.4000 49.0000 48.0000 49.0000 48.5000 49.1000 48.7000 49.1000 49.5000
+[190] 49.5000 49.0000 48.5000 49.0000 49.0000 50.0000 49.5000 50.0000 50.0000
+[199] 51.0000 50.0000 49.5000 50.0000 50.0000 51.1000 49.6000 51.0000 51.8000
+[208] 51.0000 50.6000 51.2000 51.6000 51.2000 51.2000 53.6000 51.5000 52.0000
+[217] 50.0000 52.0000 52.5000 52.0000 52.0000 53.0000 52.9000 53.0000 52.9000
+[226] 53.0000 52.0000 52.6000 52.9000 53.0000 53.5000 54.0000 54.8000 54.0000
+[235] 53.6000 53.0000 54.0000 52.5000 54.1000 52.6000 54.2000 54.2000 55.0000
+[244] 53.7000 53.7000 54.0000 53.6000 54.1000 54.5000 54.5000 54.0000 55.0000
+[253] 55.5000 56.5000 55.1000 54.0000 54.0000 54.5000 56.0000 55.9000 55.6000
+[262] 55.2000 55.0000 56.0000 54.8000 56.2000 56.1000 56.9000 57.0000 56.0000
+[271] 57.8000 57.0000 57.0000 58.1000 58.2000 58.6000 58.5000 59.0000 58.9000
+[280] 59.3000 59.0000 59.8000 60.0000 59.0000 59.2000 60.4000 61.0000 60.9000
+[289] 60.6000 64.0000 61.0000 62.0000 62.0000 60.5000 61.3000 61.1000 61.3000
+[298] 62.0000 62.7000 61.8000 62.5000 63.0000 62.5000 62.6000 62.6000 62.2000
+[307] 63.0000 62.5000 63.7000 61.6000 64.0000 63.3821 63.8000 64.1000 63.5000
+[316] 63.8000 64.3000 63.6000 64.2000 64.0000 64.0000 64.0000 63.9000 64.8000
+[325] 65.4000 65.0000 65.5000 65.1000 65.6000 66.1000 66.6000 66.6000 66.0000
+[334] 67.0000 66.0000 66.5000 67.0000 67.0000 66.0000 67.7000 67.5000 66.0000
+[343] 67.8000 68.0000 68.0000 69.3000 68.1000 69.0000 68.0000 69.0000 69.0000
+[352] 69.2000 69.4000 69.1000 69.1000 70.0000 70.5000 70.0000 69.5000 70.5000
+[361] 71.5000 70.5000 70.3000 72.0000 71.0000 72.0000 72.3000 72.5000 73.0000
+[370] 73.5000 71.0000 71.3000 74.0000 72.0000 74.0000 75.0000 76.0000 74.0000
+[379] 78.1000 55.0000 55.0000 55.0000 50.0000 55.0000 50.0000 55.0000 56.0000
+[388] 65.0000 70.0000 75.0000 55.0000 60.0000 60.0000 50.0000 55.0000 50.0000
+[397] 55.0000 50.0000 50.0000 55.0000 50.0000 50.0000 70.0000 70.0000 60.0000
+[406] 65.0000 55.0000 65.0000 60.0000 50.0000 65.0000 55.0000 50.0000 75.0000
+[415] 50.0000 55.0000 65.0000 70.0000 55.0000 60.0000 65.0000 60.0000 55.0000
+[424] 65.0000 55.0000 70.0000 55.0000 55.0000 65.0000 55.0000 60.0000 60.0000
+[433] 65.0000 75.0000 52.0000 70.0000 65.0000 55.0000 50.0000 50.0000 52.0000
+[442] 75.0000 50.0000 65.0000 58.0000 65.0000 68.0000 50.0000 55.0000 50.0000
+[451] 75.0000 65.0000 55.0000 55.0000 68.0000 70.0000 60.0000 60.0000 55.0000
+[460] 55.0000 54.0000 50.0000 55.0000 60.0000 60.0000 55.0000 50.0000 52.0000
+[469] 65.0000 50.0000 65.0000 50.0000 50.0000 50.0000 50.0000 55.0000 75.0000
+[478] 55.0000 50.0000 50.0000 52.0000 53.0000 50.0000 50.0000 50.0000 55.0000
+[487] 60.0000 65.0000 56.0000 50.0000 75.0000 56.0000 55.0000 65.0000 58.0000
+[496] 68.0000 50.0000 54.0000 70.0000 60.0000 55.0000 65.0000 55.0000 50.0000
+[505] 65.0000 60.0000 50.0000 55.0000 55.0000 55.0000 70.0000 55.0000 55.0000
+[514] 55.0000 65.0000 55.0000 60.0000 50.0000 55.0000 55.0000 65.0000 50.0000
+[523] 57.0000 65.0000 55.0000 70.0000 65.0000 60.0000 65.0000 52.0000 50.0000
+[532] 55.0000 55.0000 50.0000 50.0000 50.0000 60.0000 60.0000 55.0000 52.0000
+[541] 50.0000 52.0000 55.0000 50.0000 50.0000 50.0000 50.0000 55.0000 55.0000
+[550] 50.0000 55.0000 52.0000 65.0000 50.0000 58.0000 65.0000 50.0000 70.0000
+[559] 70.0000 55.0000 75.0000 55.0000 55.0000 57.0000 61.0000 50.0000 55.0000
+[568] 65.0000 75.0000 70.0000 50.0000 50.0000 50.0000 65.0000 50.0000 65.0000
+[577] 50.0000 60.0000 60.0000 50.0000 55.0000 34.4000 49.7000 42.0000 50.0000
+[586] 35.0000 45.0000 40.0000 35.0000 40.0000 40.0000 40.0000 35.0000 45.0000
+[595] 40.0000 35.0000 35.0000 40.0000 35.0000 40.0000 40.0000 40.0000 45.0000
+[604] 35.0000 65.0000 35.0000 50.0000 40.0000 45.0000 35.0000 35.0000 60.0000
+[613] 50.0000 40.0000 45.0000 35.0000 35.0000 50.0000 45.0000 40.0000 35.0000
+[622] 40.0000 40.0000 45.0000 40.0000 35.0000 35.0000 40.0000 40.0000 40.0000
+[631] 40.0000 35.0000 40.0000 35.0000 35.0000 45.0000 40.0000 50.0000 35.0000
+[640] 35.0000 35.0000 55.0000 35.0000 35.0000 40.0000 40.0000 56.6000 38.0000
+[649] 44.0000 41.2000 40.0000 45.0000 35.0000 40.0000 35.0000 40.0000 40.0000
+[658] 40.0000 40.0000 40.0000 40.0000 45.0000 35.0000 60.0000 51.8000 43.8000
+[667] 49.6000 32.0000 32.5000 33.1000 33.5000 34.1000 34.5000 35.5000 36.6000
+[676] 36.5000 36.5000 37.0000 38.2000 39.7000 40.2000 42.1000 42.5000 42.5000
+[685] 43.1000 45.0000 44.0000 45.2000 45.2000 45.1000 45.5000 45.5000 43.9000
+[694] 46.2000 46.6000 47.5000 46.6000 49.6000 49.3000 48.0000 48.0000 48.5000
+[703] 49.1000 49.7000 49.8000 45.0000 45.0000 42.0000 46.0000 44.0000 45.0000
+[712] 45.0000 40.0000 40.0000 45.0000 45.0000 45.0000 40.0000 45.0000 42.0000
+[721] 40.0000 45.0000 45.0000 45.0000 45.0000 45.0000 45.0000 45.0000 45.0000
+[730] 46.0000 44.0000 40.0000 48.0000 45.0000 45.0000 40.0000 45.0000 48.0000
+[739] 46.0000 44.0000 40.0000 45.0000 46.0000 40.0000 40.0000 43.0000 42.0000
+[748] 42.0000 43.0000 45.0000 44.0000 40.0000 42.0000 45.0000 43.0000 40.0000
+[757] 47.0000 47.0000 42.0000 45.0000 45.0000 45.0000 48.0000 38.0000 46.0000
+[766] 44.0000 45.0000 45.0000 48.0000 45.0000 43.0000 45.0000 45.0000 42.0000
+[775] 42.0000 44.0000 48.0000 48.0000 42.0000 42.0000 45.0000 44.0000 44.0000
+[784] 48.0000 46.0000 48.0000 47.0000 47.0000 45.0000 40.0000 45.0000 40.0000
+[793] 45.0000 38.0000 45.0000 40.0000 45.0000 40.0000 44.0000 38.0000 38.0000
+[802] 43.0000 30.0000 45.0000 47.0000 46.0000 44.0000 46.0000 40.0000 42.0000
+[811] 48.0000 42.0000 44.0000 46.0000 44.0000 48.0000 45.0000 46.0000 40.0000
+[820] 40.0000 48.0000 45.0000 45.0000 45.0000 45.0000 46.0000 44.0000 42.0000
+[829] 44.0000 40.0000 42.0000 40.0000 40.0000 40.0000 40.0000 40.0000 46.0000
+[838] 45.0000 46.0000 47.0000 44.0000 45.0000 40.0000 38.0000 46.0000 38.0000
+[847] 45.0000 46.0000 46.0000 40.0000 45.0000 42.0000 48.0000 44.0000 46.0000
+[856] 44.0000 40.0000 40.0000 45.0000 45.0000 35.0000 45.0000 45.0000 45.0000
+[865] 40.0000 40.0000 40.0000 45.0000 45.0000 40.0000 40.0000 45.0000
+
+$data.name
+[1] "final_sample"
+
+$bad.obs
+[1] 0
+
+attr(,"class")
+[1] "gof"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gofTest</span>(final_survey, <span class="at">test =</span> <span class="st">"proucl.ks.gamma"</span>, <span class="at">distribution =</span> <span class="st">"gamma"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in ks.test.default(x, "pgamma", shape = shape, scale = scale): ties
+should not be present for the one-sample Kolmogorov-Smirnov test</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$distribution
+[1] "Gamma"
+
+$dist.abb
+[1] "gamma"
+
+$distribution.parameters
+    shape     scale 
+20.002065  1.996646 
+
+$n.param.est
+[1] 2
+
+$estimation.method
+[1] "MLE"
+
+$statistic
+        D 
+0.1297474 
+
+$sample.size
+[1] 953
+
+$parameters
+  n 
+953 
+
+$crit.vals
+D.0.01 D.0.05 D.0.10 
+ 0.034  0.030  0.027 
+
+$p.value
+[1] "&lt; 0.01"
+
+$alternative
+[1] "True cdf does not equal the\n                                 Gamma Distribution."
+
+$method
+[1] "ProUCL Kolmogorov-Smirnov Gamma GOF"
+
+$data
+  [1] 25 25 25 30 30 30 30 30 30 30 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35
+ [26] 35 35 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 45 45 45 45 45 45 45 50
+ [51] 55 25 25 25 30 30 30 30 30 30 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35
+ [76] 40 40 40 40 40 40 40 45 45 45 50 50 55 25 30 30 30 30 35 35 35 35 35 40 45
+[101] 50 55 25 25 25 25 25 25 25 25 30 30 30 30 35 35 35 35 35 35 35 35 40 40 40
+[126] 40 40 45 45 45 45 50 50 55 60 25 25 25 30 30 30 30 30 30 30 30 35 35 35 35
+[151] 35 35 35 35 35 35 35 40 40 40 40 40 40 45 45 45 45 45 45 50 55 60 65 30 30
+[176] 30 35 35 35 40 45 50 50 30 30 35 35 35 35 35 35 40 40 40 40 40 45 45 45 45
+[201] 45 45 50 55 55 25 30 30 35 35 45 45 50 55 60 25 30 30 30 35 35 35 35 35 35
+[226] 35 40 40 40 40 45 45 45 45 50 50 55 55 60 65 75 25 30 30 30 30 30 30 35 35
+[251] 35 35 35 35 35 35 40 40 40 40 40 40 40 40 40 45 45 45 50 55 60 25 25 30 30
+[276] 30 30 30 30 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 40 40 40
+[301] 40 40 40 40 40 40 40 40 40 40 40 45 45 45 45 45 45 45 50 50 50 55 60 65 25
+[326] 25 25 25 30 30 30 30 30 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35
+[351] 35 35 40 40 40 40 40 40 40 40 40 40 45 45 45 45 45 45 50 50 50 55 60 65 35
+[376] 40 40 40 45 45 35 35 35 35 35 35 35 35 35 35 40 40 40 40 45 45 25 25 30 30
+[401] 35 35 35 35 35 35 35 35 35 35 35 35 35 35 35 40 40 40 40 40 40 40 40 40 40
+[426] 40 40 40 40 40 40 40 40 40 40 40 40 45 45 45 45 45 45 45 45 45 45 50 50 50
+[451] 50 50 50 55 55 55 25 25 25 25 25 30 30 30 35 35 35 35 35 35 40 40 40 40 40
+[476] 40 40 45 45 45 45 45 45 45 45 45 45 45 45 45 45 50 50 55 55 60 40 40 40 45
+[501] 45 45 45 45 45 45 50 50 25 25 25 25 30 30 30 30 30 35 35 35 35 35 35 35 35
+[526] 35 35 35 35 35 35 35 40 40 40 40 40 40 40 40 45 45 45 50 50 55 60 65 30 30
+[551] 30 30 30 30 35 35 35 35 35 35 35 35 35 35 35 40 40 40 40 40 40 40 40 40 40
+[576] 40 40 45 45 45 45 45 45 45 45 50 50 50 50 50 55 55 60 60 70 30 35 35 35 40
+[601] 40 40 40 40 40 45 45 45 45 45 45 45 45 50 50 55 55 35 35 40 40 40 40 45 45
+[626] 45 50 50 50 55 25 40 40 40 40 45 45 45 45 45 45 45 45 50 50 50 55 55 60 25
+[651] 30 30 30 35 35 35 35 35 35 35 40 40 40 40 40 45 45 45 45 45 45 45 45 45 45
+[676] 45 45 45 45 45 50 50 50 50 55 55 65 40 40 40 45 45 45 45 45 45 50 50 50 55
+[701] 55 25 25 25 25 25 25 25 25 25 30 30 30 30 30 30 30 30 30 30 35 35 35 35 35
+[726] 35 40 40 40 40 40 40 40 40 40 40 40 40 45 45 45 45 45 45 45 50 55 60 25 25
+[751] 25 25 25 25 30 30 30 30 30 30 30 30 30 30 30 35 35 35 35 35 35 35 35 35 35
+[776] 35 40 40 40 40 45 45 45 45 50 55 75 75 35 40 25 25 25 30 30 30 35 35 35 35
+[801] 40 40 40 40 40 45 45 45 45 45 50 50 60 60 65 75 75 75 35 40 40 45 45 45 45
+[826] 45 50 50 50 60 60 60 65 75 30 30 35 40 45 30 30 35 35 35 35 40 40 45 45 25
+[851] 25 30 30 30 30 30 30 30 35 35 35 40 40 40 40 45 45 45 50 50 50 25 25 30 30
+[876] 30 30 35 35 35 40 30 30 35 45 50 50 50 55 55 25 30 30 30 35 35 40 40 45 45
+[901] 50 50 50 50 55 55 60 65 65 30 50 25 30 35 40 45 45 45 55 60 45 45 45 50 50
+[926] 50 55 55 60 60 60 30 35 35 40 40 45 45 50 50 50 55 45 50 50 55 45 50 55 25
+[951] 40 40 45
+
+$data.name
+[1] "final_survey"
+
+$bad.obs
+[1] 0
+
+attr(,"class")
+[1] "gof"</code></pre>
+</div>
+</div>
+<p>##Gamma distributions</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>final_assign <span class="ot">=</span> parent_size<span class="sc">$</span>Parent_spawning_TL_cm</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>assign.gamma <span class="ot">=</span> <span class="fu">fit.distribution.gamma</span>(final_assign, <span class="at">boot =</span> <span class="dv">999</span>, <span class="at">range =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co">#sample</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>final_sample <span class="ot">=</span> samp<span class="fl">.1</span><span class="sc">$</span>TL</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>sample.gamma <span class="ot">=</span> <span class="fu">fit.distribution.gamma</span>(final_sample, <span class="at">boot =</span> <span class="dv">999</span>, <span class="at">range =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co">#survey</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>final_survey <span class="ot">=</span> ntmr <span class="sc">%&gt;%</span> <span class="fu">filter</span>(TOTAL.LENGTH <span class="sc">&gt;=</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(TOTAL.LENGTH) </span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>survey.gamma <span class="ot">=</span> <span class="fu">fit.distribution.gamma</span>(final_survey, <span class="at">boot =</span> <span class="dv">999</span>, <span class="at">range =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>#C. PLOT DISTRIBUTIONS ##Fig 2a - distributions</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>Fig.<span class="fl">2.</span>models <span class="ot">=</span> <span class="fu">left_join</span>(sample.gamma[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">sample =</span> value), assign.gamma[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">assign =</span> value), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"key"</span>, <span class="st">"range"</span>, <span class="st">"quantile"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Standardise for sample size:</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> sample <span class="sc">*</span> <span class="dv">872</span>,      <span class="co">#Adults sampled</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">assign =</span> assign <span class="sc">*</span> <span class="dv">111</span>) <span class="sc">%&gt;%</span>    <span class="co">#Assigned adults </span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> variable, <span class="at">value =</span> value, <span class="sc">-</span><span class="fu">c</span>(key, range, quantile)) <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> quantile, <span class="at">value =</span> value)</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>Fig.<span class="fl">2.</span>values <span class="ot">=</span> Fig.<span class="fl">2.</span>models <span class="sc">%&gt;%</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lower =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span><span class="sc">*</span><span class="dv">150</span><span class="sc">/</span><span class="dv">30</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mid =</span> <span class="st">`</span><span class="at">50%</span><span class="st">`</span><span class="sc">*</span><span class="dv">150</span><span class="sc">/</span><span class="dv">30</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upper =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span><span class="sc">*</span><span class="dv">150</span><span class="sc">/</span><span class="dv">30</span>)</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>Fig2a <span class="ot">=</span>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">data=</span>samp.TL, <span class="fu">aes</span>(<span class="at">x=</span>TL), <span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">boundary=</span><span class="dv">5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"grey66"</span>, <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">data=</span>parent_size, <span class="fu">aes</span>(<span class="at">x=</span>Parent_spawning_TL_cm), <span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">boundary=</span><span class="dv">5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"grey30"</span>, <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>Fig.<span class="fl">2.</span>values, <span class="fu">aes</span>(<span class="at">x =</span> range, <span class="at">y =</span> mid, <span class="at">col =</span> variable), <span class="at">size =</span> .<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>Fig.<span class="fl">2.</span>values, <span class="fu">aes</span>(<span class="at">x =</span> range, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper, <span class="at">fill =</span> variable), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>,<span class="dv">5</span>), <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"grey30"</span>, <span class="st">"grey66"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Assigned parents"</span>, <span class="st">"Sampled adults"</span>)) <span class="sc">+</span></span>
+<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"grey20"</span>, <span class="st">"grey78"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Assigned parents"</span>, <span class="st">"Sampled adults"</span>)) <span class="sc">+</span></span>
+<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="fu">expression</span>(Probability<span class="sc">~</span>density <span class="sc">%+-%</span> <span class="st">`</span><span class="at">95%CI</span><span class="st">`</span><span class="sc">~</span>of<span class="sc">~</span><span class="fu">italic</span>(<span class="st">"P.maculatus"</span>)), <span class="at">x=</span><span class="st">"Total length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">8</span>,.<span class="dv">8</span>), <span class="at">legend.title =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>)) <span class="sc">+</span></span>
+<span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb60-26"><a href="#cb60-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb60-27"><a href="#cb60-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb60-28"><a href="#cb60-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb60-29"><a href="#cb60-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>Fig2a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>all.models <span class="ot">=</span> <span class="fu">left_join</span>(sample.gamma[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">sample =</span> value), survey.gamma[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">survey =</span> value), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"key"</span>, <span class="st">"range"</span>, <span class="st">"quantile"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(assign.gamma[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">assign =</span> value), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"key"</span>, <span class="st">"range"</span>, <span class="st">"quantile"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Standardise for sample size:</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">survey =</span> survey <span class="sc">*</span> <span class="dv">4051</span>,     <span class="co">#Estimated population size in focal green zones</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>       <span class="co">#survey.std = survey.std * 4051 / mean(survey.size$n), </span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">sample =</span> sample <span class="sc">*</span> <span class="dv">872</span>,      <span class="co">#Adults sampled</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">assign =</span> assign <span class="sc">*</span> <span class="dv">111</span>) <span class="sc">%&gt;%</span>    <span class="co">#Assigned adults </span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> variable, <span class="at">value =</span> value, <span class="sc">-</span><span class="fu">c</span>(key, range, quantile)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> quantile, <span class="at">value =</span> value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>#D. What’s the likelihood of contributing to local recruitment?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>R.success <span class="ot">=</span> all.models <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>distribution) <span class="sc">%&gt;%</span> <span class="fu">gather</span>(<span class="at">key =</span> quantile, <span class="at">value =</span> value, <span class="sc">-</span><span class="fu">c</span>(key, range, variable)) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> variable, <span class="at">value =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ratio =</span> assign <span class="sc">/</span> sample,</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop =</span> sample <span class="sc">/</span> survey) <span class="sc">%&gt;%</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="fu">if_else</span>(prop <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="dv">1</span>, prop)) <span class="sc">%&gt;%</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">corrected.ratio =</span> assign <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> prop)<span class="sc">^</span><span class="dv">2</span>)) </span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>R.success.ratio <span class="ot">=</span> R.success <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(range, quantile, ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> quantile, <span class="at">value =</span> ratio)</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">ggplot</span>(R.success.ratio, <span class="fu">aes</span>(<span class="at">x =</span> range, <span class="at">y =</span> <span class="st">`</span><span class="at">50%</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>, <span class="at">ymax =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>), <span class="at">fill =</span> <span class="st">"deepskyblue1"</span>, <span class="at">alpha =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">col =</span> <span class="st">"deepskyblue3"</span>) <span class="sc">+</span></span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">38</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">38</span>, <span class="at">yend =</span> R.success.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(range <span class="sc">==</span> <span class="fl">38.0</span> ) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>)), <span class="at">lty =</span> <span class="st">"dotted"</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">38</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="fu">expression</span>(Likelihood<span class="sc">~</span>of<span class="sc">~</span>reproductive<span class="sc">~</span>success <span class="sc">%+-%</span> <span class="st">`</span><span class="at">95%CI</span><span class="st">`</span>), <span class="at">x=</span><span class="st">"Total length (cm)"</span>) <span class="sc">+</span></span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,<span class="st">"cm"</span>)) <span class="sc">+</span></span>
+<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span></span>
+<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">clip =</span> <span class="st">"off"</span>)</span>
+<span id="cb64-26"><a href="#cb64-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-27"><a href="#cb64-27" aria-hidden="true" tabindex="-1"></a>R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_segment(aes(x = 38, y = 0, xend = 38, yend = R.success.ratio %&gt;% : All aesthetics have length 1, but the data has 551 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing
+  a single row.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="figure-2" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="figure-2"><span class="header-section-number">1.5</span> Figure 2</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>Fig2 <span class="ot">=</span> <span class="fu">ggarrange</span>(Fig2a, R, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"(a)"</span>, <span class="st">"(b)"</span>), <span class="at">align =</span> <span class="st">"h"</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">font.label=</span><span class="fu">list</span>(<span class="at">size =</span> <span class="dv">22</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">family =</span> <span class="st">"Times New Roman"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_segment(aes(x = 38, y = 0, xend = 38, yend = R.success.ratio %&gt;% : All aesthetics have length 1, but the data has 551 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing
+  a single row.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>Fig2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-the-likely-reproductive-success-of-above-msl-sized-fish-38-cm-tl-versus-fish-below-the-msl-38" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="calculating-the-likely-reproductive-success-of-above-msl-sized-fish-38-cm-tl-versus-fish-below-the-msl-38"><span class="header-section-number">1.6</span> Calculating the likely reproductive success of above MSL-sized fish (&gt;38 cm TL) versus fish below the MSL (&lt;=38)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  R.success.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(range <span class="sc">&lt;=</span> <span class="dv">38</span> ) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">c025 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>), <span class="at">c500 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>), <span class="at">c975 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(range <span class="sc">==</span> <span class="dv">38</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(range, c025, c500, c975),</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  R.success.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(range <span class="sc">&gt;</span> <span class="dv">38</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">c025 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>), <span class="at">c500 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>), <span class="at">c975 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(range <span class="sc">==</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(range, c025, c500, c975)) <span class="sc">%&gt;%</span></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> key, <span class="at">value =</span> value, <span class="sc">-</span>range) <span class="sc">%&gt;%</span> <span class="fu">spread</span>(<span class="at">key =</span> range, <span class="at">value =</span> value) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">NYMFs =</span> <span class="st">`</span><span class="at">38</span><span class="st">`</span>, <span class="at">BOFFFs =</span> <span class="st">`</span><span class="at">80</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r =</span> BOFFFs <span class="sc">/</span> NYMFs )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   key    NYMFs   BOFFFs        r
+1 c025  9.19202 62.71257 6.822502
+2 c500 13.88176 75.30618 5.424830
+3 c975 18.62309 85.76075 4.605077</code></pre>
+</div>
+</div>
+</section>
+<section id="from-this-relationship-we-estimate-the-likely-reproductive-success-of-fish-above-the-msl-38-cm-tl-is-5.4-times-greater-than-that-of-nymfs-95-ci-4.6-6.8." class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="from-this-relationship-we-estimate-the-likely-reproductive-success-of-fish-above-the-msl-38-cm-tl-is-5.4-times-greater-than-that-of-nymfs-95-ci-4.6-6.8."><span class="header-section-number">1.7</span> From this relationship, we estimate the likely reproductive success of fish above the MSL (38 cm TL) is 5.4 times greater than that of NYMFs (95% CI [4.6, 6.8]).</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>c.ratio <span class="ot">=</span> R.success <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(range, quantile, corrected.ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> quantile, <span class="at">value =</span> corrected.ratio)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>R.contributions <span class="ot">=</span> <span class="fu">ggplot</span>(c.ratio, <span class="fu">aes</span>(<span class="at">x =</span> range, <span class="at">y =</span> <span class="st">`</span><span class="at">50%</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>, <span class="at">ymax =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>), <span class="at">fill=</span><span class="st">"deepskyblue1"</span>, <span class="at">alpha =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">col=</span><span class="st">"deepskyblue3"</span>) <span class="sc">+</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">38</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">38</span>, <span class="at">yend =</span> c.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(range <span class="sc">==</span> <span class="fl">38.0</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>)), <span class="at">lty =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">38</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="fu">expression</span>(Local<span class="sc">~</span>replenishment<span class="sc">~</span>contribution <span class="sc">%+-%</span> <span class="st">`</span><span class="at">95%CI</span><span class="st">`</span>), <span class="at">x=</span> <span class="st">"Total length (cm)"</span>) <span class="sc">+</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span></span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,<span class="st">"cm"</span>)) <span class="sc">+</span></span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">clip =</span> <span class="st">"off"</span>)</span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>R.contributions</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_segment(aes(x = 38, y = 0, xend = 38, yend = c.ratio %&gt;% : All aesthetics have length 1, but the data has 551 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing
+  a single row.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-the-length-that-displays-the-highest-replenishment-contribution" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="calculating-the-length-that-displays-the-highest-replenishment-contribution"><span class="header-section-number">1.8</span> Calculating the length that displays the highest replenishment contribution</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>c.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  range    2.5%      50%    97.5%
+1    41 7.98126 9.565308 11.23063</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>c.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  range    2.5%      50%    97.5%
+1  39.1 7.76972 9.837946 11.68465</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>c.ratio <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  range     2.5%      50%    97.5%
+1  36.9 7.307606 9.670182 11.97757</code></pre>
+</div>
+</div>
+</section>
+<section id="peak-39.1-95-ci-36.9-41" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="peak-39.1-95-ci-36.9-41"><span class="header-section-number">1.9</span> peak 39.1 (95% CI [36.9, 41])</h2>
+</section>
+<section id="contribution-of-nymffs-to-local-replenishment" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="contribution-of-nymffs-to-local-replenishment"><span class="header-section-number">1.10</span> Contribution of NYMFFs to local replenishment</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>c.ratio <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">c025 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>), <span class="at">c500 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>), <span class="at">c975 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(range <span class="sc">==</span> <span class="dv">38</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  range     2.5%      50%    97.5%      c025      c500     c975
+1    38 7.541084 9.819008 11.82249 0.3074236 0.3603877 0.397773</code></pre>
+</div>
+</div>
+</section>
+<section id="nymfs-contribute-36-95-ci-3140-of-juvenile-fish-that-recruited-to-the-island-group" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="nymfs-contribute-36-95-ci-3140-of-juvenile-fish-that-recruited-to-the-island-group"><span class="header-section-number">1.11</span> NYMFs contribute 36% 95 CI [31,40] of juvenile fish that recruited to the island group</h2>
+</section>
+<section id="contributions-of-above-msl-fish-equal-to-that-of-sub-msl-fish" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="contributions-of-above-msl-fish-equal-to-that-of-sub-msl-fish"><span class="header-section-number">1.12</span> Contributions of above-MSL fish equal to that of sub-MSL fish</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>c.ratio <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">c025 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>), <span class="at">c500 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">50%</span><span class="st">`</span>), <span class="at">c975 =</span> <span class="fu">cumsum</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(range <span class="sc">==</span> <span class="dv">38</span> <span class="sc">|</span> range <span class="sc">==</span> <span class="dv">49</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  range     2.5%      50%     97.5%      c025      c500      c975
+1    38 7.541084 9.819008 11.822491 0.3074236 0.3603877 0.3977730
+2    49 5.539353 6.399491  7.341405 0.7119074 0.7293088 0.7405609</code></pre>
+</div>
+</div>
+</section>
+<section id="figure-3" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="figure-3"><span class="header-section-number">1.13</span> Figure 3</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>ntmr.plot <span class="ot">=</span> <span class="fu">ggplot</span>(ntmr.zones[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> <span class="fu">spread</span>(<span class="at">key =</span> quantile, <span class="at">value =</span> value), </span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(<span class="at">y =</span> <span class="st">`</span><span class="at">50%</span><span class="st">`</span>, <span class="at">x =</span> range)) <span class="sc">+</span></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ntmr<span class="sc">$</span>TOTAL.LENGTH), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y=</span>..density..), <span class="at">binwidth=</span><span class="dv">5</span>, <span class="at">boundary=</span><span class="dv">5</span>, <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"grey66"</span>, <span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>, <span class="at">ymax =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>), <span class="at">fill =</span> <span class="st">"grey78"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">col =</span> <span class="st">"grey66"</span>) <span class="sc">+</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80</span>,<span class="dv">5</span>),<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">""</span>, <span class="st">"10"</span>, <span class="st">""</span>, <span class="st">"20"</span>, <span class="st">""</span>, <span class="st">"30"</span>, <span class="st">""</span>, <span class="st">"40"</span>, <span class="st">""</span>, <span class="st">"50"</span>, <span class="st">""</span>, <span class="st">"60"</span>, <span class="st">""</span>, <span class="st">"70"</span>, <span class="st">""</span>, <span class="st">"80"</span>)) <span class="sc">+</span></span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="fu">expression</span>(Probability<span class="sc">~</span>density <span class="sc">%+-%</span> <span class="st">`</span><span class="at">95%CI</span><span class="st">`</span>), <span class="at">x=</span><span class="st">"Total length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>))</span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a>ntmr.plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>Fig3 <span class="ot">=</span> <span class="fu">ggarrange</span>(ntmr.plot, R.contributions, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"(a)"</span>, <span class="st">"(b)"</span>), <span class="at">align =</span> <span class="st">"h"</span>, <span class="at">nrow=</span><span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">1.2</span>), <span class="at">font.label=</span><span class="fu">list</span>(<span class="at">size =</span> <span class="dv">22</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">family =</span> <span class="st">"Times New Roman"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_segment(aes(x = 38, y = 0, xend = 38, yend = c.ratio %&gt;% : All aesthetics have length 1, but the data has 551 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing
+  a single row.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>Fig3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="supplementary-figure" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Supplementary Figure</h1>
+<section id="s1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="s1"><span class="header-section-number">2.1</span> S1</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>FigS1 <span class="ot">=</span>  <span class="fu">ggplot</span>(parent_size <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(REEF, Parent_sample_TL_cm, Parent_spawning_TL_cm) <span class="sc">%&gt;%</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> key, <span class="at">value =</span> value, <span class="sc">-</span>REEF), <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> key)) <span class="sc">+</span></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">boundary=</span><span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>,<span class="dv">5</span>), <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">expression</span>(<span class="st">`</span><span class="at">#</span><span class="st">`</span><span class="sc">~</span><span class="fu">italic</span>(<span class="st">"P. maculatus"</span>)), <span class="at">x =</span> <span class="st">"Total Length (cm)"</span>) <span class="sc">+</span></span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"grey78"</span>, <span class="st">"grey28"</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Length at sampling"</span>, <span class="st">"Length at spawning"</span>)) <span class="sc">+</span></span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">9</span>,.<span class="dv">94</span>), <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span></span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>)) <span class="sc">+</span></span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb96-12"><a href="#cb96-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">26</span>)) <span class="sc">+</span></span>
+<span id="cb96-13"><a href="#cb96-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">24</span>)) <span class="sc">+</span></span>
+<span id="cb96-14"><a href="#cb96-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>))</span>
+<span id="cb96-15"><a href="#cb96-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-16"><a href="#cb96-16" aria-hidden="true" tabindex="-1"></a>FigS1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="s2" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="s2"><span class="header-section-number">2.2</span> S2</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>Figure_S2<span class="ot">=</span><span class="fu">ggarrange</span>(sample.gamma[[<span class="dv">3</span>]] <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampled adults"</span>, <span class="at">font.label=</span><span class="fu">list</span>(<span class="at">size =</span> <span class="dv">22</span>, <span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>,<span class="dv">5</span>), <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>)),</span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>          assign.gamma[[<span class="dv">3</span>]] <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Assigned parents"</span>, <span class="at">font.label=</span><span class="fu">list</span>(<span class="at">size =</span> <span class="dv">22</span>, <span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">80</span>,<span class="dv">5</span>), <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>)) <span class="sc">+</span></span>
+<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb97-12"><a href="#cb97-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb97-13"><a href="#cb97-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb97-14"><a href="#cb97-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>)) <span class="sc">+</span> </span>
+<span id="cb97-15"><a href="#cb97-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rremove</span>(<span class="st">"y.title"</span>),</span>
+<span id="cb97-16"><a href="#cb97-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"(a)"</span>, <span class="st">"(b)"</span>), <span class="at">align =</span> <span class="st">"h"</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">font.label=</span><span class="fu">list</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">family =</span> <span class="st">"Times New Roman"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Ignoring unknown labels:
+• font.label : "list(size = 22, family = \"Times New Roman\")"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Ignoring unknown labels:
+• font.label : "list(size = 22, family = \"Times New Roman\")"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Times New Roman' not found in PostScript font database</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>Figure_S2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lavin_et_al_2021_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/BostonAnalytics\.github\.io\/AD571-Statistical-Learning\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
