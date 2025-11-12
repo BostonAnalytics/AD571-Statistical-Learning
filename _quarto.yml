@@ -20,6 +20,12 @@ website:
             text: Lecture Note 01
           - href: M2/M2LN2.qmd
             text: Lecture Note 02
+      - text: Module 3
+        menu:
+          - href: M3/M3LN1.qmd
+            text: Lecture Note 01
+          - href: M3/M3LN2.qmd
+            text: Lecture Note 02
 
 format:
   html:

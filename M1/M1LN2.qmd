@@ -1,0 +1,555 @@
+---
+title: "Data Partitioning and Feature Engineering"
+date: 09/29/2023
+date-modified: today
+date-format: long
+author:
+  - name: Nakul R. Padalkar
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+format:
+  html:
+    html-math-method: 
+      method: katex
+      number-equations: true
+      add-to-equation: section
+    toc: true
+    code-overflow: wrap
+    number-sections: true
+    self-contained: true
+bibliography: ../references.bib
+editor: 
+  markdown: 
+    wrap: 65
+---
+
+```{r support, warning=FALSE,message=FALSE,include=FALSE}
+library(kableExtra)
+library(stargazer)
+library(flextable)
+library(dplyr)
+library(ggplot2)
+library(ggExtra)
+library(tidyr)
+library(ISLR2)
+library(reticulate)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE,echo = TRUE)
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+
+th <- ggplot2::theme(
+  plot.title = element_text(color="#003366", size=12, face="bold"),
+  axis.title.x = element_text(color="black", size=11, face="bold"),
+  axis.title.y = element_text(color="black", size=11, face="bold"),
+  panel.background = element_rect(fill = "white",
+                                  colour = "white",
+                                  size = 0.5, linetype = 2),
+  panel.grid.major = element_line(size = 0.5, linetype = 2,
+                                  colour = "gray80"), 
+  panel.grid.minor = element_line(size = 0.25, linetype =2,
+                                  colour = "gray80"),
+  axis.line = element_line(size = 0.53, colour = "black"),
+  panel.border = element_rect(linetype = 1, fill = NA,size=0.53),
+  axis.text = element_text(colour = "black",face="bold",size=10))
+```
+
+
+# Interaction terms in regression
+Interaction terms enter the regression equation as the product of two constitutive terms, $x_1$ and $x_2$. For this product term $x_1x_3$, the regression equation adds a separate coefficient $\beta_{3}$.
+
+$$y=\beta_{0}+\beta_{1}x_1+\beta_{2}x_2+\beta_{3}x_1x_2+\epsilon$$
+
+# Example 1: one binary, one continuous term
+
+In thinking about interaction terms, it helps to first simplify by working through the prediction of the regression equation for different values of two predictors, $x_1$ and $x_2$. We can imagine a continuous outcome y, e.g. the income of Hollywood actors, that we predict with two variables. The first, $x_1$, is a binary variable such as female gender; it takes on values of 0 (males) and 1 (females) only. The second, $x_2$, is a continuous variable, ranging from −5 to +5, such as a (centered and standardized) measure of age. In this case, I’m using the term “effect” loosely and non-causally. An interaction term expresses the idea that the effect of one variable depends on the value of the other variable. With these variables, this suggests that effect of age on actors’ income is different for male actors than for female actors.
+
+
+1. $\beta_{1}$ is the effect of $x_1$ on y when $x_2$ is 0:
+    1. $\hat{y}=\beta_{0}+\beta_{1}x_1+\beta_{2} \times 0+\beta_{3}x_1 \times 0$
+    2. $\hat{y}=\beta_{0}+\beta_{1}x_1+0+0$
+2. $\beta_{2}$ is the effect of $x_2$ on y when $x_1$ is 0:
+    1. $\hat{y}=\beta_{0}+\beta_{1} \times 0+\beta_{2}x_2+\beta_{3} \times 0 \times x_2$
+    2. $\hat{y}=\beta_{0}+\beta_{2}x_2+0$
+3. When both $x_1$ and $x_2$ are not 0, $\beta_{3}$ becomes important, and the effect of $x_1$ now varies with the value of $x_2$. We can plug in 1 for $x_1$ and simplify the equation as follows:
+    1. $\hat{y}=\beta_{0}+\beta_{1} \times 1+\beta_{2}x_2+\beta_{3} \times 1 \times x_2$
+    2. $\hat{y}=\beta_{0}+\beta_{1}+\beta_{2}x_2+\beta_{3} \times x_2$
+    3. $\hat{y}=(\beta_{0}+\beta_{1})+(\beta_{2}+\beta_{3}) \times x_2$
+    
+With simulated data, this can be illustrated easily. I begin by simulating a dataset with 200 observations, two predictors $x_1$ (binary: male/female) and $x_2$ (continuous: standardized and centered age), and create y (continuous: income) as the linear combination of $x_1, x_2$, and an interaction term of the two predictors.
+
+
+```{r}
+set.seed(123)
+n.sample <- 200
+x1 <- rbinom(n.sample, size = 1, prob = 0.5)
+x2 <- runif(n.sample, -5, 5)
+a <- 5
+b1 <- 3
+b2 <- 4
+b3 <- -3
+e <- rnorm(n.sample, 0, 5)
+y <- a + b1 * x1 + b2 * x2 + b3 * x1 * x2 + e
+sim.dat <- data.frame(y, x1, x2)
+```
+
+Before advancing, this is what the simulated data look like:
+
+```{r simfig, fig.height=2.8, fig.align='center',dpi=300}
+par(mfrow = c(1, 3))
+hist(sim.dat$y, main="Histogram of Y", breaks=20, col="#336699")
+hist(sim.dat$x1, main="Histogram of X1", breaks=20, col="#336699")
+hist(sim.dat$x2, main="Histogram of X2", breaks=20, col="#336699")
+par(mfrow = c(1, 1))
+```
+
+
+For convenience, you could also use the multi.hist() function from the “psych” package. It automatically adds a density curve (dashed line) and a normal density plot (dotted line).
+
+```{r altfig, fig.align='center', fig.height=2.8, warning=FALSE, message=FALSE, fig.width=8.5}
+library(psych)
+multi.hist(sim.dat, nrow = 1, bcol="#336699",breaks=15)
+```
+
+Fitting a model using what we know about the data-generating process gives us:
+<div align="center">
+```{r modfit, results='asis'}
+mod.sim <- lm(y ~ x1 * x2, dat = sim.dat)
+stargazer::stargazer(mod.sim, type='html', summary=TRUE,report = "vc*stp",ci=TRUE)
+```
+</div>
+
+First, I plot the relationship between the continuous predictor $x_2$ and y for all observations where $x_1=0$. The regression line is defined by an intercept $\alpha$ and a slope $\beta_2$, as we calculated above. I can extract these from the `lm` object above using the `coef()` function. I use the index in square brackets to extract the coefficient I need.
+
+```{r simplot, fig.align='center', fig.width=4.5, fig.height=4.5}
+plot(x = sim.dat[sim.dat$x1 == 0, ]$x2, y = sim.dat[sim.dat$x1 == 0, ]$y, 
+     col = rgb(red = 0, green = 0, blue = 1, alpha = 0.25), pch = 19,
+     xlab = "x2", ylab = "y")
+abline(a = coef(mod.sim)[1], b = coef(mod.sim)[3], col = "blue", pch = 19, lwd = 2)
+```
+
+For all cases where $x_{1}=0$, what is the relationship between x2 and y? Next, we can add the data points where $x_{1}=1$, and add the separate regression line for these points:
+
+```{r simplot2,  fig.align='center', fig.width=4.5, fig.height=4.5}
+plot(x = sim.dat[sim.dat$x1 == 0, ]$x2, y = sim.dat[sim.dat$x1 == 0, ]$y, 
+     pch = 19, xlab = "x2", ylab = "y", col = rgb(red = 0, green = 0, blue = 1, alpha = 0.25))
+abline(a = coef(mod.sim)[1], b = coef(mod.sim)[3], col = "blue", lwd = 2)
+points(x = sim.dat[sim.dat$x1 == 1, ]$x2, y = sim.dat[sim.dat$x1 == 1, ]$y, 
+       col = rgb(red = 1, green = 0, blue = 0, alpha = 0.25), pch = 19)
+abline(a = coef(mod.sim)[1] + coef(mod.sim)[2], b = coef(mod.sim)[3] + coef(mod.sim)[4], 
+       col = "red", lwd = 2)
+```
+
+For all cases where $x_{1}=1$, what is the relationship between x2 and y?
+
+## Specifying an interaction
+
+1. Although the tutorial does not discuss this, in the prevalent case of using null hypothesis significance tests on interaction effects, interaction terms should be derived from theory.
+2. In R, you specify an interaction term by putting an asterisk between the two constitutive terms: $x_1 \times x_2$
+
+
+See Brambor et al. (2006) for more details. What would it imply if your model only included $\beta_{3}x_{1}x_{2}$? Omitting a coefficient is equivalent to setting $\beta_1=0$ and $\beta_2=0$. See for yourself: R will include the main effects regardless of specifications if an interaction term is present.
+
+
+<div align="center">
+```{r modsim2, results='asis'}
+mod.sim2 <- lm(y ~ x1:x2, data = sim.dat)
+stargazer::stargazer(mod.sim2, type='html', summary=TRUE,report = "vc*stp",ci=TRUE)
+```
+</div>
+```{r simplot3,  fig.align='center', fig.width=4.5, fig.height=4.5}
+plot(x = sim.dat[sim.dat$x1 == 0, ]$x2, y = sim.dat[sim.dat$x1 == 0, ]$y, 
+     pch = 19, col = rgb(red = 0, green = 0, blue = 1, alpha = 0.25),
+     xlab = "x2", ylab = "y")
+points(x = sim.dat[sim.dat$x1 == 1, ]$x2, y = sim.dat[sim.dat$x1 == 1, ]$y, 
+       col = rgb(red = 1, green = 0, blue = 0, alpha = 0.25), pch = 19)
+abline(a = coef(mod.sim2)[1], b = coef(mod.sim2)[2], lwd = 2)
+```
+
+# Example 2: Two continuous variables
+
+The first example illustrates the general logic of interaction terms. It carries over directly into the case of an interaction term between two continuous variables. Let’s now simulate another (fake) dataset, with a continuous outcome y being the income of professional baseball players. We can assume that $x_{1}$ is a continuous variable and distributed normally with a mean of 2 and a standard deviation of 5 (e.g., a standardized measure of injury risk of each player). As previously, $x_{2}$ is a continuous variable (such as standardized \& centered age), ranging from −5 to +5. We might be thinking of a conditional effect, where older athletes make more — but only if they are rated as low injury risk. Older athletes with higher injury risk might be making less money. With this configuration,
+
+1. $\beta_{1}$ is the effect of $x_{1}$ on y when $x_{2}$ is 0:
+    1. $\hat{y}=\beta_{0}+\beta_{1}x_{1}+\beta_{2} \times 0+\beta_{3}x_{1} \times 0$
+    2. $\hat{y}=\beta_{0}+\beta_{1}x_{1}+0+0$
+2. $\beta_{2}$ is the effect of $x_{2}$ on y when $x_{1}$ is 0:
+    1. $\hat{y}=\beta_{0}+\beta_{1} \times 0+\beta_{2}x_{2}+\beta_{3} \times 0 \times x_{2}$
+    2. $\hat{y}=\beta_{0}+\beta_{2}x_{2}+0$
+3. When both $x_{1}$ and $x_{2}$ are not 0, $\beta_{3}$ becomes important, and the effect of $x_{1}$ now varies with the value of $x_{2}$. We can again plug in 1 for $x_{1}$ and simplify the equation as follows:
+    1.$\hat{y}=\beta_{0}+\beta_{1} \times 1+\beta_{2}x_{2}+\beta_{3} \times 1 \times x_{2}$
+    2. $\hat{y}=\beta_{0}+\beta_{1}+\beta_{2}x_{2}+\beta_{3} \times x_{2}$
+    3. $\hat{y}=(\beta_{0}+\beta_{1})+(\beta_{2}+\beta_{3}) \times x_{2}$
+4. But $x_{1}$ takes on many other values than just 1. The more general equation for y is then (cf. Brambor et al. p. 11)
+    1. $y=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{3}x_{1}x_{2}$
+    2. In this case, we cannot define just “two” equations (for $x_{1}=1$ and $x_{1}=0$). Instead, the effect of $x_{1}$ varies with $x_{2}$, and vice versa.
+    3. To express this, we use the term “marginal effects” or “conditional effects”: the effect of $x_{1}$ conditional on the value of $x_{2}$.
+    4. This marginal effect for $x_{1}$ is a slope, and this slope is the sum of the coefficient for $x_{1}$ and the product of $\beta_{3}$ and the value of $x_{2}$: $\beta_{1}+\beta_{3} \times x_{2}$.
+    5. Similarly, the marginal effect for $x_{2}$ is $\beta_{2}+\beta_{3} \times x_{1}$.
+
+I use the same simulation setup above, but make $x_{1}$ a continuous variable, normally distributed with a mean of 2 and a standard deviation of 5.
+
+```{r contdata}
+set.seed(123)
+n.sample <- 200
+x1 <- rnorm(n.sample, mean = 2, sd = 5)
+x2 <- runif(n.sample, -5, 5)
+a <- 5
+b1 <- 3
+b2 <- 4
+b3 <- -3
+e <- rnorm(n.sample, 0, 20)
+y <- a + b1 * x1 + b2 * x2 + b3 * x1 * x2 + e
+sim.dat2 <- data.frame(y, x1, x2)
+```
+
+Before advancing, this is what the simulated data look like:
+
+```{r altfig2 , fig.align='center', fig.height=2.8, warning=FALSE, message=FALSE, fig.width=8.5}
+multi.hist(sim.dat2, nrow = 1, breaks=15)
+```
+
+Fitting a model using what we know about the data-generating process gives us:
+
+<div align="center">
+```{r modsim3, results='asis'}
+mod.sim3 <- lm(y ~ x1 * x2, dat = sim.dat2)
+stargazer::stargazer(mod.sim3, type='html', summary=TRUE,report = "vc*stp",ci=TRUE)
+
+```
+</div>
+
+We can now calculate the effect of $x_{1}$ on y at different levels of $x_{2}$, say, across the range of $x_{2}$ with increments of 1. In R, I create this sequence using the `seq()` function.
+
+```{r}
+x2.sim <- seq(from = -5, to = 5, by = 1)
+x2.sim
+```
+
+
+```{r}
+eff.x1 <- coef(mod.sim3)[2] + coef(mod.sim3)[4] * x2.sim
+```
+
+I can now list the effect of x1 at different levels of $x_{2}$:
+
+```{r}
+eff.dat <- data.frame(x2.sim, eff.x1)
+eff.dat %>% kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center")
+```
+
+The object eff.x1 is now the coefficient of $x_{1}$ at the respective levels of $x_{2}$. $x_{2}$ in this context is also called the “moderator” or “moderating variable” because it moderates the effect of $x_{1}$. You can see that $x_{1}$ exhibits a positive effect on y when $x_{2}$ is approximately smaller than 1, at which point the effect of $x_{1}$ on y turns negative.
+
+You can now visualize this, just as you did in the binary-continuous interaction above. Because $x_{2}$, the moderating variable, is now continuous, there is an (almost) infinite number of separate regression lines for $x_{1}$ and y: each individual value of $x_{2}$ creates a separate regression line (with a separate slope coefficient). The following scatterplot plots observations against their values on $x_{1}$ and 7 and colors them based on their value of $x_{2}$, as in the previous example.
+
+```{r scplot,  fig.align='center', fig.width=4.5, fig.height=4.5}
+rbPal <- colorRampPalette(colors = c("red", "blue"))
+sim.dat2$x2.col <- rbPal(10)[as.numeric(cut(sim.dat2$x2,breaks = 10))]
+plot(x = sim.dat2$x1, y = sim.dat2$y, col = sim.dat2$x2.col,
+     pch = 19, xlab = "x1", ylab = "y")
+```
+
+Then, I’m adding 10 regression lines for the 10 values of $x_{2}$ that I just calculated. The lines are also colored according to the values of $x_{2}$.
+
+```{r wheelplot,fig.align='center', fig.width=4.5, fig.height=4.5}
+eff.dat$x2.col <- rbPal(10)[as.numeric(cut(eff.dat$x2,breaks = 10))]
+plot(x = sim.dat2$x1, y = sim.dat2$y, col = sim.dat2$x2.col,
+     pch = 19, xlab = "x1", ylab = "y")
+apply(eff.dat, 1, function(x) abline(a = coef(mod.sim3)[1], b = x[2], col = x[3]));
+```
+
+
+You can see that at low values of $x_{2}$ (red), the relationship between $x_{1}$ and y is positive (upward lines), whereas at higher values of $x_{2}$ (blue), the relationship is negative (downward lines).
+
+# Why it is important to inspect your data first
+
+As you’ve heard before, and as Hainmueller et al.’s working paper imply, you should always inspect your data. This also applies to interactions. Always investigate whether:
+
+1. Your data have observations across the whole range of each of the constitutive terms. It is best to do this by creating simple scatterplots of the form you see in Hainmueller et al.
+2. The raw relationship between one explanatory variable and the outcome variable is linear at different levels of the moderating variable. This is easy for binary moderators. For continuous moderators, Hainmueller et al. suggest splitting the observations in low, medium, and high levels of the continuous moderator.
+
+You should see this as an opportunity to learn something about your data rather than a nuisance.
+
+Here is an example of how I would inspect my data from the first model, which contained an interaction between a dichotomous ($x_{1}$) and continuous ($x_{2}$) variable:
+
+```{r otherplot,  fig.align='center', fig.width=9, fig.height=4.5, dpi=200}
+par(mfrow = c(1, 2))
+plot(x = sim.dat[sim.dat$x1 == 0, ]$x2,
+     y = sim.dat[sim.dat$x1 == 0, ]$y,
+     main = "x1 = 0", xlab = "x2", ylab = "y")
+plot(x = sim.dat[sim.dat$x1 == 1, ]$x2,
+     y = sim.dat[sim.dat$x1 == 1, ]$y,
+     main = "x1 = 1", xlab = "x2", ylab = "y")
+par(mfrow = c(1, 1))
+```
+
+I see no reason to be concerned about the distribution of $x_{2}$ or the linearity of the relationship between $x_{2}$ and y, and this makes sense, given how I simulated the data. But see Hainmueller et al. for examples where this does become a problem.
+
+Next, here is an example of how I would inspect my data from the third model above, which contained an interaction between a continuous ($x_{1}$) and continuous ($x_{2}$) variable. First, I split the moderator (again, I choose $x_{1}$) in three groups. For this, I use the `cut()` function (see the R Cookbook for more info).
+
+```{r}
+sim.dat2$x1_tri <- cut(x = sim.dat2$x1, 
+                       breaks = quantile(x = sim.dat2$x1, probs = c(0, 0.33, 0.66, 1)),
+                       include.lowest = TRUE)
+table(sim.dat2$x1_tri) %>% kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center")
+```
+
+
+```{r otherplot2,  fig.align='center', fig.width=10, fig.height=4.0, dpi=200}
+par(mfrow = c(1, 3))
+plot(x = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[1], ]$x2,
+     y = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[1], ]$y,
+     main = paste("x1 = ", levels(sim.dat2$x1_tri)[1], sep = ""),
+     xlab = "x2", ylab = "y")
+plot(x = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[2], ]$x2,
+     y = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[2], ]$y,
+     main = paste("x1 = ", levels(sim.dat2$x1_tri)[2], sep = ""),
+     xlab = "x2", ylab = "y")
+plot(x = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[3], ]$x2,
+     y = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[3], ]$y,
+     main = paste("x1 = ", levels(sim.dat2$x1_tri)[3], sep = ""),
+     xlab = "x2", ylab = "y")
+par(mfrow = c(1, 1))
+```
+
+Again, given how I simulated these data, there is no reason to be concerned about the distribution of $x_{2}$ or the linearity of the relationship between $x_{2}$ and y.
+
+# Obtaining standard errors for marginal effects
+
+As usual, you should evaluate the variance around coefficients. The online appendix to Brambor et al. (2006) gives you the formula for this variance:
+
+For the variance of the marginal/conditional effect of $x_{1}$, use this equation:
+
+$$\mathbb{V}ar=\mathbb{V}ar(\beta_{1})+x_{2}^{2} \times \mathbb{V}ar(\beta_{3})+2 \times x_{2} \times \mathbb{C}ov(\beta_{1},\beta_{3})$$
+
+The standard error is then easily calculated as the square root of the variance.
+
+Note that this equation makes use of the covariance of estimates. You learned about variance and covariance on Day 10, and you can access the variance-covariance matrix with the vcov() function. You can then extract cells of the matrix by using the familiar square brackets, where the first number stands for rows and the second for columns.
+
+```{r covmat}
+vcov(mod.sim3) %>% kbl %>% 
+   kable_styling(bootstrap_options = "striped", full_width = F, position = "center")
+  
+```
+
+Now, you can obtain the standard error of the respective coefficients by taking the square root of the variance. In this code, I’m nesting the equation above in the sqrt() function.
+
+```{r}
+eff.dat$se.eff.x1 <- sqrt(vcov(mod.sim3)[2, 2] + 
+                            eff.dat$x2.sim^2 * vcov(mod.sim3)[4, 4] + 
+                            2 * eff.dat$x2.sim * vcov(mod.sim3)[2, 4])
+eff.dat %>% kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center")
+```
+
+# Plotting the marginal/conditional effect
+
+It is usually (always, really) more useful to plot the marginal effect of a variable across the range of the second variable in the interaction, rather than plotting separate regression lines as I did above. I strongly recommend this approach. You already have the tools to do this:
+
+```{r condeff,  fig.align='center', fig.width=4.0, fig.height=4.0, dpi=100}
+plot(x = eff.dat$x2.sim, y = eff.dat$eff.x1, type = "l", xlab = "x2", 
+     ylab = "Conditional effect of x1")
+abline(h = 0, col = "grey", lty = "dashed")
+```
+
+
+The solid line shows the conditional effect of $x_{1}$ across the range of $x_{2}$. You can add $95\%$ confidence intervals by plotting lines representing the conditional effect $\pm 1.96 \times SE$.
+
+```{r condeff2,  fig.align='center', fig.width=4.0, fig.height=4.00, dpi=100}
+plot(x = eff.dat$x2.sim, y = eff.dat$eff.x1, type = "l", xlab = "x2", 
+     ylab = "Conditional effect of x1")
+abline(h = 0, col = "grey", lty = "dashed")
+lines(x = eff.dat$x2.sim, y = eff.dat$eff.x1 + 1.96 * eff.dat$se.eff.x1, lty = "dashed", col="#DD1E2F")
+lines(x = eff.dat$x2.sim, y = eff.dat$eff.x1 - 1.96 * eff.dat$se.eff.x1, lty = "dashed", col="#DD1E2F")
+abline(h = 0, lty = 2, col = "grey")
+```
+
+# Example 3: “Electoral Institutions, Unemployment and Extreme Right Parties: A Correction.”
+
+The final example uses real-world data on the electoral success of extreme right-wing parties in 16 countries over 102 elections. These data were used in Matt Golder’s BJPS article “[Electoral Institutions, Unemployment and Extreme Right Parties: A Correction.](https://www.jstor.org/stable/4092310)” (see Brambor et al. 2006 for the full citation).
+
+```{r golder, }
+ei.dat <- rio::import("../datasets/golder.2003.csv")
+summary(ei.dat) %>% kbl() %>% 
+    kable_styling(bootstrap_options = "striped", full_width = F,
+        position = "center")
+```
+
+```{r,  fig.align='center', fig.width=12, fig.height=12, dpi=100}
+par(mfrow = c(2, 2))
+hist(ei.dat$lerps, main="Histogram of Log voteshare ERP", breaks=20, col="#336699")
+hist(ei.dat$thresh, main="Histogram of Effective Electoral Threshold", breaks=20, col="#336699")
+hist(ei.dat$enp, main="Histogram of Effective Number of parties", breaks=20, col="#336699")
+hist(ei.dat$unemp, main="Histogram of Unemployment", breaks=20, col="#336699")
+par(mfrow = c(1, 1))
+```
+
+| Variable |	Description |
+|:---------|:-------------|
+| lerps    |	Log of extreme right percentage support + 1 |
+| thresh   |	Effective threshold of representation and exclusion in the political system |
+| enp	     |  Effective number of parties |
+| unemp    |	Unemployment rate |
+| country  |	Country name |
+| year     |	Election year |
+
+This study aims to determine the relationship between electoral support for extreme right-wing parties (the outcome variable), the threshold for representation in the political system (the first predictor), and the effective number of parties (the second predictor). The author hypothesized that the effect of representation thresholds might vary depending on the effective number of parties. The unemployment rate at the time of the election is a control variable. Because elections in the same country might be subject to idiosyncratic dynamics, the author includes a dummy variable for each country (cf. our discussion on Days 9 and 10).
+
+After fitting the model, I display the results using the familiar screenreg() function from the “texreg” package. I make use of the omit.coef option to avoid printing of the coefficients for each country dummy variable.
+
+```{r, results='asis'}
+m3 <- lm(lerps ~ thresh + enp + thresh * enp + unemp + factor(country), data = ei.dat)
+stargazer::stargazer(m3, type='html', summary=TRUE,report = "vc*stp",ci=TRUE)
+```
+
+Rather than trying to interpret these results from the regression table, I calculate the marginal effect of electoral thresholds across the range of the effective number of parties. This step is exactly analogous to what I did with simulated data above.
+
+```{r margeff,  fig.align='center', fig.width=6.0, fig.height=6.00, dpi=100}
+thresh_sim <- seq(from = min(ei.dat$thresh), to = max(ei.dat$thresh), length.out = 50)
+enp_sim <- seq(from = min(ei.dat$enp), to = max(ei.dat$enp), length.out = 50)
+eff_thresh <- coef(m3)[2] + coef(m3)[20] * enp_sim
+eff_thresh_se <- sqrt(vcov(m3)[2, 2] + enp_sim^2 * vcov(m3)[20, 20] + 2 * enp_sim * vcov(m3)[2, 20])
+plot(x = enp_sim, y = eff_thresh, type = "l", 
+     xlab = "Effective number of parties",
+     ylab = "Conditional effect of the electoral threshold")
+lines(x = enp_sim, y = eff_thresh + 1.96 * eff_thresh_se, lty = "dashed", col="#DD1E2F")
+lines(x = enp_sim, y = eff_thresh - 1.96 * eff_thresh_se, lty = "dashed", col="#DD1E2F")
+abline(h = 0, lty = "dashed", col="#336699")
+```
+
+
+What do you conclude from this figure? What do these results say about the author’s hypothesis?
+
+
+# Canned R functions to plot marginal effects in OLS
+
+Rather than calculating marginal effects by hand, you might want to use R functions to plot marginal effects with less effort.
+
+## DAintfun2()
+One good option is Dave Armstrong’s DAintfun2() function, which is part of his “DAMisc” package. You need to first install the package, then load it, and then specify the function with at least the following arguments:
+
+```{r dams-plot,  fig.align='center', fig.width=9, fig.height=4.5, dpi=300, warning=FALSE, message=FALSE}
+# install.packages("DAMisc")
+library(DAMisc)
+DAintfun2(m3, varnames = c("thresh", "enp"), 
+                  rug = TRUE, hist = TRUE)
+```
+
+
+`DAintfun2()` by default plots both the marginal effect of the first variable as well as that of the second variable. It also allows you to include an indicator of the actual distribution of the variables, via a histogram or a rug plot. With these supplementary plots, you can immediately see whether the estimated effect of a variable corresponds to real observations at that value of the moderating variable.
+
+<!-- ## ggintfun() -->
+
+<!-- A second function is `ggintfun()`, which I’ve written. I prefer working with ggplot and wanted to have a customization version of a marginal effects plot; otherwise, `DAintfun2()` does everything I need. `ggintfun(` uses the “ggplot2” package and you need to download it from my GitHub repository. This requires three extra steps: -->
+
+<!-- 1. Install the “devtools” package (only once - you’ve very likely already done this during this semester). -->
+<!-- 2. Install the “ggplot2” package (only once - you’ve very likely already done this during this semester). -->
+<!-- 3. Install the “gridExtra” package (only once). -->
+<!-- 4. Read the ggintfun() function into R using the devtools::source_url() function and the URL of the raw R code for ggintfun() on my GitHub site (every time you want to use ggintfun()). -->
+
+<!-- devtools::source_url("https://raw.githubusercontent.com/jkarreth/JKmisc/master/ggintfun.R") -->
+<!-- The function then produces this plot, which shows the exact same information as your hand-crafted marginal effects plot and the left panel of the DAintfun2()) plot from above. -->
+
+<!-- ggintfun(obj = m3, varnames = c("thresh", "enp"),  -->
+<!--          varlabs = c("Electoral threshold", "Effective number of parties"), -->
+<!--          title = FALSE, rug = TRUE, -->
+<!--          twoways = FALSE) -->
+
+
+<!-- It can also produce both panels at the same time by setting twoways = TRUE: -->
+
+<!-- ggintfun(obj = m3, varnames = c("thresh", "enp"),  -->
+<!--          varlabs = c("Electoral threshold", "Effective number of parties"), -->
+<!--          title = FALSE, rug = TRUE, -->
+<!--          twoways = TRUE) -->
+
+
+<!-- Lastly, this function automatically adjusts the plot if a moderator is binary (as in our very first model in this tutorial): -->
+
+<!-- ggintfun(obj = mod.sim, varnames = c("x1", "x2"),  -->
+<!--          varlabs = c("x1 (binary)", "x2 (continuous)"), -->
+<!--          title = FALSE, rug = TRUE, -->
+<!--          twoways = TRUE) -->
+
+
+<!-- Printing a plot to a file -->
+<!-- Basics -->
+<!-- If you want to export a plot so that you can insert it into a manuscript (or presentation slides), you can find instructions at Quick-R, as listed in the syllabus. The logic is straightforward: -->
+
+<!-- Open a graphics device where you want to plot to be printed. -->
+<!-- Create the plot -->
+<!-- Close the graphics device. -->
+<!-- Example: printing a plot as a PDF file -->
+<!-- In more detail: -->
+
+<!-- Open a graphics device where you want to plot to be printed. This command consists of several parts: the format of the plot you want to print, its filename, and its size. For instance, to plot the previous graph of marginal effects to the PDF file twoway_interaction.pdf with a width of 8 inches and a height of 4 inches, specify the graphics device as follows: -->
+<!-- pdf("twoway_interaction.pdf", width = 8, height = 4, units = "in") -->
+<!-- Next, draw the actual plot. For this example, you can use the ggintfun() function. It draws the plot in one step. -->
+<!-- ggintfun(obj = mod.sim, varnames = c("x1", "x2"),  -->
+<!--          varlabs = c("x1 (binary)", "x2 (continuous)"), -->
+<!--          title = FALSE, rug = TRUE, -->
+<!--          twoways = TRUE) -->
+<!-- In other examples, you might draw a plot in several steps. For instance, you might plot(x, y), followed by abline(lm(y ~ x)). In this case, draw the complete plot during this step - execute all code that is necessary to complete the plot. -->
+
+<!-- Close the graphics device with the following code (regardless of the file format you chose): -->
+<!-- dev.off() -->
+<!-- The sequence of these three steps has now produced a PDF file twoway_interaction.pdf in your working directory. -->
+
+<!-- Example: printing a plot as a JPG file -->
+<!-- If you wanted to print the plot to a JPG image file instead, use jpeg and specify the resolution of the plot in addition to its size: -->
+
+<!-- jpeg("twoway_interaction.jpg", width = 8, height = 4, units = "px") -->
+<!-- ggintfun(obj = mod.sim, varnames = c("x1", "x2"),  -->
+<!--          varlabs = c("x1 (binary)", "x2 (continuous)"), -->
+<!--          title = FALSE, rug = TRUE, -->
+<!--          twoways = TRUE) -->
+<!-- dev.off() -->
+<!-- Example: printing three figures next to each other -->
+<!-- The graphics device allows you to do anything you’ve down for plots in RStudio so far. If you want to place two plots next to each other, you can do so by first setting up the plotting area using the par command: -->
+
+<!-- pdf("descriptive_histograms.pdf", width = 10, height = 3.33) -->
+<!-- par(mfrow = c(1, 3)) -->
+<!-- plot(x = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[1], ]$x2, -->
+<!--      y = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[1], ]$y, -->
+<!--      main = paste("x1 = ", levels(sim.dat2$x1_tri)[1], sep = ""), -->
+<!--      xlab = "x2", ylab = "y") -->
+<!-- plot(x = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[2], ]$x2, -->
+<!--      y = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[2], ]$y, -->
+<!--      main = paste("x1 = ", levels(sim.dat2$x1_tri)[2], sep = ""), -->
+<!--      xlab = "x2", ylab = "y") -->
+<!-- plot(x = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[3], ]$x2, -->
+<!--      y = sim.dat2[sim.dat2$x1_tri == levels(sim.dat2$x1_tri)[3], ]$y, -->
+<!--      main = paste("x1 = ", levels(sim.dat2$x1_tri)[3], sep = ""), -->
+<!--      xlab = "x2", ylab = "y") -->
+<!-- par(mfrow = c(1, 1)) -->
+<!-- dev.off() -->
+<!-- Further reading on creating high-quality plots -->
+<!-- Thomas Leeper wrote a nice guide to printing high-quality figures in R for the Political Methodologist. You can find it here: http://thepoliticalmethodologist.com and in the print version of Volume 21, Issue 1. It explains the steps above in more detail and provides some additional information on how to produce good figures with other software (Excel, Stata) as well. -->
+
+
+```{r}
+set.seed(123)
+n.sample <- 200
+x1 <- rbinom(n.sample, size = 1, prob = 0.5)
+x2 <- runif(n.sample, -5, 5)
+a <- 5
+b1 <- 3
+b2 <- 4
+b3 <- -3
+e <- rnorm(n.sample, 0, 5)
+y <- a + b1 * x1 + b2 * x2 + e
+sim.dat <- data.frame(y, x1, x2)
+head(sim.dat)
+
+
+```
+
