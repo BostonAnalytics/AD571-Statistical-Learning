@@ -1,0 +1,559 @@
+---
+title: "Simulation Methods"
+author: "Nakul R. Padalkar"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    css: custom.css
+    self_contained: yes
+    number_sections: True
+  pdf_document:
+    number_sections: True
+  always_allow_html: true
+---
+
+
+## Simulation for Financial Decision Making
+
+- Use simulation to analyze cash flows and loan requirements for **Action Adventures**.
+- Connect Monte Carlo simulation with decision making and basic simulation optimization.
+- Implement the model in R and interpret output in managerial terms.
+
+---
+
+## Where Simulation Fits in Analytics
+
+- Descriptive analytics: summarize what has happened.
+- Predictive analytics: forecast what is likely to happen.
+- **Prescriptive / Simulation:**
+  - Evaluate “what-if” scenarios under uncertainty.
+  - Estimate distributions of outcomes rather than single point forecasts.
+- This case: simulate 2015 financial outcomes to support short-term financing decisions.
+
+---
+
+## What Is Monte Carlo Simulation?
+
+- Represent the system (here: monthly financials) as a **set of rules**.
+- Identify **random inputs**:
+  - Demand, costs, interest rates, machine failures, payment timing.
+- Generate many **random scenarios** using probability distributions.
+- Compute outputs (cash balance, loans, net worth) for each scenario.
+- Use the resulting distribution to understand:
+  - Expected performance.
+  - Risk of bad outcomes (e.g., negative net worth).
+  - Required safety buffers (e.g., maximum loan size).
+
+---
+
+## Simulation vs. Deterministic Models
+
+| Aspect             | Deterministic Model          | Simulation Model                                        |
+| ------------------ | ---------------------------- | ------------------------------------------------------- |
+| Inputs             | Single values                | Probability distributions                               |
+| Output             | Single number / solution     | Distribution of outcomes                                |
+| Uncertainty        | Ignored or approximated      | Explicitly modeled                                      |
+| Questions answered | “What is the best solution?” | “How risky is this policy?” “What is likely to happen?” |
+
+For Action Adventures, deterministic budgeting ignores seasonality and randomness; simulation makes risk visible.
+
+---
+
+## What Is Simulation Optimization?
+
+- **Simulation alone** evaluates outcomes for a given policy.
+-**Optimization alone** (linear programming, etc.) assumes certainty.
+- **Simulation optimization**:
+  - Choose decision variables (e.g., minimum cash balance, payment terms, safety stock).
+  - For each candidate policy, run a simulation to estimate performance.
+  - Search over policies to find one that optimizes a target metric:
+    - Minimize expected loan size or probability of negative net worth.
+- In this case:
+
+  - We can treat the **required minimum cash balance** or **credit sales fraction** as decision variables and search for policies that reduce risk.
+
+---
+
+## Case 20.2 – Action Adventures: Narrative Summary
+
+- Action Adventures sells a popular line of action figures at **$10 per unit** to toy stores.
+- Demand is:
+  - Seasonal (month-by-month seasonality factors).
+  - Random around a “base” level that follows a normal distribution.
+- Costs include:
+  - Variable production costs per unit.
+  - Fixed monthly manufacturing overhead.
+  - Occasional machine replacement costs.
+- The firm:
+  - Receives a mix of cash and credit sales.
+  - Maintains a **minimum cash balance**.
+  - Uses short-term loans when needed.
+  - Pays and earns interest based on a **stochastic prime rate**.
+
+The goal is to understand cash flow risk and short-term borrowing needs in 2015.
+
+---
+
+## Decision Questions in the Case
+
+1. Build a simulation model and run 1,000 trials for 2015.
+   - Summarize cash flows and loans.
+2. Estimate the distribution of **net worth at the end of 2015**.
+   - Probability that net worth falls below zero.
+3. Determine the distribution of the **largest short-term loan needed** during the year.
+   - Recommend a loan limit that is “safe” with high probability.
+
+---
+
+## Demand and Seasonality Structure
+
+* December 2014 base sales: 6,000 units.
+  * Actual December 2014 sales: (6,000 \times 1.18 = 7,080).
+* For each month in 2015:
+  * Base sales follow a **normal distribution** with:
+    * Mean = previous month’s base sales.
+    * Standard deviation = 500 units.
+  * Actual sales = base sales × **seasonality factor**.
+
+---
+
+You can load the seasonality factors from the case directly into R:
+
+```{r}
+#| echo: true
+#| eval: true
+#| output-location: slide
+seasonality <- c(
+  Jan = 0.79, Feb = 0.88, Mar = 0.95, Apr = 1.05,
+  May = 1.06, Jun = 0.84, Jul = 0.74, Aug = 0.98,
+  Sep = 1.06, Oct = 1.10, Nov = 1.16, Dec = 1.18
+)
+# plot seasonality
+barplot(seasonality, main = "Seasonality Factors for 2015",
+        ylab = "Seasonality Factor", xlab = "Month")
+```
+
+---
+
+## Revenue Timing and Credit Policy
+
+* Unit selling price: **$10** per action figure.
+* Fraction of sales:
+
+  * Cash sales: about 40% (varies historically; case uses 42% in December example).
+  * Credit sales: remaining percentage.
+* The case specifies:
+
+  * Credit customers pay on a **30-day interest-free** basis.
+  * So credit sales in month (t) are collected as cash in month (t+1).
+* We will treat the **cash sales percentage** as a fixed parameter in the base model (e.g., 42%), but it can be varied later for sensitivity analysis.
+
+---
+
+## Cost Structure
+
+* Variable manufacturing cost:
+  * Plastic and materials cost per unit fluctuates between **$6 and $8**.
+  * Typically modeled as a **uniform distribution** (U(6, 8)).
+* Fixed manufacturing cost:
+  * The company incurs **$15,000 per month** in fixed costs.
+* Machine failures:
+  * Eight molding machines in total.
+  * Each machine has **10% probability per month** of needing a $5,000 replacement part.
+  * You can model this as:
+    * Either a binomial draw `rbinom(1, size = 8, prob = 0.10) * 5000`,
+    * Or an expected number of failures per month if you want a simpler model.
+
+---
+
+## Cash Management Policy
+
+* Company policy: **minimum cash balance** of $20,000 at end of each month.
+* Starting cash balance (Dec 31, 2014): **$25,000**.
+* If projected end-of-month cash <$20,000:
+  * Company takes a **one-month bank loan** to bring balance up to $20,000.
+  * Loan is repaid with interest at the end of the following month.
+* Excess cash above $20,000:
+  * Earns savings interest at the savings rate.
+  * Stays in the account and carries forward.
+
+This policy is a key decision rule embedded in the simulation.
+
+---
+
+## Interest Rate Dynamics
+
+* Loan interest rate and savings rate are both based on the **prime rate**.
+* Case assumptions (summarizing the text):
+  * Loan interest rate = Prime + 2 percentage points (with a cap).
+  * Savings interest rate = Prime − 2 percentage points (with a floor).
+  * Prime rate in Dec 2014: 5%.
+  * Each month, prime evolves via a discrete random change, e.g.:
+    * 70% chance: no change.
+    * 10% chance: +25 basis points.
+    * 10% chance: −25 basis points.
+    * 5% chance: +50 basis points.
+    * 5% chance: −50 basis points.
+
+You can adjust these probabilities/values to match your exact case text.
+
+---
+
+## Random Inputs and Their Distributions
+
+Summarizing all stochastic elements:
+
+* ( $\text{BaseSales}*t \sim N(\text{BaseSales}*{t-1}, 500^2)$ )
+* ( $\text{UnitCost}_t \sim U(6, 8)$ )
+* Machine failures: ( $\text{Failures}_t \sim \text{Binomial}(8, 0.10)$ ), cost = ( $5000 \times \text{Failures}_t$ )
+* Prime rate change: discrete distribution over {–50, –25, 0, +25, +50} basis points.
+* Derived random quantities:
+  * Actual units sold, revenue, cash vs. credit split.
+  * Interest on loans and savings.
+
+---
+
+## Monthly Simulation Logic
+
+High-level algorithm for each month (t = 1, \dots, 12):
+
+1. Generate base sales and actual units sold.
+2. Compute sales revenue and split into cash vs. credit.
+3. Add **credit receipts from last month** to this month’s cash inflow.
+4. Generate unit production cost and machine failures.
+5. Compute total production and overhead costs.
+6. Update prime rate and resulting loan/savings interest rates.
+7. Update cash balance:
+   * Opening balance + cash inflows − costs − loan repayments + interest.
+8. If cash balance < minimum:
+   * Take out a new one-month loan to restore balance to $20,000.
+9. Track:
+   * Ending cash balance.
+   * Outstanding loans and interest.
+   * Net worth.
+   * Maximum short-term loan used so far.
+
+---
+
+## R Design: Data Structures
+
+```{r}
+#| echo: true
+#| eval: true
+#| output-location: slide
+months       <- month.abb
+n_months     <- 12
+
+# Parameters (you can later make these arguments to a function)
+min_cash     <- 20000
+start_cash   <- 25000
+unit_price   <- 10
+cash_frac    <- 0.42
+fixed_cost   <- 15000
+n_machines   <- 8
+fail_cost    <- 5000
+base_sd      <- 500
+prime_start  <- 0.05  # 5%
+
+seasonality <- c(0.79, 0.88, 0.95, 1.05, 1.06, 0.84,
+                 0.74, 0.98, 1.06, 1.10, 1.16, 1.18)
+```
+
+We will write a function `simulate_year()` that returns year-end net worth and maximum loan.
+
+---
+
+## R Implementation: Simulating Demand and Costs
+
+```{r}
+#| echo: true
+#| eval: true
+#| output-location: slide
+simulate_demand_costs <- function() {
+  base   <- numeric(n_months)
+  units  <- numeric(n_months)
+  v_cost <- numeric(n_months)
+  m_fail <- numeric(n_months)
+  
+  base[1] <- 6000  # Dec base from case
+  
+  for (t in 1:n_months) {
+    if (t > 1) {
+      base[t] <- rnorm(1, mean = base[t - 1], sd = base_sd)
+    }
+    units[t]  <- round(base[t] * seasonality[t])
+    v_cost[t] <- runif(1, 6, 8) * units[t]
+    failures  <- rbinom(1, size = n_machines, prob = 0.10)
+    m_fail[t] <- failures * fail_cost
+  }
+  
+  tibble(
+    month = months,
+    units = units,
+    variable_cost = v_cost,
+    fail_cost = m_fail
+  )
+}
+```
+
+This function produces a tibble with monthly production and cost information for one year.
+
+---
+
+## R Implementation: Prime Rate and Interest Rates
+
+```{r}
+#| echo: true
+#| eval: true
+#| output-location: slide
+simulate_prime <- function() {
+  prime <- numeric(n_months)
+  prime[1] <- prime_start
+  
+  # possible monthly changes in decimal form (basis points / 10000)
+  changes <- c(-0.005, -0.0025, 0, 0.0025, 0.005)
+  probs   <- c(0.05, 0.10, 0.70, 0.10, 0.05)
+  
+  for (t in 2:n_months) {
+    delta <- sample(changes, size = 1, prob = probs)
+    prime[t] <- prime[t - 1] + delta
+  }
+  
+  loan_rate    <- pmin(prime + 0.02, 0.09)        # cap at 9%
+  savings_rate <- pmax(prime - 0.02, 0.02)        # floor at 2%
+  
+  tibble(
+    month = months,
+    prime,
+    loan_rate,
+    savings_rate
+  )
+}
+```
+
+---
+
+## R Implementation: One-Year Simulation Function
+
+```{r}
+#| echo: true
+#| eval: true
+#| output-location: slide
+simulate_year <- function() {
+  demand_cost  <- simulate_demand_costs()
+  rates        <- simulate_prime()
+  
+  cash_balance <- numeric(n_months)
+  cash_balance[1] <- start_cash
+  
+  loan_outstanding <- numeric(n_months)
+  max_loan         <- 0
+  
+  # credit sales bookkeeping
+  credit_sales <- numeric(n_months)
+  credit_cash  <- numeric(n_months)  # receipts from previous month
+  
+  net_worth    <- numeric(n_months)  # simple version: cash - loans
+  
+  for (t in 1:n_months) {
+    units   <- demand_cost$units[t]
+    rev     <- units * unit_price
+    cash_in <- cash_frac * rev
+    
+    if (t > 1) {
+      cash_in <- cash_in + credit_sales[t - 1]     # last month’s credit arrives
+    }
+    
+    credit_sales[t] <- (1 - cash_frac) * rev
+    
+    # Costs
+    prod_cost  <- demand_cost$variable_cost[t] + fixed_cost + demand_cost$fail_cost[t]
+    
+    # Repay last month’s loan with interest
+    if (t > 1 && loan_outstanding[t - 1] > 0) {
+      repay <- loan_outstanding[t - 1] * (1 + rates$loan_rate[t])
+    } else {
+      repay <- 0
+    }
+    
+    # Update cash balance
+    opening_cash <- if (t == 1) start_cash else cash_balance[t - 1]
+    cash <- opening_cash + cash_in - prod_cost - repay
+    
+    # Apply minimum cash constraint with new one-month loan
+    new_loan <- 0
+    if (cash < min_cash) {
+      new_loan <- min_cash - cash
+      cash     <- min_cash
+    }
+    
+    cash_balance[t]     <- cash
+    loan_outstanding[t] <- new_loan
+    max_loan            <- max(max_loan, new_loan)
+    
+    # Interest on excess cash
+    if (cash > min_cash) {
+      interest <- (cash - min_cash) * rates$savings_rate[t]
+      cash_balance[t] <- cash_balance[t] + interest
+    }
+    
+    net_worth[t] <- cash_balance[t] - loan_outstanding[t]
+  }
+  
+  list(
+    cash_path  = cash_balance,
+    net_worth  = net_worth,
+    max_loan   = max_loan,
+    final_net  = net_worth[n_months]
+  )
+}
+```
+
+This function encapsulates the monthly logic and returns the paths and key summary outputs.
+
+---
+
+## R Implementation: Monte Carlo Replications
+
+```r
+set.seed(2025)
+
+n_rep       <- 1000
+results     <- vector("list", n_rep)
+final_net   <- numeric(n_rep)
+max_loan    <- numeric(n_rep)
+
+for (r in 1:n_rep) {
+  sim          <- simulate_year()
+  results[[r]] <- sim
+  final_net[r] <- sim$final_net
+  max_loan[r]  <- sim$max_loan
+}
+
+summary(final_net)
+summary(max_loan)
+```
+
+From here you can build a tibble of outcomes:
+
+```r
+outcomes <- tibble(
+  rep       = 1:n_rep,
+  final_net = final_net,
+  max_loan  = max_loan
+)
+```
+
+---
+
+## Summarizing Simulation Results
+
+Key quantities for the assignment:
+
+* Estimated probability that net worth < 0 at year-end:
+
+```r
+mean(final_net < 0)
+```
+
+* Recommended “safe” maximum short-term loan:
+
+```r
+quantile(max_loan, probs = c(0.90, 0.95, 0.99))
+```
+
+* Basic diagnostics plots:
+
+```r
+library(ggplot2)
+
+ggplot(outcomes, aes(x = final_net)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Distribution of Year-End Net Worth",
+       x = "Net Worth", y = "Frequency")
+
+ggplot(outcomes, aes(x = max_loan)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Distribution of Maximum Monthly Loan", x = "Max Loan")
+```
+
+These plots will let you visually explain risk and tail behavior.
+
+---
+
+## Connecting to Simulation Optimization
+
+Once the base model is working, we can treat certain parameters as decision variables:
+
+* Minimum cash balance (`min_cash`).
+* Cash fraction of sales (`cash_frac`).
+* Size of fixed manufacturing cost (e.g., exploring outsourcing vs in-house).
+
+Simple grid search example:
+
+```r
+policies <- expand.grid(
+  min_cash = c(15000, 20000, 25000),
+  cash_frac = c(0.40, 0.50, 0.60)
+)
+
+evaluate_policy <- function(min_cash, cash_frac, n_rep = 500) {
+  final_net <- max_loan <- numeric(n_rep)
+  for (r in 1:n_rep) {
+    sim <- simulate_year()  # modify simulate_year to take min_cash, cash_frac as arguments
+    final_net[r] <- sim$final_net
+    max_loan[r]  <- sim$max_loan
+  }
+  tibble(
+    min_cash,
+    cash_frac,
+    mean_net   = mean(final_net),
+    prob_loss  = mean(final_net < 0),
+    mean_loan  = mean(max_loan),
+    q95_loan   = quantile(max_loan, 0.95)
+  )
+}
+```
+
+You can loop over `policies` to compare strategies and present a table of trade-offs.
+
+---
+
+## Managerial Interpretation
+
+For the presentation, you should translate numerical results into language the CFO would use:
+
+* “With the current policy, there is approximately a X% chance that net worth at the end of 2015 will be negative.”
+* “To be 95% confident that the company will not exceed its short-term borrowing capacity, we recommend setting the loan limit at approximately $L.”
+* “Increasing the minimum cash balance from $20,000 to $25,000 reduces the probability of negative net worth from A% to B%, but raises the required loan capacity from $L1 to $L2.”
+
+Include 2–3 plots that clearly show these trade-offs.
+
+---
+
+## Limitations and Extensions
+
+* Model relies on the assumed distributions; if actual variability is higher or lower, results will change.
+* No explicit modeling of inventory accumulation or stockouts (we assume production matches demand).
+* Extensions:
+
+  * Model demand correlation across months explicitly.
+  * Incorporate inventory and capacity limits.
+  * Optimize pricing or marketing spend jointly with financing policy.
+
+---
+
+## Wrap-Up
+
+* Monte Carlo simulation lets us see the **distribution** of financial outcomes under realistic uncertainty.
+* For Action Adventures, it provides:
+
+  * Risk measures on year-end net worth.
+  * Required short-term loan capacity.
+  * A platform for exploring alternative cash-management and sales policies.
+* This same framework generalizes to:
+
+  * Inventory and production planning.
+  * Project finance.
+  * Portfolio and risk management.
+
