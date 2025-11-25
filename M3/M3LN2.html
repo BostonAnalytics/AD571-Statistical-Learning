@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nakul R. Padalkar">
+<meta name="dcterms.date" content="2025-11-25">
+
+<title>Simulation Methods – Statistical Learning Lecture Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-1118c0f6abfc1c15b4cf62daf5015217.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Statistical Learning Lecture Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-module-1" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Module 1</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-module-1">    
+        <li>
+    <a class="dropdown-item" href="../M1/M1LN1.html">
+ <span class="dropdown-text">Lecture Note 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../M1/M1LN2.html">
+ <span class="dropdown-text">Lecture Note 02</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-module-2" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Module 2</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-module-2">    
+        <li>
+    <a class="dropdown-item" href="../M2/M2LN1.html">
+ <span class="dropdown-text">Lecture Note 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../M2/M2LN2.html">
+ <span class="dropdown-text">Lecture Note 02</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-module-3" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Module 3</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-module-3">    
+        <li>
+    <a class="dropdown-item" href="../M3/M3LN1.html">
+ <span class="dropdown-text">Lecture Note 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../M3/M3LN2.html">
+ <span class="dropdown-text">Lecture Note 02</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#simulation-for-financial-decision-making" id="toc-simulation-for-financial-decision-making" class="nav-link active" data-scroll-target="#simulation-for-financial-decision-making"><span class="header-section-number">1</span> Simulation for Financial Decision Making</a></li>
+  <li><a href="#where-simulation-fits-in-analytics" id="toc-where-simulation-fits-in-analytics" class="nav-link" data-scroll-target="#where-simulation-fits-in-analytics"><span class="header-section-number">2</span> Where Simulation Fits in Analytics</a></li>
+  <li><a href="#what-is-monte-carlo-simulation" id="toc-what-is-monte-carlo-simulation" class="nav-link" data-scroll-target="#what-is-monte-carlo-simulation"><span class="header-section-number">3</span> What Is Monte Carlo Simulation?</a></li>
+  <li><a href="#simulation-vs.-deterministic-models" id="toc-simulation-vs.-deterministic-models" class="nav-link" data-scroll-target="#simulation-vs.-deterministic-models"><span class="header-section-number">4</span> Simulation vs.&nbsp;Deterministic Models</a></li>
+  <li><a href="#what-is-simulation-optimization" id="toc-what-is-simulation-optimization" class="nav-link" data-scroll-target="#what-is-simulation-optimization"><span class="header-section-number">5</span> What Is Simulation Optimization?</a></li>
+  <li><a href="#case-20.2-action-adventures-narrative-summary" id="toc-case-20.2-action-adventures-narrative-summary" class="nav-link" data-scroll-target="#case-20.2-action-adventures-narrative-summary"><span class="header-section-number">6</span> Case 20.2 – Action Adventures: Narrative Summary</a></li>
+  <li><a href="#decision-questions-in-the-case" id="toc-decision-questions-in-the-case" class="nav-link" data-scroll-target="#decision-questions-in-the-case"><span class="header-section-number">7</span> Decision Questions in the Case</a></li>
+  <li><a href="#demand-and-seasonality-structure" id="toc-demand-and-seasonality-structure" class="nav-link" data-scroll-target="#demand-and-seasonality-structure"><span class="header-section-number">8</span> Demand and Seasonality Structure</a></li>
+  <li><a href="#revenue-timing-and-credit-policy" id="toc-revenue-timing-and-credit-policy" class="nav-link" data-scroll-target="#revenue-timing-and-credit-policy"><span class="header-section-number">9</span> Revenue Timing and Credit Policy</a></li>
+  <li><a href="#cost-structure" id="toc-cost-structure" class="nav-link" data-scroll-target="#cost-structure"><span class="header-section-number">10</span> Cost Structure</a></li>
+  <li><a href="#cash-management-policy" id="toc-cash-management-policy" class="nav-link" data-scroll-target="#cash-management-policy"><span class="header-section-number">11</span> Cash Management Policy</a></li>
+  <li><a href="#interest-rate-dynamics" id="toc-interest-rate-dynamics" class="nav-link" data-scroll-target="#interest-rate-dynamics"><span class="header-section-number">12</span> Interest Rate Dynamics</a></li>
+  <li><a href="#random-inputs-and-their-distributions" id="toc-random-inputs-and-their-distributions" class="nav-link" data-scroll-target="#random-inputs-and-their-distributions"><span class="header-section-number">13</span> Random Inputs and Their Distributions</a></li>
+  <li><a href="#monthly-simulation-logic" id="toc-monthly-simulation-logic" class="nav-link" data-scroll-target="#monthly-simulation-logic"><span class="header-section-number">14</span> Monthly Simulation Logic</a></li>
+  <li><a href="#r-design-data-structures" id="toc-r-design-data-structures" class="nav-link" data-scroll-target="#r-design-data-structures"><span class="header-section-number">15</span> R Design: Data Structures</a></li>
+  <li><a href="#r-implementation-simulating-demand-and-costs" id="toc-r-implementation-simulating-demand-and-costs" class="nav-link" data-scroll-target="#r-implementation-simulating-demand-and-costs"><span class="header-section-number">16</span> R Implementation: Simulating Demand and Costs</a></li>
+  <li><a href="#r-implementation-prime-rate-and-interest-rates" id="toc-r-implementation-prime-rate-and-interest-rates" class="nav-link" data-scroll-target="#r-implementation-prime-rate-and-interest-rates"><span class="header-section-number">17</span> R Implementation: Prime Rate and Interest Rates</a></li>
+  <li><a href="#r-implementation-one-year-simulation-function" id="toc-r-implementation-one-year-simulation-function" class="nav-link" data-scroll-target="#r-implementation-one-year-simulation-function"><span class="header-section-number">18</span> R Implementation: One-Year Simulation Function</a></li>
+  <li><a href="#r-implementation-monte-carlo-replications" id="toc-r-implementation-monte-carlo-replications" class="nav-link" data-scroll-target="#r-implementation-monte-carlo-replications"><span class="header-section-number">19</span> R Implementation: Monte Carlo Replications</a></li>
+  <li><a href="#summarizing-simulation-results" id="toc-summarizing-simulation-results" class="nav-link" data-scroll-target="#summarizing-simulation-results"><span class="header-section-number">20</span> Summarizing Simulation Results</a></li>
+  <li><a href="#connecting-to-simulation-optimization" id="toc-connecting-to-simulation-optimization" class="nav-link" data-scroll-target="#connecting-to-simulation-optimization"><span class="header-section-number">21</span> Connecting to Simulation Optimization</a></li>
+  <li><a href="#managerial-interpretation" id="toc-managerial-interpretation" class="nav-link" data-scroll-target="#managerial-interpretation"><span class="header-section-number">22</span> Managerial Interpretation</a></li>
+  <li><a href="#limitations-and-extensions" id="toc-limitations-and-extensions" class="nav-link" data-scroll-target="#limitations-and-extensions"><span class="header-section-number">23</span> Limitations and Extensions</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up"><span class="header-section-number">24</span> Wrap-Up</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Simulation Methods</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nakul R. Padalkar </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 25, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="simulation-for-financial-decision-making" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="simulation-for-financial-decision-making"><span class="header-section-number">1</span> Simulation for Financial Decision Making</h2>
+<ul>
+<li>Use simulation to analyze cash flows and loan requirements for <strong>Action Adventures</strong>.</li>
+<li>Connect Monte Carlo simulation with decision making and basic simulation optimization.</li>
+<li>Implement the model in R and interpret output in managerial terms.</li>
+</ul>
+<hr>
+</section>
+<section id="where-simulation-fits-in-analytics" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="where-simulation-fits-in-analytics"><span class="header-section-number">2</span> Where Simulation Fits in Analytics</h2>
+<ul>
+<li>Descriptive analytics: summarize what has happened.</li>
+<li>Predictive analytics: forecast what is likely to happen.</li>
+<li><strong>Prescriptive / Simulation:</strong>
+<ul>
+<li>Evaluate “what-if” scenarios under uncertainty.</li>
+<li>Estimate distributions of outcomes rather than single point forecasts.</li>
+</ul></li>
+<li>This case: simulate 2015 financial outcomes to support short-term financing decisions.</li>
+</ul>
+<hr>
+</section>
+<section id="what-is-monte-carlo-simulation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="what-is-monte-carlo-simulation"><span class="header-section-number">3</span> What Is Monte Carlo Simulation?</h2>
+<ul>
+<li>Represent the system (here: monthly financials) as a <strong>set of rules</strong>.</li>
+<li>Identify <strong>random inputs</strong>:
+<ul>
+<li>Demand, costs, interest rates, machine failures, payment timing.</li>
+</ul></li>
+<li>Generate many <strong>random scenarios</strong> using probability distributions.</li>
+<li>Compute outputs (cash balance, loans, net worth) for each scenario.</li>
+<li>Use the resulting distribution to understand:
+<ul>
+<li>Expected performance.</li>
+<li>Risk of bad outcomes (e.g., negative net worth).</li>
+<li>Required safety buffers (e.g., maximum loan size).</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="simulation-vs.-deterministic-models" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="simulation-vs.-deterministic-models"><span class="header-section-number">4</span> Simulation vs.&nbsp;Deterministic Models</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 27%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Deterministic Model</th>
+<th>Simulation Model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inputs</td>
+<td>Single values</td>
+<td>Probability distributions</td>
+</tr>
+<tr class="even">
+<td>Output</td>
+<td>Single number / solution</td>
+<td>Distribution of outcomes</td>
+</tr>
+<tr class="odd">
+<td>Uncertainty</td>
+<td>Ignored or approximated</td>
+<td>Explicitly modeled</td>
+</tr>
+<tr class="even">
+<td>Questions answered</td>
+<td>“What is the best solution?”</td>
+<td>“How risky is this policy?” “What is likely to happen?”</td>
+</tr>
+</tbody>
+</table>
+<p>For Action Adventures, deterministic budgeting ignores seasonality and randomness; simulation makes risk visible.</p>
+<hr>
+</section>
+<section id="what-is-simulation-optimization" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="what-is-simulation-optimization"><span class="header-section-number">5</span> What Is Simulation Optimization?</h2>
+<ul>
+<li><p><strong>Simulation alone</strong> evaluates outcomes for a given policy. -<strong>Optimization alone</strong> (linear programming, etc.) assumes certainty.</p></li>
+<li><p><strong>Simulation optimization</strong>:</p>
+<ul>
+<li>Choose decision variables (e.g., minimum cash balance, payment terms, safety stock).</li>
+<li>For each candidate policy, run a simulation to estimate performance.</li>
+<li>Search over policies to find one that optimizes a target metric:
+<ul>
+<li>Minimize expected loan size or probability of negative net worth.</li>
+</ul></li>
+</ul></li>
+<li><p>In this case:</p>
+<ul>
+<li>We can treat the <strong>required minimum cash balance</strong> or <strong>credit sales fraction</strong> as decision variables and search for policies that reduce risk.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="case-20.2-action-adventures-narrative-summary" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="case-20.2-action-adventures-narrative-summary"><span class="header-section-number">6</span> Case 20.2 – Action Adventures: Narrative Summary</h2>
+<ul>
+<li>Action Adventures sells a popular line of action figures at <strong>$10 per unit</strong> to toy stores.</li>
+<li>Demand is:
+<ul>
+<li>Seasonal (month-by-month seasonality factors).</li>
+<li>Random around a “base” level that follows a normal distribution.</li>
+</ul></li>
+<li>Costs include:
+<ul>
+<li>Variable production costs per unit.</li>
+<li>Fixed monthly manufacturing overhead.</li>
+<li>Occasional machine replacement costs.</li>
+</ul></li>
+<li>The firm:
+<ul>
+<li>Receives a mix of cash and credit sales.</li>
+<li>Maintains a <strong>minimum cash balance</strong>.</li>
+<li>Uses short-term loans when needed.</li>
+<li>Pays and earns interest based on a <strong>stochastic prime rate</strong>.</li>
+</ul></li>
+</ul>
+<p>The goal is to understand cash flow risk and short-term borrowing needs in 2015.</p>
+<hr>
+</section>
+<section id="decision-questions-in-the-case" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="decision-questions-in-the-case"><span class="header-section-number">7</span> Decision Questions in the Case</h2>
+<ol type="1">
+<li>Build a simulation model and run 1,000 trials for 2015.
+<ul>
+<li>Summarize cash flows and loans.</li>
+</ul></li>
+<li>Estimate the distribution of <strong>net worth at the end of 2015</strong>.
+<ul>
+<li>Probability that net worth falls below zero.</li>
+</ul></li>
+<li>Determine the distribution of the <strong>largest short-term loan needed</strong> during the year.
+<ul>
+<li>Recommend a loan limit that is “safe” with high probability.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="demand-and-seasonality-structure" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="demand-and-seasonality-structure"><span class="header-section-number">8</span> Demand and Seasonality Structure</h2>
+<ul>
+<li>December 2014 base sales: 6,000 units.
+<ul>
+<li>Actual December 2014 sales: (6,000 = 7,080).</li>
+</ul></li>
+<li>For each month in 2015:
+<ul>
+<li>Base sales follow a <strong>normal distribution</strong> with:
+<ul>
+<li>Mean = previous month’s base sales.</li>
+<li>Standard deviation = 500 units.</li>
+</ul></li>
+<li>Actual sales = base sales × <strong>seasonality factor</strong>.</li>
+</ul></li>
+</ul>
+<hr>
+<p>You can load the seasonality factors from the case directly into R:</p>
+<div class="cell" data-output-location="slide">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>seasonality <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Jan =</span> <span class="fl">0.79</span>, <span class="at">Feb =</span> <span class="fl">0.88</span>, <span class="at">Mar =</span> <span class="fl">0.95</span>, <span class="at">Apr =</span> <span class="fl">1.05</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">May =</span> <span class="fl">1.06</span>, <span class="at">Jun =</span> <span class="fl">0.84</span>, <span class="at">Jul =</span> <span class="fl">0.74</span>, <span class="at">Aug =</span> <span class="fl">0.98</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sep =</span> <span class="fl">1.06</span>, <span class="at">Oct =</span> <span class="fl">1.10</span>, <span class="at">Nov =</span> <span class="fl">1.16</span>, <span class="at">Dec =</span> <span class="fl">1.18</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot seasonality</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(seasonality, <span class="at">main =</span> <span class="st">"Seasonality Factors for 2015"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Seasonality Factor"</span>, <span class="at">xlab =</span> <span class="st">"Month"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="M3LN2_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="revenue-timing-and-credit-policy" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="revenue-timing-and-credit-policy"><span class="header-section-number">9</span> Revenue Timing and Credit Policy</h2>
+<ul>
+<li><p>Unit selling price: <strong>$10</strong> per action figure.</p></li>
+<li><p>Fraction of sales:</p>
+<ul>
+<li>Cash sales: about 40% (varies historically; case uses 42% in December example).</li>
+<li>Credit sales: remaining percentage.</li>
+</ul></li>
+<li><p>The case specifies:</p>
+<ul>
+<li>Credit customers pay on a <strong>30-day interest-free</strong> basis.</li>
+<li>So credit sales in month (t) are collected as cash in month (t+1).</li>
+</ul></li>
+<li><p>We will treat the <strong>cash sales percentage</strong> as a fixed parameter in the base model (e.g., 42%), but it can be varied later for sensitivity analysis.</p></li>
+</ul>
+<hr>
+</section>
+<section id="cost-structure" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="cost-structure"><span class="header-section-number">10</span> Cost Structure</h2>
+<ul>
+<li>Variable manufacturing cost:
+<ul>
+<li>Plastic and materials cost per unit fluctuates between <strong>$6 and $8</strong>.</li>
+<li>Typically modeled as a <strong>uniform distribution</strong> (U(6, 8)).</li>
+</ul></li>
+<li>Fixed manufacturing cost:
+<ul>
+<li>The company incurs <strong>$15,000 per month</strong> in fixed costs.</li>
+</ul></li>
+<li>Machine failures:
+<ul>
+<li>Eight molding machines in total.</li>
+<li>Each machine has <strong>10% probability per month</strong> of needing a $5,000 replacement part.</li>
+<li>You can model this as:
+<ul>
+<li>Either a binomial draw <code>rbinom(1, size = 8, prob = 0.10) * 5000</code>,</li>
+<li>Or an expected number of failures per month if you want a simpler model.</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="cash-management-policy" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="cash-management-policy"><span class="header-section-number">11</span> Cash Management Policy</h2>
+<ul>
+<li>Company policy: <strong>minimum cash balance</strong> of $20,000 at end of each month.</li>
+<li>Starting cash balance (Dec 31, 2014): <strong>$25,000</strong>.</li>
+<li>If projected end-of-month cash &lt;$20,000:
+<ul>
+<li>Company takes a <strong>one-month bank loan</strong> to bring balance up to $20,000.</li>
+<li>Loan is repaid with interest at the end of the following month.</li>
+</ul></li>
+<li>Excess cash above $20,000:
+<ul>
+<li>Earns savings interest at the savings rate.</li>
+<li>Stays in the account and carries forward.</li>
+</ul></li>
+</ul>
+<p>This policy is a key decision rule embedded in the simulation.</p>
+<hr>
+</section>
+<section id="interest-rate-dynamics" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="interest-rate-dynamics"><span class="header-section-number">12</span> Interest Rate Dynamics</h2>
+<ul>
+<li>Loan interest rate and savings rate are both based on the <strong>prime rate</strong>.</li>
+<li>Case assumptions (summarizing the text):
+<ul>
+<li>Loan interest rate = Prime + 2 percentage points (with a cap).</li>
+<li>Savings interest rate = Prime − 2 percentage points (with a floor).</li>
+<li>Prime rate in Dec 2014: 5%.</li>
+<li>Each month, prime evolves via a discrete random change, e.g.:
+<ul>
+<li>70% chance: no change.</li>
+<li>10% chance: +25 basis points.</li>
+<li>10% chance: −25 basis points.</li>
+<li>5% chance: +50 basis points.</li>
+<li>5% chance: −50 basis points.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>You can adjust these probabilities/values to match your exact case text.</p>
+<hr>
+</section>
+<section id="random-inputs-and-their-distributions" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="random-inputs-and-their-distributions"><span class="header-section-number">13</span> Random Inputs and Their Distributions</h2>
+<p>Summarizing all stochastic elements:</p>
+<ul>
+<li>( <span class="math inline">\text{BaseSales}*t \sim N(\text{BaseSales}*{t-1}, 500^2)</span> )</li>
+<li>( <span class="math inline">\text{UnitCost}_t \sim U(6, 8)</span> )</li>
+<li>Machine failures: ( <span class="math inline">\text{Failures}_t \sim \text{Binomial}(8, 0.10)</span> ), cost = ( <span class="math inline">5000 \times \text{Failures}_t</span> )</li>
+<li>Prime rate change: discrete distribution over {–50, –25, 0, +25, +50} basis points.</li>
+<li>Derived random quantities:
+<ul>
+<li>Actual units sold, revenue, cash vs.&nbsp;credit split.</li>
+<li>Interest on loans and savings.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="monthly-simulation-logic" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="monthly-simulation-logic"><span class="header-section-number">14</span> Monthly Simulation Logic</h2>
+<p>High-level algorithm for each month (t = 1, , 12):</p>
+<ol type="1">
+<li>Generate base sales and actual units sold.</li>
+<li>Compute sales revenue and split into cash vs.&nbsp;credit.</li>
+<li>Add <strong>credit receipts from last month</strong> to this month’s cash inflow.</li>
+<li>Generate unit production cost and machine failures.</li>
+<li>Compute total production and overhead costs.</li>
+<li>Update prime rate and resulting loan/savings interest rates.</li>
+<li>Update cash balance:
+<ul>
+<li>Opening balance + cash inflows − costs − loan repayments + interest.</li>
+</ul></li>
+<li>If cash balance &lt; minimum:
+<ul>
+<li>Take out a new one-month loan to restore balance to $20,000.</li>
+</ul></li>
+<li>Track:
+<ul>
+<li>Ending cash balance.</li>
+<li>Outstanding loans and interest.</li>
+<li>Net worth.</li>
+<li>Maximum short-term loan used so far.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="r-design-data-structures" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="r-design-data-structures"><span class="header-section-number">15</span> R Design: Data Structures</h2>
+<div class="cell" data-output-location="slide">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>months       <span class="ot">&lt;-</span> month.abb</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n_months     <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters (you can later make these arguments to a function)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>min_cash     <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>start_cash   <span class="ot">&lt;-</span> <span class="dv">25000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>unit_price   <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>cash_frac    <span class="ot">&lt;-</span> <span class="fl">0.42</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>fixed_cost   <span class="ot">&lt;-</span> <span class="dv">15000</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>n_machines   <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fail_cost    <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>base_sd      <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>prime_start  <span class="ot">&lt;-</span> <span class="fl">0.05</span>  <span class="co"># 5%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>seasonality <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.79</span>, <span class="fl">0.88</span>, <span class="fl">0.95</span>, <span class="fl">1.05</span>, <span class="fl">1.06</span>, <span class="fl">0.84</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">0.74</span>, <span class="fl">0.98</span>, <span class="fl">1.06</span>, <span class="fl">1.10</span>, <span class="fl">1.16</span>, <span class="fl">1.18</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We will write a function <code>simulate_year()</code> that returns year-end net worth and maximum loan.</p>
+<hr>
+</section>
+<section id="r-implementation-simulating-demand-and-costs" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="r-implementation-simulating-demand-and-costs"><span class="header-section-number">16</span> R Implementation: Simulating Demand and Costs</h2>
+<div class="cell" data-output-location="slide">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>simulate_demand_costs <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  base   <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  units  <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  v_cost <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  m_fail <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  base[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">6000</span>  <span class="co"># Dec base from case</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_months) {</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (t <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      base[t] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> base[t <span class="sc">-</span> <span class="dv">1</span>], <span class="at">sd =</span> base_sd)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    units[t]  <span class="ot">&lt;-</span> <span class="fu">round</span>(base[t] <span class="sc">*</span> seasonality[t])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    v_cost[t] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">8</span>) <span class="sc">*</span> units[t]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    failures  <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size =</span> n_machines, <span class="at">prob =</span> <span class="fl">0.10</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    m_fail[t] <span class="ot">&lt;-</span> failures <span class="sc">*</span> fail_cost</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> months,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">units =</span> units,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_cost =</span> v_cost,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">fail_cost =</span> m_fail</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This function produces a tibble with monthly production and cost information for one year.</p>
+<hr>
+</section>
+<section id="r-implementation-prime-rate-and-interest-rates" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="r-implementation-prime-rate-and-interest-rates"><span class="header-section-number">17</span> R Implementation: Prime Rate and Interest Rates</h2>
+<div class="cell" data-output-location="slide">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>simulate_prime <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  prime <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  prime[<span class="dv">1</span>] <span class="ot">&lt;-</span> prime_start</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># possible monthly changes in decimal form (basis points / 10000)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  changes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.005</span>, <span class="sc">-</span><span class="fl">0.0025</span>, <span class="dv">0</span>, <span class="fl">0.0025</span>, <span class="fl">0.005</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  probs   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.70</span>, <span class="fl">0.10</span>, <span class="fl">0.05</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_months) {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    delta <span class="ot">&lt;-</span> <span class="fu">sample</span>(changes, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> probs)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    prime[t] <span class="ot">&lt;-</span> prime[t <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> delta</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  loan_rate    <span class="ot">&lt;-</span> <span class="fu">pmin</span>(prime <span class="sc">+</span> <span class="fl">0.02</span>, <span class="fl">0.09</span>)        <span class="co"># cap at 9%</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  savings_rate <span class="ot">&lt;-</span> <span class="fu">pmax</span>(prime <span class="sc">-</span> <span class="fl">0.02</span>, <span class="fl">0.02</span>)        <span class="co"># floor at 2%</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> months,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    prime,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    loan_rate,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    savings_rate</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="r-implementation-one-year-simulation-function" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="r-implementation-one-year-simulation-function"><span class="header-section-number">18</span> R Implementation: One-Year Simulation Function</h2>
+<div class="cell" data-output-location="slide">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>simulate_year <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  demand_cost  <span class="ot">&lt;-</span> <span class="fu">simulate_demand_costs</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  rates        <span class="ot">&lt;-</span> <span class="fu">simulate_prime</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  cash_balance <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  cash_balance[<span class="dv">1</span>] <span class="ot">&lt;-</span> start_cash</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  loan_outstanding <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  max_loan         <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># credit sales bookkeeping</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  credit_sales <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  credit_cash  <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)  <span class="co"># receipts from previous month</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  net_worth    <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_months)  <span class="co"># simple version: cash - loans</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_months) {</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    units   <span class="ot">&lt;-</span> demand_cost<span class="sc">$</span>units[t]</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    rev     <span class="ot">&lt;-</span> units <span class="sc">*</span> unit_price</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    cash_in <span class="ot">&lt;-</span> cash_frac <span class="sc">*</span> rev</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (t <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>      cash_in <span class="ot">&lt;-</span> cash_in <span class="sc">+</span> credit_sales[t <span class="sc">-</span> <span class="dv">1</span>]     <span class="co"># last month’s credit arrives</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    credit_sales[t] <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> cash_frac) <span class="sc">*</span> rev</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Costs</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    prod_cost  <span class="ot">&lt;-</span> demand_cost<span class="sc">$</span>variable_cost[t] <span class="sc">+</span> fixed_cost <span class="sc">+</span> demand_cost<span class="sc">$</span>fail_cost[t]</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Repay last month’s loan with interest</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (t <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;&amp;</span> loan_outstanding[t <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>      repay <span class="ot">&lt;-</span> loan_outstanding[t <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> rates<span class="sc">$</span>loan_rate[t])</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>      repay <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update cash balance</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    opening_cash <span class="ot">&lt;-</span> <span class="cf">if</span> (t <span class="sc">==</span> <span class="dv">1</span>) start_cash <span class="cf">else</span> cash_balance[t <span class="sc">-</span> <span class="dv">1</span>]</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    cash <span class="ot">&lt;-</span> opening_cash <span class="sc">+</span> cash_in <span class="sc">-</span> prod_cost <span class="sc">-</span> repay</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply minimum cash constraint with new one-month loan</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    new_loan <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (cash <span class="sc">&lt;</span> min_cash) {</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>      new_loan <span class="ot">&lt;-</span> min_cash <span class="sc">-</span> cash</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>      cash     <span class="ot">&lt;-</span> min_cash</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    cash_balance[t]     <span class="ot">&lt;-</span> cash</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    loan_outstanding[t] <span class="ot">&lt;-</span> new_loan</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    max_loan            <span class="ot">&lt;-</span> <span class="fu">max</span>(max_loan, new_loan)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Interest on excess cash</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (cash <span class="sc">&gt;</span> min_cash) {</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>      interest <span class="ot">&lt;-</span> (cash <span class="sc">-</span> min_cash) <span class="sc">*</span> rates<span class="sc">$</span>savings_rate[t]</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>      cash_balance[t] <span class="ot">&lt;-</span> cash_balance[t] <span class="sc">+</span> interest</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    net_worth[t] <span class="ot">&lt;-</span> cash_balance[t] <span class="sc">-</span> loan_outstanding[t]</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">cash_path  =</span> cash_balance,</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">net_worth  =</span> net_worth,</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_loan   =</span> max_loan,</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">final_net  =</span> net_worth[n_months]</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This function encapsulates the monthly logic and returns the paths and key summary outputs.</p>
+<hr>
+</section>
+<section id="r-implementation-monte-carlo-replications" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="r-implementation-monte-carlo-replications"><span class="header-section-number">19</span> R Implementation: Monte Carlo Replications</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>n_rep       <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>results     <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, n_rep)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>final_net   <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_rep)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>max_loan    <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_rep)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_rep) {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  sim          <span class="ot">&lt;-</span> <span class="fu">simulate_year</span>()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  results[[r]] <span class="ot">&lt;-</span> sim</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  final_net[r] <span class="ot">&lt;-</span> sim<span class="sc">$</span>final_net</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  max_loan[r]  <span class="ot">&lt;-</span> sim<span class="sc">$</span>max_loan</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final_net)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(max_loan)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>From here you can build a tibble of outcomes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>outcomes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rep       =</span> <span class="dv">1</span><span class="sc">:</span>n_rep,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_net =</span> final_net,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_loan  =</span> max_loan</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="summarizing-simulation-results" class="level2" data-number="20">
+<h2 data-number="20" class="anchored" data-anchor-id="summarizing-simulation-results"><span class="header-section-number">20</span> Summarizing Simulation Results</h2>
+<p>Key quantities for the assignment:</p>
+<ul>
+<li>Estimated probability that net worth &lt; 0 at year-end:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(final_net <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Recommended “safe” maximum short-term loan:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(max_loan, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.95</span>, <span class="fl">0.99</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Basic diagnostics plots:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(outcomes, <span class="fu">aes</span>(<span class="at">x =</span> final_net)) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Year-End Net Worth"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Net Worth"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(outcomes, <span class="fu">aes</span>(<span class="at">x =</span> max_loan)) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Maximum Monthly Loan"</span>, <span class="at">x =</span> <span class="st">"Max Loan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These plots will let you visually explain risk and tail behavior.</p>
+<hr>
+</section>
+<section id="connecting-to-simulation-optimization" class="level2" data-number="21">
+<h2 data-number="21" class="anchored" data-anchor-id="connecting-to-simulation-optimization"><span class="header-section-number">21</span> Connecting to Simulation Optimization</h2>
+<p>Once the base model is working, we can treat certain parameters as decision variables:</p>
+<ul>
+<li>Minimum cash balance (<code>min_cash</code>).</li>
+<li>Cash fraction of sales (<code>cash_frac</code>).</li>
+<li>Size of fixed manufacturing cost (e.g., exploring outsourcing vs in-house).</li>
+</ul>
+<p>Simple grid search example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>policies <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_cash =</span> <span class="fu">c</span>(<span class="dv">15000</span>, <span class="dv">20000</span>, <span class="dv">25000</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cash_frac =</span> <span class="fu">c</span>(<span class="fl">0.40</span>, <span class="fl">0.50</span>, <span class="fl">0.60</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>evaluate_policy <span class="ot">&lt;-</span> <span class="cf">function</span>(min_cash, cash_frac, <span class="at">n_rep =</span> <span class="dv">500</span>) {</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  final_net <span class="ot">&lt;-</span> max_loan <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_rep)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_rep) {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    sim <span class="ot">&lt;-</span> <span class="fu">simulate_year</span>()  <span class="co"># modify simulate_year to take min_cash, cash_frac as arguments</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    final_net[r] <span class="ot">&lt;-</span> sim<span class="sc">$</span>final_net</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    max_loan[r]  <span class="ot">&lt;-</span> sim<span class="sc">$</span>max_loan</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    min_cash,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    cash_frac,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_net   =</span> <span class="fu">mean</span>(final_net),</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">prob_loss  =</span> <span class="fu">mean</span>(final_net <span class="sc">&lt;</span> <span class="dv">0</span>),</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_loan  =</span> <span class="fu">mean</span>(max_loan),</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">q95_loan   =</span> <span class="fu">quantile</span>(max_loan, <span class="fl">0.95</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can loop over <code>policies</code> to compare strategies and present a table of trade-offs.</p>
+<hr>
+</section>
+<section id="managerial-interpretation" class="level2" data-number="22">
+<h2 data-number="22" class="anchored" data-anchor-id="managerial-interpretation"><span class="header-section-number">22</span> Managerial Interpretation</h2>
+<p>For the presentation, you should translate numerical results into language the CFO would use:</p>
+<ul>
+<li>“With the current policy, there is approximately a X% chance that net worth at the end of 2015 will be negative.”</li>
+<li>“To be 95% confident that the company will not exceed its short-term borrowing capacity, we recommend setting the loan limit at approximately $L.”</li>
+<li>“Increasing the minimum cash balance from $20,000 to $25,000 reduces the probability of negative net worth from A% to B%, but raises the required loan capacity from $L1 to $L2.”</li>
+</ul>
+<p>Include 2–3 plots that clearly show these trade-offs.</p>
+<hr>
+</section>
+<section id="limitations-and-extensions" class="level2" data-number="23">
+<h2 data-number="23" class="anchored" data-anchor-id="limitations-and-extensions"><span class="header-section-number">23</span> Limitations and Extensions</h2>
+<ul>
+<li><p>Model relies on the assumed distributions; if actual variability is higher or lower, results will change.</p></li>
+<li><p>No explicit modeling of inventory accumulation or stockouts (we assume production matches demand).</p></li>
+<li><p>Extensions:</p>
+<ul>
+<li>Model demand correlation across months explicitly.</li>
+<li>Incorporate inventory and capacity limits.</li>
+<li>Optimize pricing or marketing spend jointly with financing policy.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="wrap-up" class="level2" data-number="24">
+<h2 data-number="24" class="anchored" data-anchor-id="wrap-up"><span class="header-section-number">24</span> Wrap-Up</h2>
+<ul>
+<li><p>Monte Carlo simulation lets us see the <strong>distribution</strong> of financial outcomes under realistic uncertainty.</p></li>
+<li><p>For Action Adventures, it provides:</p>
+<ul>
+<li>Risk measures on year-end net worth.</li>
+<li>Required short-term loan capacity.</li>
+<li>A platform for exploring alternative cash-management and sales policies.</li>
+</ul></li>
+<li><p>This same framework generalizes to:</p>
+<ul>
+<li>Inventory and production planning.</li>
+<li>Project finance.</li>
+<li>Portfolio and risk management.</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/BostonAnalytics\.github\.io\/AD571-Statistical-Learning\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
