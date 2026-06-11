@@ -1,44 +1,45 @@
 project:
-  type: website
+  type: book
+  output-dir: _book
 
-website:
+book:
   title: "Statistical Learning Lecture Notes"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-      - text: Module 1
-        menu:
-          - href: M1/M1LN1.qmd
-            text: Lecture Note 01
-          - href: M1/M1LN2.qmd
-            text: Lecture Note 02
-      - text: Module 2
-        menu:
-          - href: M2/M2LN1.qmd
-            text: Lecture Note 01
-          - href: M2/M2LN2.qmd
-            text: Lecture Note 02
-      - text: Module 3
-        menu:
-          - href: M3/M3LN1.qmd
-            text: Lecture Note 01
-          - href: M3/M3LN2.qmd
-            text: Lecture Note 02
+  author: "Nakul R. Padalkar"
+  date: today
+  chapters:
+    - index.qmd
+    - part: "Lecture Notes"
+      chapters:
+        - lectures/01-statistical-learning-foundations.qmd
+        - lectures/02-linear-regression.qmd
+        - lectures/03-model-assessment-resampling.qmd
+        - lectures/04-data-splitting-feature-engineering.qmd
+        - lectures/05-model-selection-regularization.qmd
+        - lectures/06-dimension-reduction.qmd
+        - lectures/07-bias-variance-nonlinear.qmd
+        - lectures/08-logistic-discriminant.qmd
+        - lectures/09-margins-perceptron.qmd
+        - lectures/10-tree-based-methods.qmd
+        - lectures/11-ensemble-methods.qmd
+        - lectures/12-support-vector-machines.qmd
+        - lectures/13-unsupervised-learning.qmd
+        - lectures/14-statistical-learning-in-practice.qmd
+    - part: "Labs"
+      chapters:
+        - labs/03-resampling-methods.qmd
 
 format:
   html:
     theme:
-      - theme
-    html-math-method: 
+      - theme/theme.scss
+    html-math-method:
       method: katex
     number-equations: true
     number-sections: true
     toc: true
     code-overflow: wrap
     grid:
-      sidebar-width: 200px
+      sidebar-width: 260px
       body-width: 900px
       margin-width: 200px
       gutter-width: 1.5rem
@@ -51,6 +52,6 @@ crossref:
   title-delim: "**:**"
   tbl-title: '**Table**'
   tbl-labels: '**arabic**'
-editor: 
-  markdown: 
+editor:
+  markdown:
     wrap: 65
