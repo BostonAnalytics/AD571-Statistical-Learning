@@ -1,0 +1,37 @@
+---
+title: "Statistical Learning Foundations"
+---
+
+This lecture introduces statistical learning as the study of estimating
+relationships from data while managing uncertainty, generalization
+error, and decision consequences.
+
+## Learning Objectives
+
+- Define supervised and unsupervised learning in statistical terms.
+- Distinguish prediction goals from inference goals.
+- Explain reducible error, irreducible error, training error, and test
+  error.
+- Connect model flexibility to interpretability and generalization.
+
+## Core Ideas
+
+The course starts from the regression function
+
+$$
+f(x) = \operatorname{E}(Y \mid X = x),
+$$
+
+and treats every model as an approximation to an unknown data-generating
+process. This lets students compare linear models, trees, kernels, and
+ensembles using the same questions: What is being estimated? What error
+is being minimized? What assumptions are doing the work?
+
+## Worked Example
+
+Use a simple advertising or housing data example to show:
+
+- outcome, predictors, and observational units,
+- train/test split,
+- a baseline model,
+- a first estimate of prediction error.
