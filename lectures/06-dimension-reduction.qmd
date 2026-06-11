@@ -1,0 +1,31 @@
+---
+title: "Dimension Reduction"
+---
+
+Dimension reduction compresses high-dimensional predictor spaces while
+preserving useful structure for prediction, visualization, or
+interpretation.
+
+## Learning Objectives
+
+- Explain principal components as directions of maximal variance.
+- Distinguish PCA, principal components regression, and partial least
+  squares.
+- Recognize when dimension reduction helps and when it hides signal.
+- Use resampling to choose the number of components.
+
+## Core Ideas
+
+Principal components replace the original predictors with orthogonal
+linear combinations. PCR then fits a supervised model using the first
+few components rather than all original predictors.
+
+## Worked Example
+
+Use a data set with correlated predictors. Visualize the first two
+components, then compare ordinary least squares, ridge, PCR, and PLS.
+
+## Lab
+
+The Lab 05 dimension-reduction files can become a companion exercise
+focused on scaling, component interpretation, and test-set error.
