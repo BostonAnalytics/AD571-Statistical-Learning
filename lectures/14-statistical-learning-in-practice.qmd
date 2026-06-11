@@ -1,0 +1,68 @@
+---
+title: "Statistical Learning in Practice"
+---
+
+The final lecture brings the course together around reproducible
+analysis, communication, model limitations, and responsible use.
+
+## Learning Objectives
+
+- Describe a complete statistical learning workflow from question to
+  report.
+- Identify reproducibility risks in notebooks and ad hoc analyses.
+- Communicate model performance, uncertainty, and limitations.
+- Connect classical statistical learning to modern machine learning and
+  generative AI foundations.
+
+## Core Ideas
+
+Good statistical learning practice is not just model choice. It includes
+data provenance, train/test discipline, clear estimands or prediction
+targets, uncertainty, interpretation, and maintenance.
+
+## Worked Example
+
+Use a capstone-style modeling report. Students should identify the
+target, data source, preprocessing steps, candidate models, validation
+strategy, final model, limitations, and next steps.
+
+## Simulation as Practice
+
+Monte Carlo simulation is a practical complement to predictive
+modeling: instead of estimating one static outcome, students model
+uncertainty in future scenarios.
+
+Use simulation to reinforce four course habits:
+
+1. define uncertain inputs,
+2. choose defensible distributions,
+3. propagate uncertainty through a decision model,
+4. summarize the distribution of outcomes rather than a single number.
+
+```r
+simulate_profit <- function(n, price, unit_cost, demand_mean, demand_sd) {
+  demand <- pmax(0, rnorm(n, mean = demand_mean, sd = demand_sd))
+  revenue <- price * demand
+  cost <- unit_cost * demand
+  revenue - cost
+}
+
+profit <- simulate_profit(
+  n = 10000,
+  price = 40,
+  unit_cost = 25,
+  demand_mean = 1000,
+  demand_sd = 150
+)
+
+quantile(profit, c(0.05, 0.5, 0.95))
+```
+
+The teaching point is that simulation does not remove uncertainty. It
+makes uncertainty visible enough to reason about.
+
+## Lab
+
+Use this as a final project workshop. Students can bring a model result
+and revise it into a reproducible, reader-friendly statistical learning
+note.
