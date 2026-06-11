@@ -1,0 +1,33 @@
+---
+title: "Margins and Perceptron"
+---
+
+This lecture prepares students for support vector machines by focusing
+on linear decision boundaries, margins, and simple iterative learning
+rules.
+
+## Learning Objectives
+
+- Describe a linear classifier as a separating hyperplane.
+- Explain the perceptron update rule.
+- Connect classification mistakes to loss functions.
+- Use margins to reason about classifier robustness.
+
+## Core Ideas
+
+The perceptron is useful pedagogically because it makes classification
+geometry visible. A point is misclassified when the sign of
+$x_i^\top w$ does not match its label, and the update moves the
+boundary toward a better separation.
+
+## Worked Example
+
+Start with a two-dimensional synthetic data set. Animate or step through
+updates, then compare the learned boundary with logistic regression and
+a hard-margin classifier when separation is possible.
+
+## Lab
+
+Use the classification decision-region code as the base for an
+interactive exercise where students change the data geometry and watch
+the boundary move.
