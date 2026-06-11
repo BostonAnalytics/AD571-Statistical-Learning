@@ -1,0 +1,78 @@
+---
+title: "Model Selection and Regularization"
+---
+
+This lecture asks how to improve linear models when there are many
+candidate predictors, correlated variables, or a need for sparse and
+stable predictions.
+
+## Learning Objectives
+
+- Compare best subset, forward stepwise, and backward stepwise
+  selection.
+- Explain ridge regression and lasso as constrained optimization
+  problems.
+- Interpret the role of the tuning parameter.
+- Use cross-validation to choose model complexity.
+
+## Core Ideas
+
+Subset selection searches over models. Regularization changes the
+objective so that large or numerous coefficients are penalized:
+
+$$
+\sum_{i=1}^{n}(y_i - x_i^\top \beta)^2 + \lambda P(\beta).
+$$
+
+Different penalties encode different preferences about complexity.
+
+## Worked Example
+
+Use a regression data set with several predictors to compare stepwise
+selection, ridge, and lasso under cross-validation.
+
+## Selection Workflow
+
+Classical model selection provides a useful baseline before
+regularization. Start by comparing forward selection, backward
+elimination, and best subset selection.
+
+```r
+null_model <- lm(SalePrice ~ 1, data = train)
+full_model <- lm(SalePrice ~ ., data = train)
+
+forward_model <- step(
+  null_model,
+  scope = list(lower = null_model, upper = full_model),
+  direction = "forward"
+)
+
+backward_model <- step(full_model, direction = "backward")
+```
+
+This gives students a concrete path from "all possible predictors" to a
+selected linear model. The important caution is that stepwise procedures
+can overstate certainty because the same data are used to search and
+estimate.
+
+## Comparing Selection Criteria
+
+Compare candidate models using AIC, BIC, adjusted $R^2$, prediction
+error, and visual predicted-versus-actual checks:
+
+| Criterion | What it rewards | Caution |
+|---|---|---|
+| Adjusted $R^2$ | In-sample fit with a complexity adjustment | Still tied to the training sample. |
+| AIC | Predictive fit with a lighter penalty | Can choose larger models. |
+| BIC | Fit with a stronger complexity penalty | Can prefer simpler models. |
+| Cross-validation error | Estimated out-of-sample performance | Depends on the resampling design. |
+| Test error | Final held-out performance | Use once, after model selection. |
+
+This section should prepare students for ridge and lasso by showing the
+limits of discrete model search.
+
+## Lab
+
+Lab 04 and Lab 05 can be reorganized into one applied sequence: choose
+features, tune penalties, and report the final model with both accuracy
+and interpretability in mind.
