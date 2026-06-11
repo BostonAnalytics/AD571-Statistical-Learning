@@ -1,0 +1,33 @@
+---
+title: "Ensemble Methods"
+---
+
+Ensembles combine many weak or unstable learners to improve predictive
+performance. This lecture focuses on bagging, random forests, boosting,
+and the statistical idea of variance reduction.
+
+## Learning Objectives
+
+- Explain why averaging reduces variance.
+- Compare bagging and random forests.
+- Describe boosting as sequential error-focused learning.
+- Tune ensemble models without leaking test information.
+
+## Core Ideas
+
+Bagging builds many models on bootstrap samples and averages their
+predictions. Random forests decorrelate the trees by sampling predictors
+at each split. Boosting builds models sequentially so later learners
+focus on patterns missed by earlier ones.
+
+## Worked Example
+
+Compare a pruned tree, bagged trees, a random forest, and a boosted
+tree model on the same prediction task. Use performance and variable
+importance as discussion points.
+
+## Lab
+
+Lab 10 can become the applied exercise for ensemble methods. The
+gradient notes can support a short conceptual treatment of boosting as
+gradient-based optimization.
