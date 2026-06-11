@@ -1,0 +1,95 @@
+---
+title: "Linear Regression"
+---
+
+Linear regression is the first complete statistical learning workflow:
+model specification, estimation, interpretation, diagnostics,
+uncertainty, and prediction.
+
+## Learning Objectives
+
+- Write the simple and multiple linear regression models.
+- Interpret coefficients for continuous, categorical, and interaction
+  terms.
+- Explain least squares estimation and residual variation.
+- Separate coefficient uncertainty from prediction uncertainty.
+
+## Core Ideas
+
+For observations $(x_i, y_i)$, ordinary least squares estimates
+
+$$
+\hat{\beta} = \arg\min_{\beta} \sum_{i=1}^{n}
+(y_i - x_i^\top \beta)^2.
+$$
+
+The teaching emphasis should be statistical and computational: least
+squares is both an estimating principle and a loss-minimization
+procedure.
+
+## Worked Example
+
+Use the advertising data to move from simple regression to multiple
+regression and interactions. The finished lecture should show the same
+question from three angles: visual, algebraic, and predictive.
+
+## Applied Regression Workflow
+
+A complete regression analysis is a workflow, not a single call to
+`lm()`. This lecture should move through:
+
+1. define the prediction or explanation target,
+2. inspect the outcome distribution,
+3. examine predictor relationships and missingness,
+4. split the data before tuning or model comparison,
+5. fit simple and multiple regression baselines,
+6. diagnose residuals and influential observations,
+7. compare candidate models on validation or test data,
+8. translate the final model into a clear equation and interpretation.
+
+For the Ames housing example, the modeling target is `SalePrice`. A
+minimal teaching version can begin with:
+
+```r
+ames <- read.csv("../data/AmesHousing2.csv")
+
+set.seed(571)
+idx <- sample(seq_len(nrow(ames)), size = 0.8 * nrow(ames))
+train <- ames[idx, ]
+test <- ames[-idx, ]
+
+baseline <- lm(SalePrice ~ Gr.Liv.Area, data = train)
+expanded <- lm(
+  SalePrice ~ Gr.Liv.Area + Overall.Qual + Year.Built + Garage.Area,
+  data = train
+)
+```
+
+This example lets students see the difference between a single strong
+predictor and an additive model with several housing features. It also
+sets up the later discussion of model selection and regularization.
+
+## Diagnostics and Interpretation
+
+Use residual plots, normality checks, homoscedasticity checks,
+multicollinearity diagnostics, influential-observation diagnostics, and
+predicted-versus-actual plots as a sequence of questions:
+
+| Diagnostic | Teaching question |
+|---|---|
+| Residuals vs. fitted values | Is the mean structure missing curvature or interactions? |
+| Scale-location plot | Does error variance change with the fitted value? |
+| Normal Q-Q plot | Are intervals and tests relying on a poor approximation? |
+| Leverage and Cook's distance | Are a few observations controlling the fit? |
+| Correlation or VIF | Are coefficients unstable because predictors overlap? |
+| Test-set predicted vs. actual | Does the fitted model generalize? |
+
+The goal is not to make every diagnostic "perfect." The goal is to
+teach students how to notice model-data disagreement and decide whether
+the disagreement affects the scientific or predictive claim.
+
+## Lab
+
+Lab 01 and the OLS properties material can become a guided R exercise:
+fit a model, inspect residuals, compute summaries, and translate
+coefficients into plain-language claims.
