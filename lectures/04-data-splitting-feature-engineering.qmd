@@ -1,0 +1,103 @@
+---
+title: "Data Splitting and Feature Engineering"
+---
+
+This lecture bridges statistical modeling and practical machine
+learning workflows: split data correctly, prepare features reproducibly,
+and avoid leakage.
+
+## Learning Objectives
+
+- Create training, validation, and test partitions.
+- Identify leakage in preprocessing and feature construction.
+- Encode categorical variables and transform skewed predictors.
+- Build preprocessing steps that can be applied to future data.
+
+## Core Ideas
+
+Feature engineering is part of the model. Any operation that learns from
+the data must be estimated on the training set and applied unchanged to
+validation or test data.
+
+## Worked Example
+
+Use the Ames housing data to demonstrate:
+
+- partitioning,
+- missingness checks,
+- transformations,
+- dummy variables,
+- model-ready data objects.
+
+## Partitioning Patterns
+
+Data can be split with base R, `caret`, `rsample`, H2O, and other
+modeling frameworks. Teach the principle first, then show one modern
+implementation in detail.
+
+```r
+library(rsample)
+
+set.seed(571)
+ames_split <- initial_split(ames, prop = 0.8, strata = SalePrice)
+ames_train <- training(ames_split)
+ames_test <- testing(ames_split)
+```
+
+The point of stratification is to keep the response distribution roughly
+comparable across training and testing data. This is especially useful
+when the outcome is imbalanced or heavily skewed.
+
+## Feature Engineering Checklist
+
+A practical feature engineering checklist includes:
+
+| Step | Purpose |
+|---|---|
+| Transform skewed variables | Make relationships easier for simple models to capture. |
+| Scale numeric features | Put predictors on comparable scales for distance- or penalty-based methods. |
+| Bin carefully | Convert continuous variation into interpretable groups only when it helps. |
+| Lump rare levels | Reduce instability from sparse categorical levels. |
+| Encode categorical variables | Create model-ready features without inventing ordinal meaning. |
+| Handle missing values | Make missingness explicit and reproducible. |
+
+All of these steps must be learned from the training data and then
+applied to future data. That is the anti-leakage rule.
+
+```r
+library(recipes)
+
+ames_recipe <-
+  recipe(SalePrice ~ ., data = ames_train) |>
+  step_log(SalePrice, base = 10, skip = TRUE) |>
+  step_other(all_nominal_predictors(), threshold = 0.01) |>
+  step_dummy(all_nominal_predictors()) |>
+  step_zv(all_predictors()) |>
+  step_normalize(all_numeric_predictors())
+```
+
+## Interactions as Feature Construction
+
+An interaction lets the effect of one predictor depend on the value of
+another:
+
+$$
+\operatorname{E}(Y \mid X, Z) =
+\beta_0 + \beta_1X + \beta_2Z + \beta_3XZ.
+$$
+
+The marginal effect of $X$ is then
+
+$$
+\frac{\partial \operatorname{E}(Y \mid X, Z)}{\partial X}
+= \beta_1 + \beta_3Z.
+$$
+
+Once an interaction enters the model, the main effect of $X$ is
+conditional on the value of $Z$.
+
+## Lab
+
+Pair this lecture with an applied lab that turns partitioning,
+preprocessing, and model-ready feature construction into one clean
+workflow.
