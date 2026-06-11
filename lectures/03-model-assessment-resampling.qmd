@@ -1,0 +1,83 @@
+---
+title: "Model Assessment and Resampling"
+---
+
+This lecture turns model fitting into model evaluation. Students learn
+why training error is optimistic and how resampling estimates
+out-of-sample performance.
+
+## Learning Objectives
+
+- Define training, validation, and test error.
+- Compare validation splits, LOOCV, k-fold cross-validation, and the
+  bootstrap.
+- Explain the bias and variance of error estimates.
+- Use resampling to select among competing models.
+
+## Core Ideas
+
+A model is useful only if it generalizes. Cross-validation estimates
+generalization by repeatedly fitting on one part of the data and
+evaluating on held-out observations.
+
+## Worked Example
+
+Use an auto or housing data example to compare polynomial models under
+validation-set and k-fold cross-validation estimates.
+
+## Resampling Sequence
+
+One useful way to teach resampling is as a code-forward sequence:
+
+1. Fit competing polynomial regression models on the `Auto` data.
+2. Compare training error with validation-set error.
+3. Estimate test error with leave-one-out cross-validation.
+4. Repeat with k-fold cross-validation.
+5. Use the bootstrap to estimate uncertainty in a statistic or model
+   coefficient.
+
+The conceptual through-line is that resampling lets us ask questions
+that one fitted model cannot answer by itself.
+
+```r
+library(boot)
+library(ISLR)
+
+auto <- na.omit(ISLR::Auto)
+
+cv_error <- function(degree) {
+  fit <- glm(mpg ~ poly(horsepower, degree), data = auto)
+  cv.glm(auto, fit)$delta[1]
+}
+
+sapply(1:5, cv_error)
+```
+
+The important classroom moment is not the exact numeric winner. It is
+the comparison of model complexity against estimated out-of-sample
+error.
+
+## Bootstrap as Uncertainty Engine
+
+Bootstrap examples often start with estimating the uncertainty of a
+single statistic and then extend naturally to uncertainty in linear
+regression coefficients. The general recipe is:
+
+1. define the statistic of interest,
+2. resample rows with replacement,
+3. recompute the statistic many times,
+4. summarize the bootstrap distribution.
+
+```r
+boot_lm <- function(data, index) {
+  coef(lm(mpg ~ horsepower, data = data[index, ]))
+}
+
+boot(auto, boot_lm, R = 1000)
+```
+
+## Lab
+
+The companion lab applies validation splits, k-fold cross-validation,
+leave-one-out cross-validation, and polynomial model comparison:
+[Lab 03: Resampling Methods](../labs/03-resampling-methods.qmd).
