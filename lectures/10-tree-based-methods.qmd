@@ -1,0 +1,30 @@
+---
+title: "Tree-Based Methods"
+---
+
+Tree-based methods partition the feature space into regions and make
+simple predictions inside each region. They are intuitive, flexible, and
+often unstable enough to motivate ensembles.
+
+## Learning Objectives
+
+- Explain recursive binary splitting.
+- Distinguish regression trees and classification trees.
+- Interpret cost-complexity pruning.
+- Describe why single trees can have high variance.
+
+## Core Ideas
+
+A tree chooses splits that reduce impurity or prediction error. The
+model is easy to explain because prediction follows a sequence of
+feature-based questions.
+
+## Worked Example
+
+Fit a regression tree and a classification tree. Visualize the final
+tree, the feature-space partition, and the effect of pruning.
+
+## Lab
+
+Lab 09 can become the applied companion: tree fitting, pruning,
+cross-validation, and comparison with a linear baseline.
