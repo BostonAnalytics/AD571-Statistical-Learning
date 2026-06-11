@@ -1,0 +1,37 @@
+---
+title: "Logistic and Discriminant Methods"
+---
+
+This lecture shifts from continuous outcomes to classification and
+introduces probability models for class membership.
+
+## Learning Objectives
+
+- Explain why linear regression is not ideal for binary outcomes.
+- Fit and interpret logistic regression.
+- Compare logistic regression with LDA and QDA.
+- Evaluate classifiers using confusion matrices, sensitivity,
+  specificity, ROC curves, and calibration.
+
+## Core Ideas
+
+Logistic regression models conditional class probabilities through the
+log odds:
+
+$$
+\log\left(\frac{p(x)}{1 - p(x)}\right) = x^\top \beta.
+$$
+
+Discriminant analysis instead models the distribution of predictors
+within each class and then applies Bayes' rule.
+
+## Worked Example
+
+Use a binary classification data set to compare logistic regression,
+LDA, and QDA. Emphasize probability estimation before hard class labels.
+
+## Lab
+
+Lab 08 discriminant analysis can be paired with the logistic regression
+notes so students see both discriminative and generative classification
+views.
