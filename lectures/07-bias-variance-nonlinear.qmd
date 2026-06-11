@@ -1,0 +1,30 @@
+---
+title: "Bias, Variance, and Nonlinear Models"
+---
+
+This lecture connects model flexibility to prediction error and then
+introduces nonlinear regression tools such as polynomials, step
+functions, splines, and generalized additive models.
+
+## Learning Objectives
+
+- Explain the bias-variance tradeoff.
+- Identify underfitting and overfitting from train/test patterns.
+- Fit polynomial, step-function, spline, and additive models.
+- Use validation to choose nonlinear complexity.
+
+## Core Ideas
+
+Increasing flexibility often lowers bias and raises variance. The
+practical question is not whether a model is flexible, but whether its
+flexibility is earning lower expected test error.
+
+## Worked Example
+
+Use a simulated nonlinear function and a real data example to compare
+linear regression, polynomial regression, regression splines, and GAMs.
+
+## Lab
+
+Lab 06 nonlinear regression can become the applied exercise for this
+lecture.
