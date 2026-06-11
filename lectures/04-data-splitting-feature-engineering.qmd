@@ -96,8 +96,10 @@ $$
 Once an interaction enters the model, the main effect of $X$ is
 conditional on the value of $Z$.
 
-## Lab
+## Applied Practice
 
-Pair this lecture with an applied lab that turns partitioning,
-preprocessing, and model-ready feature construction into one clean
-workflow.
+Practice by turning a raw regression data set into a model-ready
+workflow: create the split first, transform skewed variables, encode
+categorical predictors, handle missing values, and fit the same model
+on the engineered training data and held-out test data. Explain which
+steps would cause leakage if estimated before the split.

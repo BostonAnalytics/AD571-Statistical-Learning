@@ -76,8 +76,10 @@ boot_lm <- function(data, index) {
 boot(auto, boot_lm, R = 1000)
 ```
 
-## Lab
+## Applied Practice
 
-The companion lab applies validation splits, k-fold cross-validation,
-leave-one-out cross-validation, and polynomial model comparison:
-[Lab 03: Resampling Methods](../labs/03-resampling-methods.qmd).
+Practice by comparing two candidate regression models with a train/test
+split, then repeat the comparison with k-fold cross-validation and
+leave-one-out cross-validation. For a simulated nonlinear response,
+fit polynomial models of several degrees and explain which degree earns
+the best estimated out-of-sample performance.

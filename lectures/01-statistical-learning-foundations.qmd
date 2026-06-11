@@ -35,3 +35,10 @@ Use a simple advertising or housing data example to show:
 - train/test split,
 - a baseline model,
 - a first estimate of prediction error.
+
+## Applied Practice
+
+Practice by inspecting a regression data set before fitting a model.
+Identify the observational unit, response, candidate predictors,
+unusual observations, and two pairwise relationships that may shape the
+first baseline model.

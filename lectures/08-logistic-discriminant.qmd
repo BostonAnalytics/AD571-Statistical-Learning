@@ -25,13 +25,67 @@ $$
 Discriminant analysis instead models the distribution of predictors
 within each class and then applies Bayes' rule.
 
+## Logistic Regression
+
+For a binary outcome, logistic regression models the probability of the
+positive class:
+
+$$
+p(x) = \Pr(Y = 1 \mid X = x).
+$$
+
+The logit link keeps fitted probabilities between 0 and 1:
+
+$$
+p(x) = \frac{\exp(x^\top\beta)}{1 + \exp(x^\top\beta)}.
+$$
+
+Coefficients are changes in log odds. Exponentiating a coefficient gives
+an odds ratio, holding other predictors fixed.
+
+```r
+library(ISLR)
+
+fit <- glm(
+  default ~ student + balance + income,
+  data = ISLR::Default,
+  family = binomial
+)
+
+summary(fit)
+exp(coef(fit))
+```
+
+## LDA and QDA
+
+LDA and QDA start from class-conditional densities,
+$f_k(x) = p(X = x \mid Y = k)$, and combine them with class priors
+$\pi_k$:
+
+$$
+\Pr(Y = k \mid X = x)
+= \frac{\pi_k f_k(x)}{\sum_{\ell} \pi_\ell f_\ell(x)}.
+$$
+
+LDA assumes a common covariance matrix across classes, producing linear
+decision boundaries. QDA allows class-specific covariance matrices,
+producing quadratic boundaries.
+
+## Evaluation
+
+Classification accuracy is often not enough, especially with rare
+events. Inspect the confusion matrix, sensitivity, specificity, ROC
+curve, and calibration. Thresholds should reflect the cost of false
+positives and false negatives.
+
 ## Worked Example
 
 Use a binary classification data set to compare logistic regression,
 LDA, and QDA. Emphasize probability estimation before hard class labels.
 
-## Lab
+## Applied Practice
 
-Lab 08 discriminant analysis can be paired with the logistic regression
-notes so students see both discriminative and generative classification
-views.
+Practice by fitting logistic regression, LDA, and QDA to the same
+classification data. Compare confusion matrices, error rates, and
+class probabilities. Explain how the preferred model would change if
+false positives and false negatives had different costs.

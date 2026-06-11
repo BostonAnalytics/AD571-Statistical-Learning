@@ -71,8 +71,10 @@ error, and visual predicted-versus-actual checks:
 This section should prepare students for ridge and lasso by showing the
 limits of discrete model search.
 
-## Lab
+## Applied Practice
 
-Lab 04 and Lab 05 can be reorganized into one applied sequence: choose
-features, tune penalties, and report the final model with both accuracy
-and interpretability in mind.
+Practice by comparing best subset selection, forward selection, and
+backward selection on the same regression task. Then fit ridge and
+lasso models with cross-validation. Report the selected predictors,
+test-set error, and the tradeoff between accuracy, stability, and
+interpretability.

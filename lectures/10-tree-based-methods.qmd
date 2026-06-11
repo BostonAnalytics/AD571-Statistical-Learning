@@ -19,12 +19,61 @@ A tree chooses splits that reduce impurity or prediction error. The
 model is easy to explain because prediction follows a sequence of
 feature-based questions.
 
+## Recursive Binary Splitting
+
+Regression trees choose splits that reduce residual sum of squares.
+Classification trees choose splits that reduce node impurity. Common
+classification impurity measures are the Gini index
+
+$$
+G = \sum_{k=1}^{K} \hat p_{mk}(1 - \hat p_{mk})
+$$
+
+and cross-entropy
+
+$$
+D = - \sum_{k=1}^{K} \hat p_{mk}\log(\hat p_{mk}),
+$$
+
+where $\hat p_{mk}$ is the proportion of class $k$ observations in node
+$m$.
+
+## Pruning
+
+A fully grown tree can overfit. Cost-complexity pruning chooses a
+subtree by minimizing
+
+$$
+\sum_{m=1}^{|T|} \sum_{i:x_i \in R_m} (y_i - \hat y_{R_m})^2
++ \alpha |T|.
+$$
+
+The tuning parameter $\alpha$ penalizes tree size. Larger values produce
+smaller trees.
+
+```r
+library(rpart)
+
+tree <- rpart(Sales ~ ., data = ISLR::Carseats)
+printcp(tree)
+pruned <- prune(tree, cp = tree$cptable[which.min(tree$cptable[, "xerror"]), "CP"])
+```
+
+## Strengths and Limits
+
+Trees handle interactions and nonlinearities naturally. They also
+require little preprocessing. Their main weakness is instability: small
+changes in the data can lead to different splits. This instability
+motivates bagging, random forests, and boosting.
+
 ## Worked Example
 
 Fit a regression tree and a classification tree. Visualize the final
 tree, the feature-space partition, and the effect of pruning.
 
-## Lab
+## Applied Practice
 
-Lab 09 can become the applied companion: tree fitting, pruning,
-cross-validation, and comparison with a linear baseline.
+Practice by fitting a classification tree and comparing it with a
+logistic regression baseline. Prune the tree using cross-validation,
+then report whether the tree's interpretability and accuracy justify
+using it over the linear classifier.

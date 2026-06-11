@@ -22,13 +22,48 @@ The quality of an unsupervised analysis depends on the distance metric,
 preprocessing, stability, and whether the discovered structure answers
 a meaningful question.
 
+## Clustering
+
+K-means clustering partitions observations into $K$ groups by minimizing
+within-cluster squared distance:
+
+$$
+\sum_{k=1}^{K} \sum_{i \in C_k} \|x_i - \bar x_k\|^2.
+$$
+
+The analyst chooses $K$, so clustering should be checked for stability
+and interpretability.
+
+```r
+set.seed(571)
+x <- scale(USArrests)
+km <- kmeans(x, centers = 3, nstart = 20)
+km$cluster
+```
+
+Hierarchical clustering builds a tree of nested clusters. It requires a
+distance metric and linkage rule.
+
+```r
+hc <- hclust(dist(x), method = "complete")
+plot(hc)
+rect.hclust(hc, k = 3)
+```
+
+## PCA for Unsupervised Structure
+
+PCA is often used before clustering to visualize high-dimensional data.
+It can reveal dominant directions of variation, but those directions are
+not automatically the most meaningful scientific dimensions.
+
 ## Worked Example
 
 Use a data set with several numeric features. Scale the data, visualize
 PCA scores, run k-means for multiple values of $k$, and compare with a
 hierarchical clustering solution.
 
-## Lab
+## Applied Practice
 
-The Jupyter unsupervised learning lab can be translated or linked as a
-language-agnostic exercise.
+Practice by clustering a scaled numeric data set, comparing several
+values of $K$, and explaining whether the clusters are stable and
+meaningful.

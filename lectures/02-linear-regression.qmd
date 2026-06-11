@@ -88,8 +88,10 @@ The goal is not to make every diagnostic "perfect." The goal is to
 teach students how to notice model-data disagreement and decide whether
 the disagreement affects the scientific or predictive claim.
 
-## Lab
+## Applied Practice
 
-Lab 01 and the OLS properties material can become a guided R exercise:
-fit a model, inspect residuals, compute summaries, and translate
-coefficients into plain-language claims.
+Practice by fitting simple and multiple regression models to the
+advertising data. Compare coefficient interpretations, residual
+standard error, test-set RMSE, and a predicted-versus-actual plot. End
+with a short paragraph explaining which predictors matter and whether
+the fitted model appears useful for prediction.

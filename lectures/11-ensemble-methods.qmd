@@ -20,14 +20,70 @@ predictions. Random forests decorrelate the trees by sampling predictors
 at each split. Boosting builds models sequentially so later learners
 focus on patterns missed by earlier ones.
 
+## Bagging
+
+Bagging reduces variance by averaging many trees fit to bootstrap
+samples:
+
+$$
+\hat f_{\text{bag}}(x) =
+\frac{1}{B}\sum_{b=1}^{B}\hat f^{*b}(x).
+$$
+
+For regression, predictions are averaged. For classification, trees vote
+or average class probabilities.
+
+## Random Forests
+
+Random forests add a second layer of randomness. At each split, the tree
+can consider only a random subset of predictors. This reduces
+correlation among trees and often improves the average.
+
+The main tuning parameters are the number of trees, the number of
+predictors considered at each split (`mtry`), and tree size controls.
+
+## Boosting
+
+Boosting builds an additive model:
+
+$$
+\hat f(x) = \sum_{b=1}^{B} \lambda \hat f_b(x),
+$$
+
+where each new tree is fit to improve the current model. Important
+tuning parameters include the number of trees, learning rate, tree
+depth, and minimum observations per terminal node.
+
+```r
+library(caret)
+
+ctrl <- trainControl(method = "cv", number = 5)
+
+rf_fit <- train(High ~ ., data = train, method = "rf", trControl = ctrl)
+gbm_fit <- train(
+  High ~ .,
+  data = train,
+  method = "gbm",
+  trControl = ctrl,
+  verbose = FALSE
+)
+```
+
+## Interpretation
+
+Ensembles can be more accurate than a single tree but less transparent.
+Use variable importance, partial dependence, and test-set performance to
+explain what the model is doing.
+
 ## Worked Example
 
 Compare a pruned tree, bagged trees, a random forest, and a boosted
 tree model on the same prediction task. Use performance and variable
 importance as discussion points.
 
-## Lab
+## Applied Practice
 
-Lab 10 can become the applied exercise for ensemble methods. The
-gradient notes can support a short conceptual treatment of boosting as
-gradient-based optimization.
+Practice by comparing a single tree, bagged trees, a random forest, and
+a boosted tree model on the same prediction task. Use resampling to
+tune the models, evaluate them on held-out data, and decide whether the
+gain in accuracy is worth the loss of transparency.

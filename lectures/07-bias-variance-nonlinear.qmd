@@ -19,12 +19,58 @@ Increasing flexibility often lowers bias and raises variance. The
 practical question is not whether a model is flexible, but whether its
 flexibility is earning lower expected test error.
 
+For a new point $x_0$, the expected prediction error can be decomposed
+as
+
+$$
+\operatorname{E}\{(Y - \hat f(x_0))^2\}
+= \operatorname{Var}(\epsilon)
++ \operatorname{Bias}(\hat f(x_0))^2
++ \operatorname{Var}(\hat f(x_0)).
+$$
+
+The irreducible error $\operatorname{Var}(\epsilon)$ remains even for a
+perfect estimate of the regression function. The reducible part depends
+on the learning method, sample size, and model complexity.
+
+## Nonlinear Regression Tools
+
+Linear regression can represent nonlinear relationships by transforming
+or expanding the predictors.
+
+| Method | Model idea | Main tuning choice |
+|---|---|---|
+| Polynomial regression | Add powers such as $x^2$ and $x^3$ | Degree |
+| Step functions | Divide a predictor into intervals | Cut points |
+| Regression splines | Fit smooth piecewise polynomials | Knots or degrees of freedom |
+| GAMs | Add smooth functions of multiple predictors | Smoothness per term |
+
+```r
+library(ISLR)
+library(splines)
+library(gam)
+
+wage <- ISLR::Wage
+
+poly_fit <- lm(wage ~ poly(age, 4), data = wage)
+spline_fit <- lm(wage ~ bs(age, df = 6), data = wage)
+gam_fit <- gam(wage ~ s(age, df = 5) + education + year, data = wage)
+```
+
+## Choosing Flexibility
+
+Use validation or cross-validation to choose flexibility. Training error
+usually decreases as models become more flexible, but test error often
+decreases only until the model starts fitting noise.
+
 ## Worked Example
 
 Use a simulated nonlinear function and a real data example to compare
 linear regression, polynomial regression, regression splines, and GAMs.
 
-## Lab
+## Applied Practice
 
-Lab 06 nonlinear regression can become the applied exercise for this
-lecture.
+Practice by modeling a nonlinear relationship with polynomial terms,
+step functions, regression splines, and a generalized additive model.
+Use validation or cross-validation to choose complexity, then explain
+which model balances flexibility and interpretability best.

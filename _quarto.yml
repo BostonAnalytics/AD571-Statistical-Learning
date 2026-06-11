@@ -24,9 +24,6 @@ book:
         - lectures/12-support-vector-machines.qmd
         - lectures/13-unsupervised-learning.qmd
         - lectures/14-statistical-learning-in-practice.qmd
-    - part: "Labs"
-      chapters:
-        - labs/03-resampling-methods.qmd
 
 format:
   html:

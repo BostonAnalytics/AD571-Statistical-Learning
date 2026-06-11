@@ -61,8 +61,9 @@ quantile(profit, c(0.05, 0.5, 0.95))
 The teaching point is that simulation does not remove uncertainty. It
 makes uncertainty visible enough to reason about.
 
-## Lab
+## Applied Practice
 
-Use this as a final project workshop. Students can bring a model result
-and revise it into a reproducible, reader-friendly statistical learning
-note.
+For a final project workshop, prepare a reproducible modeling report
+that includes the research question, data source, preprocessing,
+candidate models, validation strategy, final model, limitations, and
+next steps.

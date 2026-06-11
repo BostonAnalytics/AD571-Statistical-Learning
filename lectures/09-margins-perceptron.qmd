@@ -20,14 +20,49 @@ geometry visible. A point is misclassified when the sign of
 $x_i^\top w$ does not match its label, and the update moves the
 boundary toward a better separation.
 
+For labels $y_i \in \{-1, 1\}$, the perceptron predicts using
+
+$$
+\hat y_i = \operatorname{sign}(w^\top x_i + b).
+$$
+
+When observation $i$ is misclassified, the weights are updated as
+
+$$
+w \leftarrow w + \eta y_i x_i,
+\qquad
+b \leftarrow b + \eta y_i,
+$$
+
+where $\eta$ is a learning rate. The update moves the boundary in the
+direction that would make the current example more likely to be
+classified correctly.
+
+## Margins
+
+A margin measures how far an observation is from the decision boundary.
+Large margins are desirable because small perturbations to the data are
+less likely to change the predicted class. This idea leads directly to
+support vector machines, which choose a separating boundary by
+maximizing the margin while allowing controlled violations.
+
+```r
+set.seed(571)
+x1 <- rnorm(100)
+x2 <- rnorm(100)
+y <- factor(ifelse(x1 + x2 + rnorm(100, sd = 0.5) > 0, "A", "B"))
+plot(x1, x2, col = y, pch = 19)
+```
+
 ## Worked Example
 
 Start with a two-dimensional synthetic data set. Animate or step through
 updates, then compare the learned boundary with logistic regression and
 a hard-margin classifier when separation is possible.
 
-## Lab
+## Applied Practice
 
-Use the classification decision-region code as the base for an
-interactive exercise where students change the data geometry and watch
-the boundary move.
+Practice by drawing a two-dimensional classification data set, fitting
+a linear classifier, and identifying points close to the decision
+boundary. Explain how changing the margin or allowing violations would
+change the fitted boundary.

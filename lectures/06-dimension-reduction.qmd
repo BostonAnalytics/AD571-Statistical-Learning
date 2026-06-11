@@ -20,12 +20,86 @@ Principal components replace the original predictors with orthogonal
 linear combinations. PCR then fits a supervised model using the first
 few components rather than all original predictors.
 
+Suppose the centered and scaled predictor matrix is $X$. Principal
+component analysis finds loading vectors $v_1, v_2, \ldots$ so that the
+first score vector
+
+$$
+z_1 = Xv_1
+$$
+
+has the largest possible variance subject to $\|v_1\| = 1$. The second
+component maximizes variance subject to being orthogonal to the first,
+and so on. The result is a new coordinate system ordered by the amount
+of predictor variation each component explains.
+
+Scaling matters. Without scaling, variables measured on larger numeric
+scales can dominate the components even when they are not more
+important for the modeling question.
+
+## PCA for Exploration
+
+PCA is often used before modeling to inspect structure in many
+predictors at once.
+
+```r
+library(ISLR)
+
+college <- ISLR::College
+x <- model.matrix(Apps ~ ., college)[, -1]
+
+pca <- prcomp(x, center = TRUE, scale. = TRUE)
+summary(pca)
+biplot(pca, scale = 0)
+```
+
+The proportion of variance explained tells how much predictor variation
+is represented by each component. The loadings show which original
+variables define each component.
+
+## Principal Components Regression
+
+PCR uses principal components as predictors in a regression model. It is
+especially useful when predictors are numerous and correlated.
+
+```r
+library(pls)
+
+set.seed(571)
+pcr_fit <- pcr(
+  Apps ~ .,
+  data = college,
+  scale = TRUE,
+  validation = "CV"
+)
+
+validationplot(pcr_fit, val.type = "MSEP")
+```
+
+Cross-validation chooses how many components to keep. Keeping too few
+components can miss signal; keeping too many can reintroduce noise.
+
+## PCA, PCR, and PLS
+
+PCA is unsupervised: it uses only the predictors. PCR is supervised only
+after the PCA step: it regresses the outcome on selected components.
+Partial least squares is supervised during component construction: it
+chooses components that are related to both $X$ and $Y$.
+
+| Method | Uses outcome when constructing components? | Common use |
+|---|---:|---|
+| PCA | No | Visualization and compression |
+| PCR | No | Regression with many correlated predictors |
+| PLS | Yes | Prediction when directions of high predictor variance may not align with the outcome |
+
 ## Worked Example
 
 Use a data set with correlated predictors. Visualize the first two
 components, then compare ordinary least squares, ridge, PCR, and PLS.
 
-## Lab
+## Applied Practice
 
-The Lab 05 dimension-reduction files can become a companion exercise
-focused on scaling, component interpretation, and test-set error.
+Practice by fitting principal components regression on a data set with
+many correlated predictors. Use cross-validation to choose the number
+of components, compare PCR with ordinary least squares and penalized
+regression, and interpret what the first two components represent.

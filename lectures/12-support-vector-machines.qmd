@@ -20,13 +20,64 @@ violations. The kernel trick lets the model compute similarities in a
 high-dimensional feature space without explicitly constructing every
 feature.
 
+## Separating Hyperplanes
+
+For two classes coded as $y_i \in \{-1, 1\}$, a separating hyperplane
+has the form
+
+$$
+f(x) = \beta_0 + x^\top \beta.
+$$
+
+The sign of $f(x)$ determines the predicted class. The margin is the
+distance between the separating hyperplane and the closest training
+points. Those closest points are the support vectors.
+
+## Soft-Margin Classifier
+
+Perfect separation is often impossible or undesirable. The soft-margin
+classifier allows violations with slack variables:
+
+$$
+y_i(\beta_0 + x_i^\top\beta) \geq 1 - \xi_i,
+\quad \xi_i \geq 0.
+$$
+
+The cost parameter controls the tradeoff between a wide margin and
+classification violations. A large cost penalizes violations heavily; a
+small cost allows more violations and usually a wider margin.
+
+## Kernels
+
+Kernels replace inner products with similarity functions. Common choices
+include:
+
+| Kernel | Use |
+|---|---|
+| Linear | Approximately linear class boundary |
+| Polynomial | Curved boundaries with global polynomial structure |
+| Radial basis | Flexible local boundaries |
+| Sigmoid | Neural-network-like similarity, less common in practice |
+
+```r
+library(e1071)
+
+linear_svm <- svm(y ~ ., data = train, kernel = "linear", cost = 1)
+radial_svm <- svm(y ~ ., data = train, kernel = "radial", cost = 1)
+```
+
+SVMs are sensitive to feature scale, so numeric predictors should be
+centered and scaled.
+
 ## Worked Example
 
 Use a two-dimensional classification example to compare linear,
 polynomial, and radial kernels. Show how the decision boundary changes
 as the tuning parameters change.
 
-## Lab
+## Applied Practice
 
-Lab 11 can become the applied SVM exercise. The lecture should include a
-small visual demo before moving to a larger data set.
+Practice by fitting linear, radial, and polynomial SVMs after centering
+and scaling numeric predictors. Tune the cost and kernel parameters
+with cross-validation, then compare the resulting decision boundaries
+and test-set performance.
