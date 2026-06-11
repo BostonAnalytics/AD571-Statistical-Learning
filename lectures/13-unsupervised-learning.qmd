@@ -1,0 +1,34 @@
+---
+title: "Unsupervised Learning"
+---
+
+Unsupervised learning searches for structure without an observed
+response. This lecture focuses on clustering, dimension reduction for
+exploration, and the risks of over-interpreting discovered patterns.
+
+## Learning Objectives
+
+- Distinguish supervised prediction from unsupervised structure
+  discovery.
+- Apply PCA for visualization and compression.
+- Compare k-means and hierarchical clustering.
+- Evaluate unsupervised results with stability, context, and
+  downstream usefulness.
+
+## Core Ideas
+
+Without a response variable, there is no single test error to optimize.
+The quality of an unsupervised analysis depends on the distance metric,
+preprocessing, stability, and whether the discovered structure answers
+a meaningful question.
+
+## Worked Example
+
+Use a data set with several numeric features. Scale the data, visualize
+PCA scores, run k-means for multiple values of $k$, and compare with a
+hierarchical clustering solution.
+
+## Lab
+
+The Jupyter unsupervised learning lab can be translated or linked as a
+language-agnostic exercise.
