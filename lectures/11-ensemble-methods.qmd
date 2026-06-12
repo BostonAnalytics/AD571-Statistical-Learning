@@ -35,7 +35,14 @@ Bagging uses bootstrap samples to create many training sets. Each tree
 is usually grown deeply, so individual trees are flexible and unstable.
 The average is more stable than any one tree.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(randomForest)
 
 bag_fit <- randomForest(
@@ -45,6 +52,24 @@ bag_fit <- randomForest(
   importance = TRUE
 )
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.ensemble import RandomForestClassifier
+
+bag_fit = RandomForestClassifier(
+    n_estimators=500,
+    max_features=None,
+    random_state=571
+)
+bag_fit.fit(X_train, y_train)
+```
+
+:::
 
 When `mtry` equals the number of predictors, each split can consider
 all variables. This is bagging for tree models.
@@ -79,7 +104,14 @@ captured well. The learning rate $\lambda$ controls how much each tree
 contributes. Smaller learning rates usually require more trees but can
 generalize better.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(gbm)
 
 boost_fit <- gbm(
@@ -92,6 +124,25 @@ boost_fit <- gbm(
   cv.folds = 5
 )
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.ensemble import GradientBoostingRegressor
+
+boost_fit = GradientBoostingRegressor(
+    n_estimators=3000,
+    learning_rate=0.01,
+    max_depth=3,
+    random_state=571
+)
+boost_fit.fit(X_train, y_train)
+```
+
+:::
 
 Boosting is powerful, but it has more tuning choices: number of trees,
 learning rate, interaction depth, and minimum observations in terminal
