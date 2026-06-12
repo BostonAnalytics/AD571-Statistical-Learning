@@ -61,7 +61,14 @@ quality or living area, then on neighborhood, age, or basement size. In
 a car-seat sales example, a tree may split on shelving location, price,
 advertising, or competitor price.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(rpart)
 
 sales_tree <- rpart(Sales ~ ., data = ISLR::Carseats)
@@ -69,6 +76,39 @@ printcp(sales_tree)
 plot(sales_tree)
 text(sales_tree, use.n = TRUE)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.tree import DecisionTreeRegressor, plot_tree
+import matplotlib.pyplot as plt
+
+X = carseats.drop(columns=["Sales"])
+y = carseats["Sales"]
+categorical = X.select_dtypes(exclude="number").columns
+
+preprocess = ColumnTransformer([
+    ("categorical", OneHotEncoder(handle_unknown="ignore"), categorical)
+], remainder="passthrough")
+
+sales_tree = make_pipeline(
+    preprocess,
+    DecisionTreeRegressor(random_state=571, min_samples_leaf=10)
+).fit(X, y)
+
+plt.figure(figsize=(12, 6))
+plot_tree(sales_tree.named_steps["decisiontreeregressor"], max_depth=3)
+plt.show()
+```
+
+:::
 
 The tree should be read as a set of local comparisons. A split near the
 root affects many observations; a split near a leaf affects a smaller
@@ -90,13 +130,37 @@ $$
 The tuning parameter $\alpha$ penalizes tree size. Larger values produce
 smaller trees.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 best_cp <- sales_tree$cptable[
   which.min(sales_tree$cptable[, "xerror"]),
   "CP"
 ]
 pruned_tree <- prune(sales_tree, cp = best_cp)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+tree_model = sales_tree.named_steps["decisiontreeregressor"]
+path = tree_model.cost_complexity_pruning_path(
+    sales_tree.named_steps["columntransformer"].transform(X),
+    y
+)
+ccp_alphas = path.ccp_alphas
+print(ccp_alphas[:10])
+```
+
+:::
 
 Cross-validation should be used to choose the pruning level. A smaller
 tree with nearly the same error is often preferable because it is easier
