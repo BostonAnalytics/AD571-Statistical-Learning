@@ -41,7 +41,7 @@ The average is more stable than any one tree.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(randomForest)
 
@@ -57,7 +57,7 @@ bag_fit <- randomForest(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.ensemble import RandomForestClassifier
 
@@ -110,7 +110,7 @@ generalize better.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(gbm)
 
@@ -129,7 +129,7 @@ boost_fit <- gbm(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.ensemble import GradientBoostingRegressor
 
