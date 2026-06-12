@@ -48,7 +48,7 @@ probability model, and converts probabilities into labels.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 n <- 300
@@ -73,7 +73,7 @@ table(predicted = classification_data$pred,
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
