@@ -108,7 +108,7 @@ The opening analysis should answer five questions:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(MASS)
 
@@ -126,7 +126,7 @@ summary(expanded)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import pandas as pd
 import statsmodels.formula.api as smf

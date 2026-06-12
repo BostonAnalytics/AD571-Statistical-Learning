@@ -53,7 +53,7 @@ regression to multiple regression. Suppose `sales` is the response and
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 advertising <- data.frame(
@@ -80,7 +80,7 @@ summary(interaction_fit)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -131,7 +131,7 @@ candidate models:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 id <- sample(seq_len(nrow(advertising)), size = 0.8 * nrow(advertising))
@@ -150,7 +150,7 @@ test_r2 <- 1 - sum((test$sales - pred)^2) /
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
@@ -217,7 +217,7 @@ Diagnostics convert assumptions into visible questions:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 par(mfrow = c(2, 2))
 plot(fit)
@@ -227,7 +227,7 @@ plot(fit)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import matplotlib.pyplot as plt
 import scipy.stats as stats
