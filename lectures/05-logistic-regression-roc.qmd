@@ -49,7 +49,7 @@ probability estimation, and threshold choice.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 n <- 1000
@@ -74,7 +74,7 @@ exp(coef(logit_fit))
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -113,7 +113,7 @@ monotonically with the predictor.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 credit$balance_bin <- cut(credit$balance,
                           breaks = quantile(credit$balance, probs = seq(0, 1, 0.1)),
@@ -125,7 +125,7 @@ aggregate(default ~ balance_bin, data = credit, mean)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 credit["balance_bin"] = pd.qcut(credit["balance"], q=10, duplicates="drop")
 print(credit.groupby("balance_bin")["default"].mean())
@@ -148,7 +148,7 @@ positive cases above negative cases.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 thresholds <- seq(0, 1, length.out = 101)
 roc_points <- do.call(rbind, lapply(thresholds, function(cutoff) {
@@ -170,7 +170,7 @@ head(roc_points)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 thresholds = np.linspace(0, 1, 101)
 records = []
