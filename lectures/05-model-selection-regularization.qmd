@@ -2,79 +2,146 @@
 title: "Model Selection and Regularization"
 ---
 
-This lecture asks how to improve linear models when there are many
-candidate predictors, correlated variables, or a need for sparse and
-stable predictions.
+Model selection asks which predictors and which level of complexity
+should be used. Regularization answers the same question by changing
+the estimation problem: instead of choosing one subset of predictors
+directly, it penalizes coefficient size or coefficient count.
 
 ## Learning Objectives
 
 - Compare best subset, forward stepwise, and backward stepwise
   selection.
-- Explain ridge regression and lasso as constrained optimization
-  problems.
-- Interpret the role of the tuning parameter.
-- Use cross-validation to choose model complexity.
+- Use adjusted $R^2$, $C_p$, BIC, AIC, validation error, and
+  cross-validation error.
+- Explain ridge regression and lasso as penalized least squares.
+- Describe why standardization matters for penalized regression.
+- Use cross-validation to choose a tuning parameter.
 
-## Core Ideas
+## Why Selection Is Hard
 
-Subset selection searches over models. Regularization changes the
-objective so that large or numerous coefficients are penalized:
+With $p$ predictors, best subset selection considers $2^p$ possible
+models. That search can find a model that fits the training data well,
+but the search itself adds variability. The selected model may look
+more certain than it really is because the same data were used to try
+many alternatives.
 
-$$
-\sum_{i=1}^{n}(y_i - x_i^\top \beta)^2 + \lambda P(\beta).
-$$
+Selection should therefore be evaluated with a criterion that accounts
+for complexity or with held-out prediction error.
 
-Different penalties encode different preferences about complexity.
+## Subset and Stepwise Selection
 
-## Candidate Model Comparison
-
-Use a regression data set with several predictors to compare stepwise
-selection, ridge, and lasso under cross-validation.
-
-## Selection Workflow
-
-Classical model selection provides a useful baseline before
-regularization. Start by comparing forward selection, backward
-elimination, and best subset selection.
+Best subset selection chooses the best model of each size. Forward
+stepwise selection starts from the intercept-only model and adds one
+predictor at a time. Backward stepwise selection starts from the full
+model and removes one predictor at a time.
 
 ```r
-null_model <- lm(SalePrice ~ 1, data = train)
-full_model <- lm(SalePrice ~ ., data = train)
+library(leaps)
 
-forward_model <- step(
-  null_model,
-  scope = list(lower = null_model, upper = full_model),
-  direction = "forward"
-)
+subset_fit <- regsubsets(SalePrice ~ ., data = train, nvmax = 20)
+subset_summary <- summary(subset_fit)
 
-backward_model <- step(full_model, direction = "backward")
+which.min(subset_summary$bic)
+which.max(subset_summary$adjr2)
 ```
 
-This gives students a concrete path from "all possible predictors" to a
-selected linear model. The important caution is that stepwise procedures
-can overstate certainty because the same data are used to search and
-estimate.
+The resulting model path can be compared using:
 
-## Comparing Selection Criteria
-
-Compare candidate models using AIC, BIC, adjusted $R^2$, prediction
-error, and visual predicted-versus-actual checks:
-
-| Criterion | What it rewards | Caution |
+| Criterion | Preference | Caution |
 |---|---|---|
-| Adjusted $R^2$ | In-sample fit with a complexity adjustment | Still tied to the training sample. |
-| AIC | Predictive fit with a lighter penalty | Can choose larger models. |
-| BIC | Fit with a stronger complexity penalty | Can prefer simpler models. |
-| Cross-validation error | Estimated out-of-sample performance | Depends on the resampling design. |
-| Test error | Final held-out performance | Use once, after model selection. |
+| Training RSS | Larger models | Always decreases as predictors are added |
+| Adjusted $R^2$ | Fit adjusted for model size | Still an in-sample measure |
+| Mallows' $C_p$ | Low estimated prediction error | Depends on variance estimate |
+| AIC | Predictive fit with lighter penalty | Can select larger models |
+| BIC | Fit with stronger penalty | Often selects simpler models |
+| Cross-validation | Held-out predictive performance | Depends on split design |
 
-This section should prepare students for ridge and lasso by showing the
-limits of discrete model search.
+## Media Incivility Selection Example
 
-## Selection Practice
+A model-selection analysis should connect the criterion to the research
+question. For a media-incivility outcome with many political,
+platform, or text features, an exhaustive search can identify candidate
+models of each size, while forward and backward selection provide
+computationally cheaper alternatives.
 
-Practice by comparing best subset selection, forward selection, and
-backward selection on the same regression task. Then fit ridge and
-lasso models with cross-validation. Report the selected predictors,
-test-set error, and the tradeoff between accuracy, stability, and
-interpretability.
+The analysis workflow is:
+
+1. define the outcome and candidate predictors,
+2. split the data or define cross-validation folds,
+3. fit the candidate model paths on the training data,
+4. compare $R^2$, adjusted $R^2$, $C_p$, BIC, and validation error,
+5. refit the selected specification on the training data,
+6. evaluate once on the held-out data,
+7. describe the selected predictors without overstating certainty.
+
+## Ridge Regression
+
+Ridge regression minimizes
+
+$$
+\sum_{i=1}^{n}(y_i - x_i^\top\beta)^2
++ \lambda \sum_{j=1}^{p}\beta_j^2.
+$$
+
+The $\ell_2$ penalty shrinks coefficients toward zero but usually does
+not set them exactly to zero. Ridge is especially helpful when
+predictors are correlated: it distributes signal across related
+variables and lowers variance.
+
+```r
+library(glmnet)
+
+x_train <- model.matrix(Apps ~ ., College)[, -1]
+y_train <- College$Apps
+
+ridge_cv <- cv.glmnet(x_train, y_train, alpha = 0)
+coef(ridge_cv, s = "lambda.min")
+coef(ridge_cv, s = "lambda.1se")
+```
+
+## Lasso
+
+The lasso minimizes
+
+$$
+\sum_{i=1}^{n}(y_i - x_i^\top\beta)^2
++ \lambda \sum_{j=1}^{p}|\beta_j|.
+$$
+
+The $\ell_1$ penalty can set coefficients exactly to zero, so lasso is
+both a prediction method and a variable-selection method. When
+predictors are strongly correlated, lasso may choose one representative
+predictor and ignore others with similar information.
+
+```r
+lasso_cv <- cv.glmnet(x_train, y_train, alpha = 1)
+coef(lasso_cv, s = "lambda.min")
+coef(lasso_cv, s = "lambda.1se")
+```
+
+`lambda.min` gives the value with the lowest cross-validation error.
+`lambda.1se` gives the simplest model whose error is within one
+standard error of the minimum. The one-standard-error rule is often a
+good teaching device because it makes the accuracy-simplicity tradeoff
+explicit.
+
+## Scaling and Interpretation
+
+Penalties operate on coefficient size, so predictors must be on
+comparable scales. Otherwise a variable measured in large units may be
+penalized differently from a variable measured in small units. Most
+software standardizes predictors internally by default, but analysts
+should know whether and how that standardization occurred.
+
+After penalized regression, coefficient interpretation should be
+careful. Shrinkage intentionally biases coefficients toward zero to
+reduce variance. Penalized coefficients are not ordinary least-squares
+estimates with ordinary standard errors.
+
+## Chapter Synthesis
+
+Analyze one data set with best subset selection, forward selection,
+backward selection, ridge, and lasso. Compare selected predictors,
+cross-validation error, held-out error, and interpretability. Explain
+whether the final choice is driven more by prediction accuracy,
+stability, sparsity, or communication.

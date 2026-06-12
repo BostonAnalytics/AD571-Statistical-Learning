@@ -2,90 +2,140 @@
 title: "Logistic and Discriminant Methods"
 ---
 
-This lecture shifts from continuous outcomes to classification and
-introduces probability models for class membership.
+Classification models estimate class membership. This chapter focuses
+on probability-based classifiers: logistic regression, linear
+discriminant analysis, and quadratic discriminant analysis.
 
 ## Learning Objectives
 
-- Explain why linear regression is not ideal for binary outcomes.
+- Explain why ordinary linear regression is not appropriate for binary
+  outcomes.
 - Fit and interpret logistic regression.
+- Interpret log odds, odds ratios, fitted probabilities, and thresholds.
 - Compare logistic regression with LDA and QDA.
-- Evaluate classifiers using confusion matrices, sensitivity,
-  specificity, ROC curves, and calibration.
-
-## Core Ideas
-
-Logistic regression models conditional class probabilities through the
-log odds:
-
-$$
-\log\left(\frac{p(x)}{1 - p(x)}\right) = x^\top \beta.
-$$
-
-Discriminant analysis instead models the distribution of predictors
-within each class and then applies Bayes' rule.
+- Evaluate classifiers with confusion matrices, sensitivity,
+  specificity, ROC curves, AUC, and calibration.
 
 ## Logistic Regression
 
-For a binary outcome, logistic regression models the probability of the
-positive class:
+For a binary outcome, logistic regression models
 
 $$
-p(x) = \Pr(Y = 1 \mid X = x).
+p(x) = \Pr(Y = 1 \mid X=x).
 $$
 
-The logit link keeps fitted probabilities between 0 and 1:
+The logit link maps probabilities to the real line:
 
 $$
-p(x) = \frac{\exp(x^\top\beta)}{1 + \exp(x^\top\beta)}.
+\log\left(\frac{p(x)}{1-p(x)}\right)
+= \beta_0 + x^\top\beta.
 $$
 
-Coefficients are changes in log odds. Exponentiating a coefficient gives
-an odds ratio, holding other predictors fixed.
+Equivalently,
+
+$$
+p(x) =
+\frac{\exp(\beta_0 + x^\top\beta)}
+{1 + \exp(\beta_0 + x^\top\beta)}.
+$$
+
+Coefficients are changes in log odds. Exponentiating a coefficient
+gives an odds ratio, holding the other predictors fixed.
+
+## Credit Default Example
+
+The default data show why probability estimation matters. The response
+is rare, so accuracy can be misleading: a classifier that predicts "no
+default" for everyone may have high accuracy but no practical value.
 
 ```r
 library(ISLR)
 
-fit <- glm(
+default_fit <- glm(
   default ~ student + balance + income,
-  data = ISLR::Default,
+  data = Default,
   family = binomial
 )
 
-summary(fit)
-exp(coef(fit))
+summary(default_fit)
+exp(coef(default_fit))
+Default$prob_default <- predict(default_fit, type = "response")
 ```
 
-## LDA and QDA
+The fitted probabilities can be sorted, binned, and compared with
+observed default rates. This helps students see whether high predicted
+risk actually corresponds to higher observed risk.
 
-LDA and QDA start from class-conditional densities,
-$f_k(x) = p(X = x \mid Y = k)$, and combine them with class priors
-$\pi_k$:
+## Thresholds and Error Costs
+
+Logistic regression returns probabilities. A threshold turns
+probabilities into class labels:
+
+```r
+pred_class <- ifelse(Default$prob_default > 0.5, "Yes", "No")
+table(predicted = pred_class, observed = Default$default)
+```
+
+The threshold should reflect the decision context. If false negatives
+are expensive, a lower threshold may be appropriate. If false positives
+are expensive, a higher threshold may be appropriate. The statistical
+model estimates risk; the threshold encodes a decision rule.
+
+## Discriminant Analysis
+
+Discriminant analysis starts by modeling the distribution of predictors
+within each class. Bayes' rule gives
 
 $$
-\Pr(Y = k \mid X = x)
-= \frac{\pi_k f_k(x)}{\sum_{\ell} \pi_\ell f_\ell(x)}.
+\Pr(Y=k \mid X=x)
+=
+\frac{\pi_k f_k(x)}
+{\sum_{\ell=1}^{K} \pi_\ell f_\ell(x)},
 $$
 
-LDA assumes a common covariance matrix across classes, producing linear
-decision boundaries. QDA allows class-specific covariance matrices,
-producing quadratic boundaries.
+where $\pi_k$ is the prior probability of class $k$ and $f_k(x)$ is the
+class-conditional density.
 
-## Evaluation
+LDA assumes that each class has a multivariate normal predictor
+distribution with a common covariance matrix. This produces linear
+decision boundaries. QDA allows a different covariance matrix in each
+class, producing quadratic boundaries.
 
-Classification accuracy is often not enough, especially with rare
-events. Inspect the confusion matrix, sensitivity, specificity, ROC
-curve, and calibration. Thresholds should reflect the cost of false
-positives and false negatives.
+```r
+library(MASS)
 
-## Classification Comparison
+lda_fit <- lda(default ~ balance + income + student, data = Default)
+qda_fit <- qda(default ~ balance + income + student, data = Default)
 
-Use a binary classification data set to compare logistic regression,
-LDA, and QDA. Emphasize probability estimation before hard class labels.
+lda_pred <- predict(lda_fit)$posterior[, "Yes"]
+qda_pred <- predict(qda_fit)$posterior[, "Yes"]
+```
 
-## Threshold Practice
+LDA can be more stable when data are limited because it estimates fewer
+parameters. QDA can be more flexible when class covariance patterns
+really differ and there is enough data to estimate them.
 
-Practice by fitting logistic regression, LDA, and QDA to the same
-classification data. Compare confusion matrices, error rates, and
-class probabilities. Explain how the preferred model would change if
-false positives and false negatives had different costs.
+## ROC, AUC, and Calibration
+
+Classification evaluation should include more than one number:
+
+| Measure | What it answers |
+|---|---|
+| Accuracy | What fraction of labels are correct at one threshold? |
+| Sensitivity | What fraction of positives are detected? |
+| Specificity | What fraction of negatives are correctly rejected? |
+| ROC curve | How do sensitivity and specificity trade off across thresholds? |
+| AUC | How well are positives ranked above negatives? |
+| Calibration | Do predicted probabilities match observed frequencies? |
+
+ROC curves evaluate ranking across thresholds. Calibration evaluates
+probability quality. A model can rank well and still produce poorly
+calibrated probabilities.
+
+## Chapter Synthesis
+
+Fit logistic regression, LDA, and QDA to the same binary classification
+problem. Compare fitted probabilities, confusion matrices at multiple
+thresholds, ROC curves, AUC, and calibration. State which model is best
+for probability estimation and which threshold is appropriate for the
+decision context.

@@ -3,95 +3,153 @@ title: "Linear Regression"
 ---
 
 Linear regression is the first complete statistical learning workflow:
-model specification, estimation, interpretation, diagnostics,
-uncertainty, and prediction.
+specification, estimation, interpretation, diagnostics, uncertainty,
+and prediction. It is simple enough to study carefully and rich enough
+to introduce most habits used throughout the course.
 
 ## Learning Objectives
 
-- Write the simple and multiple linear regression models.
-- Interpret coefficients for continuous, categorical, and interaction
-  terms.
-- Explain least squares estimation and residual variation.
-- Separate coefficient uncertainty from prediction uncertainty.
+- Write simple and multiple linear regression models.
+- Interpret coefficients for continuous variables, categorical
+  variables, and interactions.
+- Explain least squares as loss minimization.
+- Evaluate a regression model with residual diagnostics and held-out
+  prediction error.
+- Translate a fitted model into a clear substantive statement.
 
-## Core Ideas
+## Least Squares Regression
 
-For observations $(x_i, y_i)$, ordinary least squares estimates
+The multiple linear regression model has the form
 
 $$
-\hat{\beta} = \arg\min_{\beta} \sum_{i=1}^{n}
-(y_i - x_i^\top \beta)^2.
+Y_i = \beta_0 + \beta_1X_{i1} + \cdots + \beta_pX_{ip}
++ \epsilon_i.
 $$
 
-The teaching emphasis should be statistical and computational: least
-squares is both an estimating principle and a loss-minimization
-procedure.
+Ordinary least squares chooses coefficients that minimize residual sum
+of squares:
 
-## Advertising Regression
+$$
+\hat{\beta} =
+\arg\min_{\beta}
+\sum_{i=1}^{n}(y_i - x_i^\top\beta)^2.
+$$
 
-Use the advertising data to move from simple regression to multiple
-regression and interactions. The finished lecture should show the same
-question from three angles: visual, algebraic, and predictive.
+The fitted value is $\hat y_i = x_i^\top\hat\beta$, and the residual is
+$e_i = y_i - \hat y_i$. A coefficient estimates the expected change in
+the response for a one-unit increase in that predictor, holding the
+other predictors in the model fixed. That "holding fixed" phrase is
+essential: coefficient meaning depends on the full model specification.
 
-## Applied Regression Workflow
+## Advertising Model Sequence
 
-A complete regression analysis is a workflow, not a single call to
-`lm()`. This lecture should move through:
-
-1. define the prediction or explanation target,
-2. inspect the outcome distribution,
-3. examine predictor relationships and missingness,
-4. split the data before tuning or model comparison,
-5. fit simple and multiple regression baselines,
-6. diagnose residuals and influential observations,
-7. compare candidate models on validation or test data,
-8. translate the final model into a clear equation and interpretation.
-
-For the Ames housing example, the modeling target is `SalePrice`. A
-minimal teaching version can begin with:
+The advertising data provide a compact way to move from simple
+regression to multiple regression. Suppose `sales` is the response and
+`TV`, `radio`, and `newspaper` are advertising budgets.
 
 ```r
-ames <- read.csv("../data/AmesHousing2.csv")
+advertising <- read.csv("Advertising.csv")
 
-set.seed(571)
-idx <- sample(seq_len(nrow(ames)), size = 0.8 * nrow(ames))
-train <- ames[idx, ]
-test <- ames[-idx, ]
+tv_fit <- lm(sales ~ TV, data = advertising)
+media_fit <- lm(sales ~ TV + radio + newspaper, data = advertising)
+interaction_fit <- lm(sales ~ TV * radio + newspaper, data = advertising)
 
-baseline <- lm(SalePrice ~ Gr.Liv.Area, data = train)
-expanded <- lm(
-  SalePrice ~ Gr.Liv.Area + Overall.Qual + Year.Built + Garage.Area,
-  data = train
-)
+summary(tv_fit)
+summary(media_fit)
+summary(interaction_fit)
 ```
 
-This example lets students see the difference between a single strong
-predictor and an additive model with several housing features. It also
-sets up the later discussion of model selection and regularization.
+The simple model asks whether `TV` budget alone predicts sales. The
+multiple regression model asks whether each medium explains variation
+after accounting for the others. The interaction model asks whether the
+effect of one medium changes as another medium changes.
 
-## Diagnostics and Interpretation
+## Train/Test Evaluation
 
-Use residual plots, normality checks, homoscedasticity checks,
-multicollinearity diagnostics, influential-observation diagnostics, and
-predicted-versus-actual plots as a sequence of questions:
+Regression teaching often begins with coefficient tables, but
+prediction requires held-out evaluation. Split before comparing
+candidate models:
 
-| Diagnostic | Teaching question |
+```r
+set.seed(571)
+id <- sample(seq_len(nrow(advertising)), size = 0.8 * nrow(advertising))
+train <- advertising[id, ]
+test <- advertising[-id, ]
+
+fit <- lm(sales ~ TV + radio + newspaper, data = train)
+pred <- predict(fit, newdata = test)
+
+rmse <- sqrt(mean((test$sales - pred)^2))
+test_r2 <- 1 - sum((test$sales - pred)^2) /
+  sum((test$sales - mean(test$sales))^2)
+```
+
+Residual standard error describes typical residual size in the training
+data. Test RMSE describes typical prediction error on observations not
+used to estimate the coefficients. Both can be useful, but they answer
+different questions.
+
+## Interactions and Marginal Effects
+
+An interaction lets the effect of one predictor depend on another:
+
+$$
+\operatorname{E}(Y \mid X,Z)
+= \beta_0 + \beta_1X + \beta_2Z + \beta_3XZ.
+$$
+
+The marginal effect of $X$ is
+
+$$
+\frac{\partial \operatorname{E}(Y \mid X,Z)}{\partial X}
+= \beta_1 + \beta_3Z.
+$$
+
+After an interaction is included, the main effect of $X$ is the effect
+when $Z=0$. If $Z=0$ is not meaningful, centering $Z$ can make the main
+effect easier to interpret.
+
+## Diagnostics and Influence
+
+Diagnostics convert assumptions into visible questions:
+
+| Diagnostic | Question |
 |---|---|
 | Residuals vs. fitted values | Is the mean structure missing curvature or interactions? |
-| Scale-location plot | Does error variance change with the fitted value? |
-| Normal Q-Q plot | Are intervals and tests relying on a poor approximation? |
-| Leverage and Cook's distance | Are a few observations controlling the fit? |
+| Scale-location plot | Does residual spread change across fitted values? |
+| Normal Q-Q plot | Are uncertainty summaries sensitive to tail behavior? |
+| Leverage | Are some predictor combinations unusual? |
+| Cook's distance | Are individual observations strongly changing the fit? |
 | Correlation or VIF | Are coefficients unstable because predictors overlap? |
-| Test-set predicted vs. actual | Does the fitted model generalize? |
 
-The goal is not to make every diagnostic "perfect." The goal is to
-teach students how to notice model-data disagreement and decide whether
-the disagreement affects the scientific or predictive claim.
+```r
+par(mfrow = c(2, 2))
+plot(fit)
+```
 
-## Regression Practice
+The goal is not to make every plot perfect. The goal is to notice
+model-data disagreement and decide whether it changes the claim.
 
-Practice by fitting simple and multiple regression models to the
-advertising data. Compare coefficient interpretations, residual
-standard error, test-set RMSE, and a predicted-versus-actual plot. End
-with a short paragraph explaining which predictors matter and whether
-the fitted model appears useful for prediction.
+## Coefficient Interpretation
+
+Good interpretation follows a stable template:
+
+1. name the response scale,
+2. name the predictor and unit change,
+3. state the direction and magnitude,
+4. state what is held fixed,
+5. avoid causal language unless the design supports it.
+
+For example: holding radio and newspaper budgets fixed, an additional
+unit of TV advertising budget is associated with an estimated increase
+of $\hat\beta_1$ sales units. This is an association from an
+observational regression, not by itself proof that changing TV spending
+would cause the same change in sales.
+
+## Chapter Synthesis
+
+Fit simple, multiple, and interaction regression models to the same
+data set. Compare coefficient interpretations, residual standard error,
+test RMSE, and a predicted-versus-actual plot. End with a paragraph
+explaining which predictors matter, whether the interaction is useful,
+and whether the model is more valuable for prediction or inference.

@@ -2,43 +2,146 @@
 title: "Statistical Learning Foundations"
 ---
 
-This lecture introduces statistical learning as the study of estimating
-relationships from data while managing uncertainty, generalization
-error, and decision consequences.
+Statistical learning is the study of using data to estimate structure,
+make predictions, and quantify uncertainty. The course begins with a
+single guiding idea: every method is trying to learn something about an
+unknown relationship between inputs and an outcome.
 
 ## Learning Objectives
 
-- Define supervised and unsupervised learning in statistical terms.
-- Distinguish prediction goals from inference goals.
-- Explain reducible error, irreducible error, training error, and test
+- Distinguish supervised, unsupervised, regression, and classification
+  problems.
+- Separate prediction goals from inference goals.
+- Define reducible error, irreducible error, training error, and test
   error.
-- Connect model flexibility to interpretability and generalization.
+- Describe the main parts of a reproducible statistical learning
+  workflow.
+- Inspect a data set before fitting a first model.
 
-## Core Ideas
+## The Statistical Learning Problem
 
-The course starts from the regression function
+For a response variable $Y$ and predictors $X = (X_1,\ldots,X_p)$, the
+regression function is
 
 $$
-f(x) = \operatorname{E}(Y \mid X = x),
+f(x) = \operatorname{E}(Y \mid X = x).
 $$
 
-and treats every model as an approximation to an unknown data-generating
-process. This lets students compare linear models, trees, kernels, and
-ensembles using the same questions: What is being estimated? What error
-is being minimized? What assumptions are doing the work?
+The observed response can be written as
 
-## First Modeling Frame
+$$
+Y = f(X) + \epsilon,
+$$
 
-Use a simple advertising or housing data example to show:
+where $\epsilon$ collects the part of the outcome that cannot be
+predicted from the available predictors. A fitted model $\hat f$ is an
+estimate of $f$. Some methods estimate a very simple surface, such as a
+line or plane. Others estimate a highly flexible surface, such as a
+tree ensemble or kernel classifier. The question is not which method is
+universally best; the question is which method learns useful structure
+for the task at hand.
 
-- outcome, predictors, and observational units,
-- train/test split,
-- a baseline model,
-- a first estimate of prediction error.
+In supervised learning, the data include an outcome. Regression predicts
+a quantitative outcome; classification predicts a class label or class
+probability. In unsupervised learning, there is no designated outcome.
+The goal is to find structure among observations or variables, such as
+clusters, low-dimensional representations, or unusual observations.
 
-## Regression Exploration
+## Prediction and Inference
 
-Practice by inspecting a regression data set before fitting a model.
-Identify the observational unit, response, candidate predictors,
-unusual observations, and two pairwise relationships that may shape the
-first baseline model.
+Prediction asks for accurate values of $\hat Y$ on future or held-out
+cases. Inference asks what the data suggest about the relationship
+between variables. The same fitted model can be used for both, but the
+emphasis changes:
+
+| Goal | Main question | Typical evidence |
+|---|---|---|
+| Prediction | How well does the model generalize? | Validation error, test error, calibration |
+| Inference | Which relationships are supported? | Coefficients, uncertainty intervals, diagnostics |
+| Description | What patterns are visible? | Summaries, plots, cluster profiles |
+| Decision support | What action should be taken? | Error costs, uncertainty, constraints |
+
+A model that predicts well is not automatically interpretable. A model
+with clean coefficient interpretations is not automatically the best
+predictor. Students should name the goal before comparing models.
+
+## Error and Generalization
+
+At a new point $x_0$, prediction error has two parts:
+
+$$
+\operatorname{E}\{(Y - \hat f(x_0))^2\}
+= \operatorname{E}\{(f(x_0) - \hat f(x_0))^2\}
++ \operatorname{Var}(\epsilon).
+$$
+
+The first term is reducible because better data, better features, or a
+better method may lower it. The second term is irreducible because two
+observations with the same predictors can still have different
+outcomes.
+
+Training error is computed on the data used to fit the model. Test
+error is computed on data not used in fitting or tuning. Flexible
+models can drive training error down while increasing test error, so
+training error alone is not enough evidence of a useful model.
+
+## Boston Housing Opening Analysis
+
+A first analysis should begin before modeling. In the Boston housing
+data, the observational unit is a census tract, the response `medv` is
+median home value, and candidate predictors include crime rate,
+industrial land use, distance to employment centers, pupil-teacher
+ratio, and other tract-level summaries.
+
+The opening analysis should answer five questions:
+
+1. What is the response, and what does one row represent?
+2. Which predictors are quantitative and which are categorical or
+   binary?
+3. Are there unusual values, impossible values, or strong skew?
+4. Which pairwise relationships with the response are most visible?
+5. Which baseline model is simple enough to interpret?
+
+```r
+library(MASS)
+
+data(Boston)
+summary(Boston)
+pairs(Boston[, c("medv", "lstat", "rm", "ptratio", "crim")])
+
+baseline <- lm(medv ~ lstat, data = Boston)
+expanded <- lm(medv ~ lstat + rm + ptratio + crim, data = Boston)
+summary(baseline)
+summary(expanded)
+```
+
+The purpose of this first fit is orientation. A strong association
+between `lstat` and `medv` suggests a useful baseline, while the
+expanded model shows how additional predictors can improve prediction
+and change interpretation.
+
+## Assumptions as Modeling Questions
+
+Ordinary least squares relies on assumptions that should be treated as
+diagnostic questions rather than as boxes to check mechanically:
+
+| Assumption | Practical question |
+|---|---|
+| Linearity | Is the conditional mean roughly linear in the predictors used? |
+| Independent errors | Are observations collected in a way that creates dependence? |
+| Constant variance | Does residual spread change with fitted values or predictors? |
+| Approximate normality | Are interval estimates relying on a poor error approximation? |
+| No extreme leverage | Are a few observations controlling the fitted relationship? |
+
+The assumptions matter because they affect interpretation,
+uncertainty, and prediction. When a diagnostic reveals a problem, the
+next step may be a transformation, an interaction, a nonlinear term, a
+different model class, or a narrower claim.
+
+## Chapter Synthesis
+
+Use a small regression data set to write a one-page opening analysis:
+identify the observational unit, response, predictors, outcome
+distribution, two notable pairwise relationships, one unusual feature
+of the data, and a simple baseline model. End by stating whether the
+immediate goal is prediction, inference, or description.

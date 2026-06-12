@@ -2,68 +2,115 @@
 title: "Unsupervised Learning"
 ---
 
-Unsupervised learning searches for structure without an observed
-response. This lecture focuses on clustering, dimension reduction for
-exploration, and the risks of over-interpreting discovered patterns.
+Unsupervised learning searches for structure without a designated
+response variable. Because there is no outcome to predict, the quality
+of the analysis depends on preprocessing, distance measures, stability,
+and whether the discovered structure answers a meaningful question.
 
 ## Learning Objectives
 
 - Distinguish supervised prediction from unsupervised structure
   discovery.
-- Apply PCA for visualization and compression.
+- Use PCA for visualization and compression.
 - Compare k-means and hierarchical clustering.
-- Evaluate unsupervised results with stability, context, and
-  downstream usefulness.
+- Explain how scaling and distance metrics affect clusters.
+- Evaluate unsupervised results with stability and interpretability.
 
-## Core Ideas
+## No Response, No Single Test Error
 
-Without a response variable, there is no single test error to optimize.
-The quality of an unsupervised analysis depends on the distance metric,
-preprocessing, stability, and whether the discovered structure answers
-a meaningful question.
+In supervised learning, held-out error provides a natural evaluation
+target. In unsupervised learning, there is no response variable, so
+there is no single test error to optimize. Instead, analysts ask:
 
-## Clustering
+- Are the patterns stable under reasonable preprocessing choices?
+- Are clusters separated enough to describe?
+- Do the patterns persist across resamples?
+- Are the discovered groups useful for a later scientific or business
+  question?
+- Could the result be an artifact of scale, outliers, or distance
+  choice?
 
-K-means clustering partitions observations into $K$ groups by minimizing
+## PCA for Structure
+
+PCA is often used to visualize high-dimensional data before clustering.
+It creates uncorrelated component scores ordered by explained variance.
+
+```r
+x <- scale(USArrests)
+pca <- prcomp(x)
+plot(pca$x[, 1], pca$x[, 2], pch = 19)
+```
+
+The first two components may reveal broad separation among
+observations, but they do not guarantee meaningful clusters. PCA finds
+directions of high variance, not necessarily directions that match a
+substantive grouping.
+
+## K-Means Clustering
+
+K-means partitions observations into $K$ clusters by minimizing
 within-cluster squared distance:
 
 $$
-\sum_{k=1}^{K} \sum_{i \in C_k} \|x_i - \bar x_k\|^2.
+\sum_{k=1}^{K}\sum_{i\in C_k}\|x_i-\bar x_k\|^2.
 $$
-
-The analyst chooses $K$, so clustering should be checked for stability
-and interpretability.
 
 ```r
 set.seed(571)
-x <- scale(USArrests)
-km <- kmeans(x, centers = 3, nstart = 20)
-km$cluster
+km3 <- kmeans(x, centers = 3, nstart = 20)
+km3$cluster
 ```
 
-Hierarchical clustering builds a tree of nested clusters. It requires a
-distance metric and linkage rule.
+The analyst chooses $K$. Common aids include within-cluster sum of
+squares, silhouette summaries, stability checks, and interpretability
+of cluster profiles. None of these automatically proves the "true"
+number of clusters.
+
+## Hierarchical Clustering
+
+Hierarchical clustering builds a tree of nested groupings. It requires
+a distance metric and linkage rule.
 
 ```r
-hc <- hclust(dist(x), method = "complete")
-plot(hc)
-rect.hclust(hc, k = 3)
+hc_complete <- hclust(dist(x), method = "complete")
+plot(hc_complete)
+rect.hclust(hc_complete, k = 3)
 ```
 
-## PCA for Unsupervised Structure
+Complete linkage tends to create compact clusters. Single linkage can
+chain observations together. Average linkage is often a middle ground.
+Changing linkage can change the dendrogram, so the choice should be
+reported.
 
-PCA is often used before clustering to visualize high-dimensional data.
-It can reveal dominant directions of variation, but those directions are
-not automatically the most meaningful scientific dimensions.
+## Scaling and Distance
 
-## Cluster Analysis Example
+Clustering is often dominated by scale. If one variable has a much
+larger numeric range, Euclidean distance will emphasize that variable.
+Standardization is common, but it is not automatic truth. Scaling says
+that one standard deviation in each variable should count equally.
 
-Use a data set with several numeric features. Scale the data, visualize
-PCA scores, run k-means for multiple values of $k$, and compare with a
-hierarchical clustering solution.
+Outliers also matter. A small number of unusual observations can affect
+cluster centers, dendrogram structure, and PCA directions. The opening
+analysis should therefore include summaries, plots, and sensitivity
+checks.
 
-## Stability Practice
+## Cluster Profiles
 
-Practice by clustering a scaled numeric data set, comparing several
-values of $K$, and explaining whether the clusters are stable and
-meaningful.
+Clusters become useful when they can be described. After assigning
+clusters, summarize original variables by cluster:
+
+```r
+aggregate(USArrests, by = list(cluster = km3$cluster), mean)
+```
+
+Profiles should be written in the original measurement units when
+possible. A cluster label is not an explanation; it is a concise name
+for a pattern that must be interpreted in context.
+
+## Chapter Synthesis
+
+Scale a numeric data set, visualize the first two principal component
+scores, run k-means for several values of $K$, and compare with
+hierarchical clustering under at least two linkage rules. Report
+cluster profiles, stability checks, and a cautious interpretation of
+what the groups do and do not imply.

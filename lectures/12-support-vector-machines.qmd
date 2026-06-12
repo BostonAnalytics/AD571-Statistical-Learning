@@ -2,82 +2,122 @@
 title: "Support Vector Machines"
 ---
 
-Support vector machines use margins and kernels to build classifiers
-that can be linear in a transformed feature space while nonlinear in
-the original inputs.
+Support vector machines use margins and kernels to construct
+classifiers that can be linear in a transformed feature space while
+nonlinear in the original variables.
 
 ## Learning Objectives
 
-- Explain maximal-margin classification.
-- Distinguish hard-margin and soft-margin classifiers.
+- Explain maximal-margin and soft-margin classification.
 - Interpret support vectors and the cost parameter.
-- Describe how kernels create nonlinear decision boundaries.
-
-## Core Ideas
-
-The SVM objective balances margin width against classification
-violations. The kernel trick lets the model compute similarities in a
-high-dimensional feature space without explicitly constructing every
-feature.
+- Compare linear, polynomial, and radial kernels.
+- Explain why scaling is essential for SVMs.
+- Tune cost and kernel parameters with cross-validation.
 
 ## Separating Hyperplanes
 
-For two classes coded as $y_i \in \{-1, 1\}$, a separating hyperplane
-has the form
+For classes coded as $y_i \in \{-1,1\}$, a separating hyperplane has
+the form
 
 $$
-f(x) = \beta_0 + x^\top \beta.
+f(x) = \beta_0 + x^\top\beta.
 $$
 
-The sign of $f(x)$ determines the predicted class. The margin is the
-distance between the separating hyperplane and the closest training
-points. Those closest points are the support vectors.
+The predicted class is the sign of $f(x)$. If the classes are perfectly
+separable, many hyperplanes may classify the training data correctly.
+The maximal-margin classifier chooses the hyperplane with the largest
+distance to the closest training points.
 
-## Soft-Margin Classifier
+Those closest points are the support vectors. They determine the
+boundary; observations far from the boundary do not directly control
+the fit.
 
-Perfect separation is often impossible or undesirable. The soft-margin
-classifier allows violations with slack variables:
+## Soft Margins
+
+Perfect separation is rare and can lead to overly sensitive boundaries.
+The soft-margin classifier allows violations:
 
 $$
 y_i(\beta_0 + x_i^\top\beta) \geq 1 - \xi_i,
-\quad \xi_i \geq 0.
+\qquad \xi_i \geq 0.
 $$
 
-The cost parameter controls the tradeoff between a wide margin and
-classification violations. A large cost penalizes violations heavily; a
-small cost allows more violations and usually a wider margin.
-
-## Kernels
-
-Kernels replace inner products with similarity functions. Common choices
-include:
-
-| Kernel | Use |
-|---|---|
-| Linear | Approximately linear class boundary |
-| Polynomial | Curved boundaries with global polynomial structure |
-| Radial basis | Flexible local boundaries |
-| Sigmoid | Neural-network-like similarity, less common in practice |
+The cost parameter controls the penalty for violations. A large cost
+allows fewer violations and may produce a narrower margin. A small cost
+allows more violations and may produce a wider, more stable margin.
 
 ```r
 library(e1071)
 
-linear_svm <- svm(y ~ ., data = train, kernel = "linear", cost = 1)
-radial_svm <- svm(y ~ ., data = train, kernel = "radial", cost = 1)
+linear_svm <- svm(
+  class ~ .,
+  data = train,
+  kernel = "linear",
+  cost = 1,
+  scale = TRUE
+)
 ```
 
-SVMs are sensitive to feature scale, so numeric predictors should be
-centered and scaled.
+## Kernels
 
-## Kernel Comparison
+Kernels compute similarity after an implicit feature transformation.
+This allows nonlinear boundaries without explicitly creating all
+transformed variables.
 
-Use a two-dimensional classification example to compare linear,
-polynomial, and radial kernels. Show how the decision boundary changes
-as the tuning parameters change.
+| Kernel | Form | Boundary behavior |
+|---|---|---|
+| Linear | $x_i^\top x_j$ | Linear in original predictors |
+| Polynomial | $(c + x_i^\top x_j)^d$ | Global curved boundaries |
+| Radial basis | $\exp(-\gamma\|x_i-x_j\|^2)$ | Local flexible boundaries |
 
-## SVM Tuning Practice
+The radial kernel is often effective because it can create local
+nonlinear boundaries. Its flexibility depends on $\gamma$: larger
+values create more local influence.
 
-Practice by fitting linear, radial, and polynomial SVMs after centering
-and scaling numeric predictors. Tune the cost and kernel parameters
-with cross-validation, then compare the resulting decision boundaries
-and test-set performance.
+## Iris Decision Surfaces
+
+A two-feature iris classification example makes kernels visible. Fit
+linear, polynomial, and radial SVMs on the same scaled predictors, then
+plot the predicted class across a grid. The linear kernel creates a
+straight boundary in the two-dimensional plot. The polynomial and
+radial kernels can bend around class structure.
+
+```r
+tuned <- tune(
+  svm,
+  class ~ .,
+  data = train,
+  kernel = "radial",
+  ranges = list(cost = c(0.1, 1, 10), gamma = c(0.1, 1, 5))
+)
+
+best_svm <- tuned$best.model
+```
+
+This comparison should emphasize that better visual separation on the
+training data is not enough. Kernel choice and tuning parameters must
+be chosen with validation or cross-validation.
+
+## Scaling and Tuning
+
+SVMs depend on distances and inner products, so feature scale matters.
+If one predictor has a much larger numeric range than another, it can
+dominate the margin and kernel values.
+
+The usual tuning sequence is:
+
+1. split the data,
+2. center and scale predictors inside the training data,
+3. choose candidate kernels,
+4. tune cost and kernel-specific parameters by cross-validation,
+5. evaluate the selected model on held-out data,
+6. inspect support vectors and decision surfaces where possible.
+
+## Chapter Synthesis
+
+Fit linear, polynomial, and radial SVMs to the same classification
+problem after proper scaling. Tune cost and kernel parameters by
+cross-validation, compare held-out performance, and visualize decision
+boundaries for a two-predictor version of the data. Explain which
+observations act as support vectors and how the cost parameter changes
+the margin.

@@ -3,12 +3,12 @@ project:
   output-dir: _book
 
 book:
-  title: "Statistical Learning Lecture Notes"
+  title: "Statistical Learning"
   author: "Nakul R. Padalkar"
   date: today
   chapters:
     - index.qmd
-    - part: "Lecture Notes"
+    - part: "Chapters"
       chapters:
         - lectures/01-statistical-learning-foundations.qmd
         - lectures/02-linear-regression.qmd

@@ -12,9 +12,9 @@ format:
     toc-depth: 2
 ---
 
-This book is a 14-lecture course in statistical machine learning. It is
-organized as reusable, university-agnostic teaching notes that can be
-adapted across semesters.
+This book is a 14-chapter course in statistical machine learning. It is
+organized as a single concise sequence that combines concepts,
+reproducible examples, and guided analysis.
 
 The course is organized around a practical sequence:
 
@@ -30,7 +30,7 @@ The course is organized around a practical sequence:
 
 ## Book Structure
 
-The main body is a book of 14 lecture-note chapters:
+The main body is a book of 14 chapters:
 
 | Chapter | Topic |
 |---:|---|
@@ -52,5 +52,5 @@ The main body is a book of 14 lecture-note chapters:
 ## Course Voice
 
 The chapters use neutral course language rather than references to a
-specific university, term, or software stack. Each lecture emphasizes
+specific university, term, or software stack. Each chapter emphasizes
 concepts, reproducible code, and statistical judgment.

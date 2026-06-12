@@ -2,42 +2,61 @@
 title: "Statistical Learning in Practice"
 ---
 
-The final lecture brings the course together around reproducible
-analysis, communication, model limitations, and responsible use.
+The final chapter brings the course together around reproducible
+analysis, communication, model limitations, and responsible use. A good
+statistical learning project is not a list of fitted models. It is a
+defensible workflow from question to data to evidence to decision.
 
 ## Learning Objectives
 
-- Describe a complete statistical learning workflow from question to
-  report.
-- Identify reproducibility risks in notebooks and ad hoc analyses.
+- Describe a complete statistical learning workflow.
 - Communicate model performance, uncertainty, and limitations.
-- Connect classical statistical learning to modern machine learning and
-  generative AI foundations.
+- Identify reproducibility risks in notebooks and ad hoc analyses.
+- Compare models using evidence matched to the project goal.
+- Connect classical statistical learning habits to modern machine
+  learning practice.
 
-## Core Ideas
+## The Complete Workflow
 
-Good statistical learning practice is not just model choice. It includes
-data provenance, train/test discipline, clear estimands or prediction
-targets, uncertainty, interpretation, and maintenance.
+A complete project should make each of these choices visible:
 
-## Capstone Report
+1. research or prediction question,
+2. observational unit and response variable,
+3. candidate predictors and data exclusions,
+4. preprocessing and feature engineering,
+5. train/validation/test design,
+6. candidate model classes,
+7. tuning strategy,
+8. final evaluation,
+9. interpretation and uncertainty,
+10. limitations and maintenance plan.
 
-Use a capstone-style modeling report. Students should identify the
-target, data source, preprocessing steps, candidate models, validation
-strategy, final model, limitations, and next steps.
+The workflow matters because most modeling failures are not caused by a
+single bad algorithm. They are caused by unclear targets, leakage,
+unstable preprocessing, poorly matched evaluation metrics, or
+overconfident interpretation.
+
+## Choosing Evidence
+
+Different goals require different evidence:
+
+| Goal | Evidence to emphasize |
+|---|---|
+| Accurate prediction | Held-out error, calibration, robustness |
+| Explanation | Coefficients, uncertainty, diagnostics, design limitations |
+| Screening | Sensitivity, specificity, threshold costs |
+| Ranking | ROC/AUC, precision-recall, lift |
+| Segmentation | Cluster stability, profiles, external validity |
+| Communication | Simplicity, visuals, reproducibility |
+
+The final model should be justified using the evidence that matches the
+goal, not the metric that makes the model look best.
 
 ## Simulation as Practice
 
-Monte Carlo simulation is a practical complement to predictive
-modeling: instead of estimating one static outcome, students model
-uncertainty in future scenarios.
-
-Use simulation to reinforce four course habits:
-
-1. define uncertain inputs,
-2. choose defensible distributions,
-3. propagate uncertainty through a decision model,
-4. summarize the distribution of outcomes rather than a single number.
+Monte Carlo simulation complements predictive modeling by propagating
+uncertainty through a decision model. Instead of reporting one static
+outcome, simulation reports a distribution of possible outcomes.
 
 ```r
 simulate_profit <- function(n, price, unit_cost, demand_mean, demand_sd) {
@@ -47,6 +66,7 @@ simulate_profit <- function(n, price, unit_cost, demand_mean, demand_sd) {
   revenue - cost
 }
 
+set.seed(571)
 profit <- simulate_profit(
   n = 10000,
   price = 40,
@@ -58,12 +78,63 @@ profit <- simulate_profit(
 quantile(profit, c(0.05, 0.5, 0.95))
 ```
 
-The teaching point is that simulation does not remove uncertainty. It
-makes uncertainty visible enough to reason about.
+Simulation does not remove uncertainty. It makes uncertainty visible
+enough to reason about tradeoffs, tail outcomes, and risk tolerance.
 
-## Final Project Workshop
+## Reproducible Reporting
 
-For a final project workshop, prepare a reproducible modeling report
-that includes the research question, data source, preprocessing,
-candidate models, validation strategy, final model, limitations, and
-next steps.
+A reproducible report should allow another analyst to rerun the work
+and understand the decisions. It should include:
+
+- package versions or computing environment,
+- data source and cleaning rules,
+- random seeds for resampling,
+- train/test split definition,
+- model formulas or tuning grids,
+- final evaluation code,
+- clear tables and figures,
+- limitations written in ordinary language.
+
+Reproducibility is also a communication practice. A reader should be
+able to distinguish observed data patterns, modeling assumptions,
+validation evidence, and recommendations.
+
+## Responsible Interpretation
+
+Models can encode bias, fail under distribution shift, and invite
+overconfident decisions. A final report should state:
+
+- what population the data represent,
+- what cases are excluded or underrepresented,
+- whether the task is predictive or causal,
+- which errors are most costly,
+- where the model should not be used,
+- how performance should be monitored over time.
+
+Responsible statistical learning means treating a model as an
+evidence-producing tool, not as an authority.
+
+## Final Project Structure
+
+A strong final project uses the following structure:
+
+1. question and motivation,
+2. data description,
+3. exploratory analysis,
+4. preprocessing and splitting,
+5. candidate models,
+6. validation results,
+7. final model and held-out evaluation,
+8. interpretation,
+9. limitations,
+10. conclusion.
+
+The conclusion should be short and specific: what was learned, how
+strong the evidence is, and what decision or next analysis follows.
+
+## Chapter Synthesis
+
+Revise a complete modeling project into a reproducible report. Make the
+target, data construction, preprocessing, model comparison, final
+evaluation, and limitations explicit. The final product should read as
+a coherent analysis rather than a transcript of code execution.
