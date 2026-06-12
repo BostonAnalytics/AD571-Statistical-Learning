@@ -47,8 +47,25 @@ The advertising data provide a compact way to move from simple
 regression to multiple regression. Suppose `sales` is the response and
 `TV`, `radio`, and `newspaper` are advertising budgets.
 
-```r
-advertising <- read.csv("Advertising.csv")
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+set.seed(571)
+advertising <- data.frame(
+  TV = runif(200, 0, 300),
+  radio = runif(200, 0, 50),
+  newspaper = runif(200, 0, 100)
+)
+advertising$sales <- 3 +
+  0.045 * advertising$TV +
+  0.19 * advertising$radio +
+  0.002 * advertising$TV * advertising$radio +
+  rnorm(200, sd = 2)
 
 tv_fit <- lm(sales ~ TV, data = advertising)
 media_fit <- lm(sales ~ TV + radio + newspaper, data = advertising)
@@ -58,6 +75,44 @@ summary(tv_fit)
 summary(media_fit)
 summary(interaction_fit)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+rng = np.random.default_rng(571)
+advertising = pd.DataFrame({
+    "TV": rng.uniform(0, 300, 200),
+    "radio": rng.uniform(0, 50, 200),
+    "newspaper": rng.uniform(0, 100, 200),
+})
+advertising["sales"] = (
+    3
+    + 0.045 * advertising["TV"]
+    + 0.19 * advertising["radio"]
+    + 0.002 * advertising["TV"] * advertising["radio"]
+    + rng.normal(0, 2, 200)
+)
+
+tv_fit = smf.ols("sales ~ TV", data=advertising).fit()
+media_fit = smf.ols("sales ~ TV + radio + newspaper", data=advertising).fit()
+interaction_fit = smf.ols(
+    "sales ~ TV * radio + newspaper",
+    data=advertising
+).fit()
+
+print(tv_fit.summary())
+print(media_fit.summary())
+print(interaction_fit.summary())
+```
+
+:::
 
 The simple model asks whether `TV` budget alone predicts sales. The
 multiple regression model asks whether each medium explains variation
@@ -70,7 +125,14 @@ Regression teaching often begins with coefficient tables, but
 prediction requires held-out evaluation. Split before comparing
 candidate models:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 set.seed(571)
 id <- sample(seq_len(nrow(advertising)), size = 0.8 * nrow(advertising))
 train <- advertising[id, ]
@@ -83,6 +145,33 @@ rmse <- sqrt(mean((test$sales - pred)^2))
 test_r2 <- 1 - sum((test$sales - pred)^2) /
   sum((test$sales - mean(test$sales))^2)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import statsmodels.formula.api as smf
+
+train, test = train_test_split(
+    advertising,
+    train_size=0.8,
+    random_state=571
+)
+
+fit = smf.ols("sales ~ TV + radio + newspaper", data=train).fit()
+pred = fit.predict(test)
+
+rmse = mean_squared_error(test["sales"], pred) ** 0.5
+test_r2 = r2_score(test["sales"], pred)
+
+print({"rmse": rmse, "test_r2": test_r2})
+```
+
+:::
 
 Residual standard error describes typical residual size in the training
 data. Test RMSE describes typical prediction error on observations not
@@ -122,10 +211,41 @@ Diagnostics convert assumptions into visible questions:
 | Cook's distance | Are individual observations strongly changing the fit? |
 | Correlation or VIF | Are coefficients unstable because predictors overlap? |
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 par(mfrow = c(2, 2))
 plot(fit)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+residuals = fit.resid
+fitted = fit.fittedvalues
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+axes[0].scatter(fitted, residuals)
+axes[0].axhline(0, color="black", linewidth=1)
+axes[0].set_xlabel("Fitted values")
+axes[0].set_ylabel("Residuals")
+stats.probplot(residuals, dist="norm", plot=axes[1])
+plt.tight_layout()
+plt.show()
+```
+
+:::
 
 The goal is not to make every plot perfect. The goal is to notice
 model-data disagreement and decide whether it changes the claim.
