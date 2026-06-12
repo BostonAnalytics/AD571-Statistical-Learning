@@ -41,7 +41,7 @@ model and removes one predictor at a time.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(leaps)
 
@@ -56,7 +56,7 @@ which.max(subset_summary$adjr2)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import itertools
 import numpy as np
@@ -134,7 +134,7 @@ variables and lowers variance.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(glmnet)
 
@@ -150,7 +150,7 @@ coef(ridge_cv, s = "lambda.1se")
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -192,7 +192,7 @@ predictor and ignore others with similar information.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 lasso_cv <- cv.glmnet(x_train, y_train, alpha = 1)
 coef(lasso_cv, s = "lambda.min")
@@ -203,7 +203,7 @@ coef(lasso_cv, s = "lambda.1se")
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.linear_model import LassoCV
 from sklearn.pipeline import make_pipeline
