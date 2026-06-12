@@ -62,7 +62,7 @@ classified correctly.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 x1 <- rnorm(100)
@@ -75,7 +75,7 @@ plot(x1, x2, col = ifelse(y == 1, "steelblue", "firebrick"), pch = 19)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import matplotlib.pyplot as plt
