@@ -64,7 +64,7 @@ outcome, simulation reports a distribution of possible outcomes.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 simulate_profit <- function(n, price, unit_cost, demand_mean, demand_sd) {
   demand <- pmax(0, rnorm(n, mean = demand_mean, sd = demand_sd))
@@ -89,7 +89,7 @@ quantile(profit, c(0.05, 0.5, 0.95))
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 

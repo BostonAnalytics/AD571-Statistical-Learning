@@ -44,7 +44,7 @@ waiting-time, abundance, or loss distribution.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 fish <- data.frame(
@@ -61,7 +61,7 @@ fit_gamma
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -94,7 +94,7 @@ inputs into a policy-relevant quantity.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 simulate_contribution <- function(n, mean_small, mean_large) {
@@ -111,7 +111,7 @@ quantile(share_small, c(0.05, 0.5, 0.95))
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 
