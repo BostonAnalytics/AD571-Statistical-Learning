@@ -102,7 +102,14 @@ The opening analysis should answer five questions:
 4. Which pairwise relationships with the response are most visible?
 5. Which baseline model is simple enough to interpret?
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(MASS)
 
 data(Boston)
@@ -114,6 +121,39 @@ expanded <- lm(medv ~ lstat + rm + ptratio + crim, data = Boston)
 summary(baseline)
 summary(expanded)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import pandas as pd
+import statsmodels.formula.api as smf
+from sklearn.datasets import fetch_california_housing
+import matplotlib.pyplot as plt
+
+housing = fetch_california_housing(as_frame=True).frame
+housing = housing.rename(columns={"MedHouseVal": "medv"})
+
+print(housing.describe())
+pd.plotting.scatter_matrix(
+    housing[["medv", "MedInc", "AveRooms", "HouseAge", "AveOccup"]],
+    figsize=(8, 8)
+)
+plt.show()
+
+baseline = smf.ols("medv ~ MedInc", data=housing).fit()
+expanded = smf.ols(
+    "medv ~ MedInc + AveRooms + HouseAge + AveOccup",
+    data=housing
+).fit()
+
+print(baseline.summary())
+print(expanded.summary())
+```
+
+:::
 
 The purpose of this first fit is orientation. A strong association
 between `lstat` and `medv` suggests a useful baseline, while the
