@@ -35,11 +35,39 @@ there is no single test error to optimize. Instead, analysts ask:
 PCA is often used to visualize high-dimensional data before clustering.
 It creates uncorrelated component scores ordered by explained variance.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 x <- scale(USArrests)
 pca <- prcomp(x)
 plot(pca$x[, 1], pca$x[, 2], pch = 19)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+x = StandardScaler().fit_transform(us_arrests)
+pca = PCA().fit_transform(x)
+
+plt.scatter(pca[:, 0], pca[:, 1])
+plt.xlabel("PC1")
+plt.ylabel("PC2")
+plt.show()
+```
+
+:::
 
 The first two components may reveal broad separation among
 observations, but they do not guarantee meaningful clusters. PCA finds
@@ -55,11 +83,32 @@ $$
 \sum_{k=1}^{K}\sum_{i\in C_k}\|x_i-\bar x_k\|^2.
 $$
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 set.seed(571)
 km3 <- kmeans(x, centers = 3, nstart = 20)
 km3$cluster
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.cluster import KMeans
+
+km3 = KMeans(n_clusters=3, n_init=20, random_state=571).fit(x)
+print(km3.labels_)
+```
+
+:::
 
 The analyst chooses $K$. Common aids include within-cluster sum of
 squares, silhouette summaries, stability checks, and interpretability
@@ -71,11 +120,35 @@ number of clusters.
 Hierarchical clustering builds a tree of nested groupings. It requires
 a distance metric and linkage rule.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 hc_complete <- hclust(dist(x), method = "complete")
 plot(hc_complete)
 rect.hclust(hc_complete, k = 3)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from scipy.cluster.hierarchy import dendrogram, fcluster, linkage
+import matplotlib.pyplot as plt
+
+hc_complete = linkage(x, method="complete")
+dendrogram(hc_complete)
+plt.show()
+clusters = fcluster(hc_complete, t=3, criterion="maxclust")
+```
+
+:::
 
 Complete linkage tends to create compact clusters. Single linkage can
 chain observations together. Average linkage is often a middle ground.
@@ -99,9 +172,28 @@ checks.
 Clusters become useful when they can be described. After assigning
 clusters, summarize original variables by cluster:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 aggregate(USArrests, by = list(cluster = km3$cluster), mean)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+profiles = us_arrests.assign(cluster=km3.labels_).groupby("cluster").mean()
+print(profiles)
+```
+
+:::
 
 Profiles should be written in the original measurement units when
 possible. A cluster label is not an explanation; it is a concise name
