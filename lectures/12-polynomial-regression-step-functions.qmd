@@ -33,7 +33,7 @@ $x$.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 n <- 250
@@ -50,7 +50,7 @@ summary(poly2)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -94,7 +94,7 @@ $$
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 step_fit <- lm(wage ~ cut(age, breaks = 5), data = nonlinear)
 summary(step_fit)
@@ -104,7 +104,7 @@ summary(step_fit)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import statsmodels.formula.api as smf
 

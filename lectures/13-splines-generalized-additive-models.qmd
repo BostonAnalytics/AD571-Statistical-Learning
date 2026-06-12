@@ -26,7 +26,7 @@ number and placement of knots control flexibility.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(splines)
 
@@ -46,7 +46,7 @@ summary(spline_fit)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -90,7 +90,7 @@ predictor.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(gam)
 
@@ -102,7 +102,7 @@ summary(gam_fit)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 gam_like_fit = smf.ols("wage ~ bs(age, df=5)", data=spline_data).fit()
 print(gam_like_fit.summary())
