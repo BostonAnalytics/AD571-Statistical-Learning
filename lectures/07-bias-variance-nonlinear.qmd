@@ -41,7 +41,14 @@ available sample size and signal strength.
 A simulation makes the tradeoff visible because the true function can
 be known:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 set.seed(571)
 x <- runif(200, -3, 3)
 y <- sin(x) + 0.4 * x^2 + rnorm(200, sd = 0.4)
@@ -50,6 +57,30 @@ fit_linear <- lm(y ~ x)
 fit_poly5 <- lm(y ~ poly(x, 5))
 fit_poly15 <- lm(y ~ poly(x, 15))
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+
+rng = np.random.default_rng(571)
+x = rng.uniform(-3, 3, 200)
+y = np.sin(x) + 0.4 * x**2 + rng.normal(0, 0.4, 200)
+X = x.reshape(-1, 1)
+
+fit_linear = LinearRegression().fit(X, y)
+fit_poly5 = make_pipeline(PolynomialFeatures(5), LinearRegression()).fit(X, y)
+fit_poly15 = make_pipeline(PolynomialFeatures(15), LinearRegression()).fit(X, y)
+```
+
+:::
 
 The linear model has high bias if the true function is curved. The
 degree-15 polynomial may have high variance if it follows accidental
@@ -68,12 +99,40 @@ $$
 
 In R, orthogonal polynomial terms reduce numerical collinearity:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(ISLR)
 
 wage <- ISLR::Wage
 poly_fit <- lm(wage ~ poly(age, 4), data = wage)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+
+X_age = wage[["age"]]
+y_wage = wage["wage"]
+
+poly_fit = make_pipeline(
+    PolynomialFeatures(degree=4, include_bias=False),
+    LinearRegression()
+).fit(X_age, y_wage)
+```
+
+:::
 
 The degree controls flexibility. Prediction plots are usually clearer
 than raw coefficient interpretation for high-degree polynomials.
@@ -83,19 +142,70 @@ than raw coefficient interpretation for high-degree polynomials.
 A step function divides a predictor into intervals and fits a constant
 mean within each interval:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 step_fit <- lm(wage ~ cut(age, 4), data = wage)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import pandas as pd
+import statsmodels.formula.api as smf
+
+wage_step = wage.copy()
+wage_step["age_bin"] = pd.cut(wage_step["age"], bins=4)
+step_fit = smf.ols("wage ~ C(age_bin)", data=wage_step).fit()
+print(step_fit.summary())
+```
+
+:::
 
 Regression splines fit smooth piecewise polynomials. Knots define where
 the pieces meet, and degrees of freedom control smoothness:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(splines)
 
 spline_fit <- lm(wage ~ bs(age, df = 6), data = wage)
 natural_fit <- lm(wage ~ ns(age, df = 5), data = wage)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import statsmodels.formula.api as smf
+
+spline_fit = smf.ols(
+    "wage ~ bs(age, df=6)",
+    data=wage
+).fit()
+natural_fit = smf.ols(
+    "wage ~ cr(age, df=5)",
+    data=wage
+).fit()
+```
+
+:::
 
 Natural splines add boundary constraints that often produce more stable
 behavior at the edges of the data.
@@ -111,7 +221,14 @@ $$
 
 They keep additivity while allowing nonlinear effects:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(gam)
 
 gam_fit <- gam(
@@ -119,6 +236,22 @@ gam_fit <- gam(
   data = wage
 )
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import statsmodels.formula.api as smf
+
+gam_like_fit = smf.ols(
+    "wage ~ bs(age, df=5) + bs(year, df=4) + C(education)",
+    data=wage
+).fit()
+```
+
+:::
 
 GAM plots show the estimated contribution of each smooth term while
 holding other terms in the model fixed.
