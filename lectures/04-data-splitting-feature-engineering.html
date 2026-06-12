@@ -349,7 +349,6 @@ window.Quarto = {
   <li><a href="#transformations" id="toc-transformations" class="nav-link" data-scroll-target="#transformations"><span class="header-section-number">9.5</span> Transformations</a></li>
   <li><a href="#interaction-features" id="toc-interaction-features" class="nav-link" data-scroll-target="#interaction-features"><span class="header-section-number">9.6</span> Interaction Features</a></li>
   <li><a href="#model-ready-data-is-not-model-free" id="toc-model-ready-data-is-not-model-free" class="nav-link" data-scroll-target="#model-ready-data-is-not-model-free"><span class="header-section-number">9.7</span> Model-Ready Data Is Not Model-Free</a></li>
-  <li><a href="#chapter-synthesis" id="toc-chapter-synthesis" class="nav-link" data-scroll-target="#chapter-synthesis"><span class="header-section-number">9.8</span> Chapter Synthesis</a></li>
   </ul>
 </nav>
     </div>
@@ -592,10 +591,6 @@ window.Quarto = {
 <section id="model-ready-data-is-not-model-free" class="level2" data-number="9.7">
 <h2 data-number="9.7" class="anchored" data-anchor-id="model-ready-data-is-not-model-free"><span class="header-section-number">9.7</span> Model-Ready Data Is Not Model-Free</h2>
 <p>Preprocessing embeds modeling choices. Scaling assumes that relative distance matters. Rare-level lumping assumes sparse categories should share information. Dummy encoding chooses a reference structure. Feature engineering is therefore part of the model, and it must be reported with the same care as the final algorithm.</p>
-</section>
-<section id="chapter-synthesis" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="chapter-synthesis"><span class="header-section-number">9.8</span> Chapter Synthesis</h2>
-<p>Start with a raw regression or classification data set. Create the split first, then build a preprocessing recipe that handles missing values, categorical variables, skewed variables, rare levels, and scaling. Fit the same baseline model before and after feature engineering, compare held-out error, and identify which steps would have caused leakage if performed before the split.</p>
 
 
 </section>

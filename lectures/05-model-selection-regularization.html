@@ -349,7 +349,6 @@ window.Quarto = {
   <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">10.5</span> Ridge Regression</a></li>
   <li><a href="#lasso" id="toc-lasso" class="nav-link" data-scroll-target="#lasso"><span class="header-section-number">10.6</span> Lasso</a></li>
   <li><a href="#scaling-and-interpretation" id="toc-scaling-and-interpretation" class="nav-link" data-scroll-target="#scaling-and-interpretation"><span class="header-section-number">10.7</span> Scaling and Interpretation</a></li>
-  <li><a href="#chapter-synthesis" id="toc-chapter-synthesis" class="nav-link" data-scroll-target="#chapter-synthesis"><span class="header-section-number">10.8</span> Chapter Synthesis</a></li>
   </ul>
 </nav>
     </div>
@@ -598,10 +597,6 @@ window.Quarto = {
 <h2 data-number="10.7" class="anchored" data-anchor-id="scaling-and-interpretation"><span class="header-section-number">10.7</span> Scaling and Interpretation</h2>
 <p>Penalties operate on coefficient size, so predictors must be on comparable scales. Otherwise a variable measured in large units may be penalized differently from a variable measured in small units. Most software standardizes predictors internally by default, but analysts should know whether and how that standardization occurred.</p>
 <p>After penalized regression, coefficient interpretation should be careful. Shrinkage intentionally biases coefficients toward zero to reduce variance. Penalized coefficients are not ordinary least-squares estimates with ordinary standard errors.</p>
-</section>
-<section id="chapter-synthesis" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="chapter-synthesis"><span class="header-section-number">10.8</span> Chapter Synthesis</h2>
-<p>Analyze one data set with best subset selection, forward selection, backward selection, ridge, and lasso. Compare selected predictors, cross-validation error, held-out error, and interpretability. Explain whether the final choice is driven more by prediction accuracy, stability, sparsity, or communication.</p>
 
 
 </section>

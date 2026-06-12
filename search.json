@@ -20,16 +20,6 @@
     ]
   },
   {
-    "objectID": "index.html#course-voice",
-    "href": "index.html#course-voice",
-    "title": "Statistical Learning",
-    "section": "0.2 Course Voice",
-    "text": "0.2 Course Voice\nThe chapters use neutral course language rather than references to a specific university, term, or software stack. Each chapter emphasizes concepts, reproducible code, and statistical judgment.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Preface</span>"
-    ]
-  },
-  {
     "objectID": "lectures/01-statistical-learning-foundations.html",
     "href": "lectures/01-statistical-learning-foundations.html",
     "title": "2  Statistical Learning Foundations",
@@ -101,17 +91,6 @@
     "title": "2  Statistical Learning Foundations",
     "section": "2.6 Assumptions as Modeling Questions",
     "text": "2.6 Assumptions as Modeling Questions\nOrdinary least squares relies on assumptions that should be treated as diagnostic questions rather than as boxes to check mechanically:\n\n\n\n\n\n\n\nAssumption\nPractical question\n\n\n\n\nLinearity\nIs the conditional mean roughly linear in the predictors used?\n\n\nIndependent errors\nAre observations collected in a way that creates dependence?\n\n\nConstant variance\nDoes residual spread change with fitted values or predictors?\n\n\nApproximate normality\nAre interval estimates relying on a poor error approximation?\n\n\nNo extreme leverage\nAre a few observations controlling the fitted relationship?\n\n\n\nThe assumptions matter because they affect interpretation, uncertainty, and prediction. When a diagnostic reveals a problem, the next step may be a transformation, an interaction, a nonlinear term, a different model class, or a narrower claim.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical Learning Foundations</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/01-statistical-learning-foundations.html#chapter-synthesis",
-    "href": "lectures/01-statistical-learning-foundations.html#chapter-synthesis",
-    "title": "2  Statistical Learning Foundations",
-    "section": "2.7 Chapter Synthesis",
-    "text": "2.7 Chapter Synthesis\nUse a small regression data set to write a one-page opening analysis: identify the observational unit, response, predictors, outcome distribution, two notable pairwise relationships, one unusual feature of the data, and a simple baseline model. End by stating whether the immediate goal is prediction, inference, or description.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical Learning Foundations</span>"
@@ -206,17 +185,6 @@
     ]
   },
   {
-    "objectID": "lectures/02-linear-regression.html#chapter-synthesis",
-    "href": "lectures/02-linear-regression.html#chapter-synthesis",
-    "title": "3  Linear Regression",
-    "section": "3.8 Chapter Synthesis",
-    "text": "3.8 Chapter Synthesis\nFit simple, multiple, and interaction regression models to the same data set. Compare coefficient interpretations, residual standard error, test RMSE, and a predicted-versus-actual plot. End with a paragraph explaining which predictors matter, whether the interaction is useful, and whether the model is more valuable for prediction or inference.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression</span>"
-    ]
-  },
-  {
     "objectID": "lectures/03-interactions-marginal-effects.html",
     "href": "lectures/03-interactions-marginal-effects.html",
     "title": "4  Interactions and Marginal Effects",
@@ -277,17 +245,6 @@
     "title": "4  Interactions and Marginal Effects",
     "section": "4.5 Standard Errors for Marginal Effects",
     "text": "4.5 Standard Errors for Marginal Effects\nFor a continuous-continuous interaction, the marginal effect \\beta_1+\\beta_3Z has uncertainty because it depends on two estimated coefficients. Its variance is\n\n\\operatorname{Var}(\\hat\\beta_1 + z\\hat\\beta_3)\n= \\operatorname{Var}(\\hat\\beta_1)\n+ z^2\\operatorname{Var}(\\hat\\beta_3)\n+ 2z\\operatorname{Cov}(\\hat\\beta_1,\\hat\\beta_3).\n\nThe uncertainty can be narrow in some regions of Z and wide in others. This is why marginal-effect plots are often more honest than a single starred interaction coefficient.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactions and Marginal Effects</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/03-interactions-marginal-effects.html#chapter-synthesis",
-    "href": "lectures/03-interactions-marginal-effects.html#chapter-synthesis",
-    "title": "4  Interactions and Marginal Effects",
-    "section": "4.6 Chapter Synthesis",
-    "text": "4.6 Chapter Synthesis\nFit an interaction model, compute predicted values for meaningful combinations of the interacting variables, and explain the result in terms of conditional effects. Avoid saying that a main effect is “positive” or “negative” without stating the value of the interacting variable.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactions and Marginal Effects</span>"
@@ -360,17 +317,6 @@
     ]
   },
   {
-    "objectID": "lectures/04-classification-foundations.html#chapter-synthesis",
-    "href": "lectures/04-classification-foundations.html#chapter-synthesis",
-    "title": "5  Classification Foundations",
-    "section": "5.6 Chapter Synthesis",
-    "text": "5.6 Chapter Synthesis\nFit a simple classifier, produce predicted probabilities, compare at least two thresholds, and report the resulting confusion matrices. End by explaining which error type matters most for the decision.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Classification Foundations</span>"
-    ]
-  },
-  {
     "objectID": "lectures/05-logistic-regression-roc.html",
     "href": "lectures/05-logistic-regression-roc.html",
     "title": "6  Logistic Regression and ROC Analysis",
@@ -437,17 +383,6 @@
     ]
   },
   {
-    "objectID": "lectures/05-logistic-regression-roc.html#chapter-synthesis",
-    "href": "lectures/05-logistic-regression-roc.html#chapter-synthesis",
-    "title": "6  Logistic Regression and ROC Analysis",
-    "section": "6.6 Chapter Synthesis",
-    "text": "6.6 Chapter Synthesis\nFit a logistic model, interpret odds ratios, inspect binned default rates, evaluate thresholds with confusion matrices, and use ROC/AUC to describe ranking performance. State the final threshold as a decision choice tied to error costs.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Logistic Regression and ROC Analysis</span>"
-    ]
-  },
-  {
     "objectID": "lectures/06-discriminant-analysis.html",
     "href": "lectures/06-discriminant-analysis.html",
     "title": "7  Discriminant Analysis",
@@ -497,17 +432,6 @@
     "title": "7  Discriminant Analysis",
     "section": "7.4 Comparing with Logistic Regression",
     "text": "7.4 Comparing with Logistic Regression\nLogistic regression and LDA can produce similar boundaries when class conditional distributions are close to normal with common covariance. QDA can bend the boundary when covariance differs across classes.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Discriminant Analysis</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/06-discriminant-analysis.html#chapter-synthesis",
-    "href": "lectures/06-discriminant-analysis.html#chapter-synthesis",
-    "title": "7  Discriminant Analysis",
-    "section": "7.5 Chapter Synthesis",
-    "text": "7.5 Chapter Synthesis\nFit LDA and QDA to the same binary classification task. Compare class probabilities, confusion matrices, and ranking behavior. Explain whether the additional flexibility of QDA is justified by performance and sample size.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Discriminant Analysis</span>"
@@ -701,17 +625,6 @@
     ]
   },
   {
-    "objectID": "lectures/04-data-splitting-feature-engineering.html#chapter-synthesis",
-    "href": "lectures/04-data-splitting-feature-engineering.html#chapter-synthesis",
-    "title": "9  Data Splitting and Feature Engineering",
-    "section": "9.8 Chapter Synthesis",
-    "text": "9.8 Chapter Synthesis\nStart with a raw regression or classification data set. Create the split first, then build a preprocessing recipe that handles missing values, categorical variables, skewed variables, rare levels, and scaling. Fit the same baseline model before and after feature engineering, compare held-out error, and identify which steps would have caused leakage if performed before the split.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Data Splitting and Feature Engineering</span>"
-    ]
-  },
-  {
     "objectID": "lectures/05-model-selection-regularization.html",
     "href": "lectures/05-model-selection-regularization.html",
     "title": "10  Model Selection and Regularization",
@@ -800,17 +713,6 @@
     ]
   },
   {
-    "objectID": "lectures/05-model-selection-regularization.html#chapter-synthesis",
-    "href": "lectures/05-model-selection-regularization.html#chapter-synthesis",
-    "title": "10  Model Selection and Regularization",
-    "section": "10.8 Chapter Synthesis",
-    "text": "10.8 Chapter Synthesis\nAnalyze one data set with best subset selection, forward selection, backward selection, ridge, and lasso. Compare selected predictors, cross-validation error, held-out error, and interpretability. Explain whether the final choice is driven more by prediction accuracy, stability, sparsity, or communication.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Model Selection and Regularization</span>"
-    ]
-  },
-  {
     "objectID": "lectures/06-dimension-reduction.html",
     "href": "lectures/06-dimension-reduction.html",
     "title": "11  Dimension Reduction",
@@ -882,17 +784,6 @@
     "title": "11  Dimension Reduction",
     "section": "11.6 Near-Infrared Spectra Example",
     "text": "11.6 Near-Infrared Spectra Example\nHigh-dimensional spectra data illustrate why dimension reduction is useful. Each observation can contain hundreds of wavelength measurements, with neighboring wavelengths strongly correlated. A small number of components can summarize broad spectral patterns while reducing noise.\nThe analysis sequence is:\n\ncenter and scale spectral predictors inside the training data,\nvisualize the first two component scores,\ninspect loadings to see which wavelengths define each component,\nfit PCR and PLS models,\nchoose the number of components by cross-validation,\nevaluate the selected model on held-out observations.\n\nThis example also shows that interpretability changes. Instead of interpreting one coefficient per wavelength, students interpret component loadings and prediction performance together.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Dimension Reduction</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/06-dimension-reduction.html#chapter-synthesis",
-    "href": "lectures/06-dimension-reduction.html#chapter-synthesis",
-    "title": "11  Dimension Reduction",
-    "section": "11.7 Chapter Synthesis",
-    "text": "11.7 Chapter Synthesis\nFit PCA, PCR, and PLS to a data set with many correlated predictors. Report the variance explained by the first components, interpret the first two loading patterns, choose the number of components by cross-validation, and compare PCR or PLS with a penalized regression baseline.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Dimension Reduction</span>"
@@ -987,17 +878,6 @@
     ]
   },
   {
-    "objectID": "lectures/07-bias-variance-nonlinear.html#chapter-synthesis",
-    "href": "lectures/07-bias-variance-nonlinear.html#chapter-synthesis",
-    "title": "12  Bias, Variance, and Nonlinear Models",
-    "section": "12.8 Chapter Synthesis",
-    "text": "12.8 Chapter Synthesis\nModel one nonlinear relationship using a linear term, polynomial terms, step functions, regression splines, and a generalized additive model. Compare validation error and fitted curves. Explain which model offers the best balance of accuracy, smoothness, and interpretability.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Bias, Variance, and Nonlinear Models</span>"
-    ]
-  },
-  {
     "objectID": "lectures/12-polynomial-regression-step-functions.html",
     "href": "lectures/12-polynomial-regression-step-functions.html",
     "title": "13  Polynomial Regression and Step Functions",
@@ -1042,17 +922,6 @@
     ]
   },
   {
-    "objectID": "lectures/12-polynomial-regression-step-functions.html#chapter-synthesis",
-    "href": "lectures/12-polynomial-regression-step-functions.html#chapter-synthesis",
-    "title": "13  Polynomial Regression and Step Functions",
-    "section": "13.4 Chapter Synthesis",
-    "text": "13.4 Chapter Synthesis\nFit linear, polynomial, and step-function models to the same nonlinear relationship. Compare validation error and prediction plots. Explain whether smoothness, interpretability, or predictive accuracy should drive the final choice.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Polynomial Regression and Step Functions</span>"
-    ]
-  },
-  {
     "objectID": "lectures/13-splines-generalized-additive-models.html",
     "href": "lectures/13-splines-generalized-additive-models.html",
     "title": "14  Splines and Generalized Additive Models",
@@ -1091,17 +960,6 @@
     "title": "14  Splines and Generalized Additive Models",
     "section": "14.3 Generalized Additive Models",
     "text": "14.3 Generalized Additive Models\nA generalized additive model has the form\n\ng\\{\\operatorname{E}(Y \\mid X)\\}\n= \\beta_0 + f_1(X_1) + f_2(X_2) + \\cdots + f_p(X_p).\n\nThe model is additive across predictors but nonlinear within each predictor.\n\nRPython\n\n\n\nlibrary(gam)\n\ngam_fit &lt;- gam(wage ~ s(age, df = 5), data = spline_data)\nsummary(gam_fit)\n\n\n\n\ngam_like_fit = smf.ols(\"wage ~ bs(age, df=5)\", data=spline_data).fit()\nprint(gam_like_fit.summary())\n\n\n\n\nThe fitted smooth term should be interpreted with predicted values and uncertainty, not as a single slope.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Splines and Generalized Additive Models</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/13-splines-generalized-additive-models.html#chapter-synthesis",
-    "href": "lectures/13-splines-generalized-additive-models.html#chapter-synthesis",
-    "title": "14  Splines and Generalized Additive Models",
-    "section": "14.4 Chapter Synthesis",
-    "text": "14.4 Chapter Synthesis\nFit a regression spline, a natural spline, and an additive smooth model to the same data. Compare validation error and the shape of fitted curves. Explain whether the additional flexibility clarifies the relationship or merely follows noise.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Splines and Generalized Additive Models</span>"
@@ -1185,17 +1043,6 @@
     ]
   },
   {
-    "objectID": "lectures/08-logistic-discriminant.html#chapter-synthesis",
-    "href": "lectures/08-logistic-discriminant.html#chapter-synthesis",
-    "title": "15  Classification Model Comparison",
-    "section": "15.7 Chapter Synthesis",
-    "text": "15.7 Chapter Synthesis\nFit logistic regression, LDA, and QDA to the same binary classification problem. Compare fitted probabilities, confusion matrices at multiple thresholds, ROC curves, AUC, and calibration. State which model is best for probability estimation and which threshold is appropriate for the decision context.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Classification Model Comparison</span>"
-    ]
-  },
-  {
     "objectID": "lectures/09-margins-perceptron.html",
     "href": "lectures/09-margins-perceptron.html",
     "title": "16  Margins and Perceptron",
@@ -1273,17 +1120,6 @@
     ]
   },
   {
-    "objectID": "lectures/09-margins-perceptron.html#chapter-synthesis",
-    "href": "lectures/09-margins-perceptron.html#chapter-synthesis",
-    "title": "16  Margins and Perceptron",
-    "section": "16.7 Chapter Synthesis",
-    "text": "16.7 Chapter Synthesis\nCreate a two-dimensional classification data set, draw a linear boundary, identify misclassified observations, and mark the points closest to the boundary. Explain how a perceptron update changes the boundary and why maximizing the margin leads naturally to support vector machines.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Margins and Perceptron</span>"
-    ]
-  },
-  {
     "objectID": "lectures/10-tree-based-methods.html",
     "href": "lectures/10-tree-based-methods.html",
     "title": "17  Tree-Based Methods",
@@ -1355,17 +1191,6 @@
     "title": "17  Tree-Based Methods",
     "section": "17.6 Strengths and Limits",
     "text": "17.6 Strengths and Limits\nTrees naturally capture:\n\nnonlinear relationships,\ninteractions,\nthreshold effects,\nmixed numeric and categorical predictors.\n\nTheir main weakness is variance. A small change in the training data can produce a different first split, which changes the whole tree. A single tree is therefore useful for interpretation and exploration, but not always the most accurate predictor.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Tree-Based Methods</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/10-tree-based-methods.html#chapter-synthesis",
-    "href": "lectures/10-tree-based-methods.html#chapter-synthesis",
-    "title": "17  Tree-Based Methods",
-    "section": "17.7 Chapter Synthesis",
-    "text": "17.7 Chapter Synthesis\nFit a classification or regression tree, visualize the tree, explain the first three splits, prune it with cross-validation, and compare held-out performance with a linear or logistic regression baseline. Decide whether the tree’s interpretability compensates for any loss in accuracy.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Tree-Based Methods</span>"
@@ -1460,17 +1285,6 @@
     ]
   },
   {
-    "objectID": "lectures/11-ensemble-methods.html#chapter-synthesis",
-    "href": "lectures/11-ensemble-methods.html#chapter-synthesis",
-    "title": "18  Ensemble Methods",
-    "section": "18.8 Chapter Synthesis",
-    "text": "18.8 Chapter Synthesis\nCompare a pruned tree, bagged trees, a random forest, and boosted trees on the same prediction task. Report tuning choices, cross-validation error, held-out error, and variable importance. Conclude whether the ensemble’s performance gain justifies its loss of simplicity.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Ensemble Methods</span>"
-    ]
-  },
-  {
     "objectID": "lectures/12-support-vector-machines.html",
     "href": "lectures/12-support-vector-machines.html",
     "title": "19  Support Vector Machines",
@@ -1542,17 +1356,6 @@
     "title": "19  Support Vector Machines",
     "section": "19.6 Scaling and Tuning",
     "text": "19.6 Scaling and Tuning\nSVMs depend on distances and inner products, so feature scale matters. If one predictor has a much larger numeric range than another, it can dominate the margin and kernel values.\nThe usual tuning sequence is:\n\nsplit the data,\ncenter and scale predictors inside the training data,\nchoose candidate kernels,\ntune cost and kernel-specific parameters by cross-validation,\nevaluate the selected model on held-out data,\ninspect support vectors and decision surfaces where possible.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Support Vector Machines</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/12-support-vector-machines.html#chapter-synthesis",
-    "href": "lectures/12-support-vector-machines.html#chapter-synthesis",
-    "title": "19  Support Vector Machines",
-    "section": "19.7 Chapter Synthesis",
-    "text": "19.7 Chapter Synthesis\nFit linear, polynomial, and radial SVMs to the same classification problem after proper scaling. Tune cost and kernel parameters by cross-validation, compare held-out performance, and visualize decision boundaries for a two-predictor version of the data. Explain which observations act as support vectors and how the cost parameter changes the margin.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>Support Vector Machines</span>"
@@ -1647,17 +1450,6 @@
     ]
   },
   {
-    "objectID": "lectures/13-unsupervised-learning.html#chapter-synthesis",
-    "href": "lectures/13-unsupervised-learning.html#chapter-synthesis",
-    "title": "20  Unsupervised Learning",
-    "section": "20.8 Chapter Synthesis",
-    "text": "20.8 Chapter Synthesis\nScale a numeric data set, visualize the first two principal component scores, run k-means for several values of K, and compare with hierarchical clustering under at least two linkage rules. Report cluster profiles, stability checks, and a cautious interpretation of what the groups do and do not imply.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Unsupervised Learning</span>"
-    ]
-  },
-  {
     "objectID": "lectures/14-statistical-learning-in-practice.html",
     "href": "lectures/14-statistical-learning-in-practice.html",
     "title": "21  Statistical Learning in Practice",
@@ -1746,17 +1538,6 @@
     ]
   },
   {
-    "objectID": "lectures/14-statistical-learning-in-practice.html#chapter-synthesis",
-    "href": "lectures/14-statistical-learning-in-practice.html#chapter-synthesis",
-    "title": "21  Statistical Learning in Practice",
-    "section": "21.8 Chapter Synthesis",
-    "text": "21.8 Chapter Synthesis\nRevise a complete modeling project into a reproducible report. Make the target, data construction, preprocessing, model comparison, final evaluation, and limitations explicit. The final product should read as a coherent analysis rather than a transcript of code execution.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Statistical Learning in Practice</span>"
-    ]
-  },
-  {
     "objectID": "lectures/20-applied-statistical-learning-case-studies.html",
     "href": "lectures/20-applied-statistical-learning-case-studies.html",
     "title": "22  Applied Statistical Learning Case Studies",
@@ -1806,17 +1587,6 @@
     "title": "22  Applied Statistical Learning Case Studies",
     "section": "22.4 Simulation for Decision Support",
     "text": "22.4 Simulation for Decision Support\nSimulation can propagate uncertainty from biological or operational inputs into a policy-relevant quantity.\n\nRPython\n\n\n\nset.seed(571)\nsimulate_contribution &lt;- function(n, mean_small, mean_large) {\n  small &lt;- rgamma(n, shape = 25, rate = 25 / mean_small)\n  large &lt;- rgamma(n, shape = 25, rate = 25 / mean_large)\n  small / (small + large)\n}\n\nshare_small &lt;- simulate_contribution(10000, mean_small = 36, mean_large = 64)\nquantile(share_small, c(0.05, 0.5, 0.95))\n\n\n\n\nimport numpy as np\n\ndef simulate_contribution(n, mean_small, mean_large, seed=571):\n    rng = np.random.default_rng(seed)\n    small = rng.gamma(shape=25, scale=mean_small / 25, size=n)\n    large = rng.gamma(shape=25, scale=mean_large / 25, size=n)\n    return small / (small + large)\n\nshare_small = simulate_contribution(10000, mean_small=36, mean_large=64)\nprint(np.quantile(share_small, [0.05, 0.5, 0.95]))\n\n\n\n\nThe simulation does not settle the policy question by itself. It makes the consequences of assumptions visible and gives the analyst a way to describe uncertainty in the decision quantity.",
-    "crumbs": [
-      "Chapters",
-      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Applied Statistical Learning Case Studies</span>"
-    ]
-  },
-  {
-    "objectID": "lectures/20-applied-statistical-learning-case-studies.html#chapter-synthesis",
-    "href": "lectures/20-applied-statistical-learning-case-studies.html#chapter-synthesis",
-    "title": "22  Applied Statistical Learning Case Studies",
-    "section": "22.5 Chapter Synthesis",
-    "text": "22.5 Chapter Synthesis\nChoose an applied question and write a reproducible modeling brief: question, data construction, exploratory summaries, model choice, validation or uncertainty, results, limitations, and decision-relevant interpretation.",
     "crumbs": [
       "Chapters",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Applied Statistical Learning Case Studies</span>"
