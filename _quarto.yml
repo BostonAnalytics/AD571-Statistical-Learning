@@ -12,11 +12,17 @@ book:
       chapters:
         - lectures/01-statistical-learning-foundations.qmd
         - lectures/02-linear-regression.qmd
+        - lectures/03-interactions-marginal-effects.qmd
+        - lectures/04-classification-foundations.qmd
+        - lectures/05-logistic-regression-roc.qmd
+        - lectures/06-discriminant-analysis.qmd
         - lectures/03-model-assessment-resampling.qmd
         - lectures/04-data-splitting-feature-engineering.qmd
         - lectures/05-model-selection-regularization.qmd
         - lectures/06-dimension-reduction.qmd
         - lectures/07-bias-variance-nonlinear.qmd
+        - lectures/12-polynomial-regression-step-functions.qmd
+        - lectures/13-splines-generalized-additive-models.qmd
         - lectures/08-logistic-discriminant.qmd
         - lectures/09-margins-perceptron.qmd
         - lectures/10-tree-based-methods.qmd
@@ -24,6 +30,7 @@ book:
         - lectures/12-support-vector-machines.qmd
         - lectures/13-unsupervised-learning.qmd
         - lectures/14-statistical-learning-in-practice.qmd
+        - lectures/20-applied-statistical-learning-case-studies.qmd
 
 format:
   html:
