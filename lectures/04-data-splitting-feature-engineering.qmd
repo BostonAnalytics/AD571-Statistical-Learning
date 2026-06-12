@@ -28,7 +28,7 @@ data are held back for final evaluation.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(rsample)
 library(AmesHousing)
@@ -47,7 +47,7 @@ ames_test <- testing(ames_split)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.model_selection import train_test_split
 
@@ -93,7 +93,7 @@ workflow should handle all of these in a fixed order.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(recipes)
 
@@ -114,7 +114,7 @@ test_ready <- bake(ames_prep, new_data = ames_test)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 from sklearn.compose import ColumnTransformer
