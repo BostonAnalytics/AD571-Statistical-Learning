@@ -75,13 +75,13 @@ Ensembles can be more accurate than a single tree but less transparent.
 Use variable importance, partial dependence, and test-set performance to
 explain what the model is doing.
 
-## Worked Example
+## Ensemble Comparison
 
 Compare a pruned tree, bagged trees, a random forest, and a boosted
 tree model on the same prediction task. Use performance and variable
 importance as discussion points.
 
-## Applied Practice
+## Tuning Practice
 
 Practice by comparing a single tree, bagged trees, a random forest, and
 a boosted tree model on the same prediction task. Use resampling to

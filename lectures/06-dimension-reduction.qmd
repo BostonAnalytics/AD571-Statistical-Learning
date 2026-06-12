@@ -92,12 +92,12 @@ chooses components that are related to both $X$ and $Y$.
 | PCR | No | Regression with many correlated predictors |
 | PLS | Yes | Prediction when directions of high predictor variance may not align with the outcome |
 
-## Worked Example
+## Correlated Predictors Example
 
 Use a data set with correlated predictors. Visualize the first two
 components, then compare ordinary least squares, ridge, PCR, and PLS.
 
-## Applied Practice
+## Component Selection Practice
 
 Practice by fitting principal components regression on a data set with
 many correlated predictors. Use cross-validation to choose the number

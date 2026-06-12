@@ -69,13 +69,13 @@ radial_svm <- svm(y ~ ., data = train, kernel = "radial", cost = 1)
 SVMs are sensitive to feature scale, so numeric predictors should be
 centered and scaled.
 
-## Worked Example
+## Kernel Comparison
 
 Use a two-dimensional classification example to compare linear,
 polynomial, and radial kernels. Show how the decision boundary changes
 as the tuning parameters change.
 
-## Applied Practice
+## SVM Tuning Practice
 
 Practice by fitting linear, radial, and polynomial SVMs after centering
 and scaling numeric predictors. Tune the cost and kernel parameters

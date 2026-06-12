@@ -56,13 +56,13 @@ PCA is often used before clustering to visualize high-dimensional data.
 It can reveal dominant directions of variation, but those directions are
 not automatically the most meaningful scientific dimensions.
 
-## Worked Example
+## Cluster Analysis Example
 
 Use a data set with several numeric features. Scale the data, visualize
 PCA scores, run k-means for multiple values of $k$, and compare with a
 hierarchical clustering solution.
 
-## Applied Practice
+## Stability Practice
 
 Practice by clustering a scaled numeric data set, comparing several
 values of $K$, and explaining whether the clusters are stable and

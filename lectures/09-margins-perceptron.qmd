@@ -54,13 +54,13 @@ y <- factor(ifelse(x1 + x2 + rnorm(100, sd = 0.5) > 0, "A", "B"))
 plot(x1, x2, col = y, pch = 19)
 ```
 
-## Worked Example
+## Two-Dimensional Boundary
 
 Start with a two-dimensional synthetic data set. Animate or step through
 updates, then compare the learned boundary with logistic regression and
 a hard-margin classifier when separation is possible.
 
-## Applied Practice
+## Margin Practice
 
 Practice by drawing a two-dimensional classification data set, fitting
 a linear classifier, and identifying points close to the decision

@@ -20,7 +20,7 @@ Good statistical learning practice is not just model choice. It includes
 data provenance, train/test discipline, clear estimands or prediction
 targets, uncertainty, interpretation, and maintenance.
 
-## Worked Example
+## Capstone Report
 
 Use a capstone-style modeling report. Students should identify the
 target, data source, preprocessing steps, candidate models, validation
@@ -61,7 +61,7 @@ quantile(profit, c(0.05, 0.5, 0.95))
 The teaching point is that simulation does not remove uncertainty. It
 makes uncertainty visible enough to reason about.
 
-## Applied Practice
+## Final Project Workshop
 
 For a final project workshop, prepare a reproducible modeling report
 that includes the research question, data source, preprocessing,

@@ -66,12 +66,12 @@ require little preprocessing. Their main weakness is instability: small
 changes in the data can lead to different splits. This instability
 motivates bagging, random forests, and boosting.
 
-## Worked Example
+## Tree Fitting Example
 
 Fit a regression tree and a classification tree. Visualize the final
 tree, the feature-space partition, and the effect of pruning.
 
-## Applied Practice
+## Pruning Practice
 
 Practice by fitting a classification tree and comparing it with a
 logistic regression baseline. Prune the tree using cross-validation,

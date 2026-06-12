@@ -19,7 +19,7 @@ Feature engineering is part of the model. Any operation that learns from
 the data must be estimated on the training set and applied unchanged to
 validation or test data.
 
-## Worked Example
+## Ames Housing Workflow
 
 Use the Ames housing data to demonstrate:
 
@@ -96,7 +96,7 @@ $$
 Once an interaction enters the model, the main effect of $X$ is
 conditional on the value of $Z$.
 
-## Applied Practice
+## Leakage Check
 
 Practice by turning a raw regression data set into a model-ready
 workflow: create the split first, transform skewed variables, encode

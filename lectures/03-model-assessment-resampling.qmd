@@ -2,84 +2,394 @@
 title: "Model Assessment and Resampling"
 ---
 
-This lecture turns model fitting into model evaluation. Students learn
-why training error is optimistic and how resampling estimates
-out-of-sample performance.
+Resampling methods turn model fitting into model evaluation. Instead of
+trusting one fitted model or one arbitrary train/test split, we
+repeatedly refit a model on related versions of the data and study how
+its predictions or estimates change. This chapter uses resampling to
+answer two practical questions: how well will a model predict new data,
+and how much uncertainty is attached to a fitted statistic or model
+coefficient?
 
 ## Learning Objectives
 
-- Define training, validation, and test error.
-- Compare validation splits, LOOCV, k-fold cross-validation, and the
-  bootstrap.
-- Explain the bias and variance of error estimates.
-- Use resampling to select among competing models.
+- Distinguish training error, validation error, test error, and
+  cross-validation error.
+- Explain why a single validation split can be unstable.
+- Implement leave-one-out and k-fold cross-validation.
+- Use resampling to compare candidate regression models.
+- Use the bootstrap to estimate uncertainty in statistics and model
+  coefficients.
 
-## Core Ideas
+## Why Training Error Is Not Enough
 
-A model is useful only if it generalizes. Cross-validation estimates
-generalization by repeatedly fitting on one part of the data and
-evaluating on held-out observations.
+A model is useful only if it generalizes. Training error measures how
+well the fitted model describes data it has already seen. Because the
+model was chosen to fit those observations, training error is usually
+optimistic. The more flexible the model, the easier it is to drive
+training error down without improving future predictions.
 
-## Worked Example
-
-Use an auto or housing data example to compare polynomial models under
-validation-set and k-fold cross-validation estimates.
-
-## Resampling Sequence
-
-One useful way to teach resampling is as a code-forward sequence:
-
-1. Fit competing polynomial regression models on the `Auto` data.
-2. Compare training error with validation-set error.
-3. Estimate test error with leave-one-out cross-validation.
-4. Repeat with k-fold cross-validation.
-5. Use the bootstrap to estimate uncertainty in a statistic or model
-   coefficient.
-
-The conceptual through-line is that resampling lets us ask questions
-that one fitted model cannot answer by itself.
+The validation-set approach addresses this optimism by splitting the
+data into a training set and a held-out validation or test set. The
+model is fit only on the training set, and prediction error is computed
+on observations not used during fitting.
 
 ```r
-library(boot)
 library(ISLR)
+library(boot)
+library(ggplot2)
 
 auto <- na.omit(ISLR::Auto)
 
-cv_error <- function(degree) {
+set.seed(571)
+train_id <- sample(seq_len(nrow(auto)), size = 0.6 * nrow(auto))
+train <- auto[train_id, ]
+test <- auto[-train_id, ]
+
+fit <- lm(mpg ~ horsepower, data = train)
+pred <- predict(fit, newdata = test)
+mean((test$mpg - pred)^2)
+```
+
+The validation-set estimate is easy to understand, but it depends on
+which observations happen to fall in the training set. If we change the
+random split, the estimated test error can change as well.
+
+## Polynomial Complexity in the `Auto` Data
+
+The `Auto` data show a curved relationship between horsepower and gas
+mileage. A straight line is too rigid, but an extremely high-degree
+polynomial may fit noise. Resampling gives a disciplined way to compare
+model flexibility.
+
+```r
+ggplot(auto, aes(horsepower, mpg)) +
+  geom_point(alpha = 0.65) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ poly(x, 2),
+    se = FALSE,
+    color = "#2f5f7e"
+  ) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ poly(x, 4),
+    se = FALSE,
+    color = "#7a3035"
+  )
+```
+
+For one split, compute validation error for polynomial degrees 1
+through 10:
+
+```r
+set.seed(571)
+train_id <- sample(seq_len(nrow(auto)), size = 0.6 * nrow(auto))
+train <- auto[train_id, ]
+test <- auto[-train_id, ]
+
+validation_error <- sapply(1:10, function(degree) {
+  fit <- lm(mpg ~ poly(horsepower, degree), data = train)
+  pred <- predict(fit, newdata = test)
+  mean((test$mpg - pred)^2)
+})
+
+data.frame(degree = 1:10, mse = validation_error)
+```
+
+The usual pattern is a sharp improvement from degree 1 to degree 2 and
+little consistent gain from higher degrees. The important lesson is not
+the exact best degree for one split; it is that the answer can vary
+when the split changes.
+
+```r
+split_errors <- do.call(rbind, lapply(1:10, function(seed) {
+  set.seed(seed)
+  train_id <- sample(seq_len(nrow(auto)), size = 0.6 * nrow(auto))
+  train <- auto[train_id, ]
+  test <- auto[-train_id, ]
+
+  data.frame(
+    split = seed,
+    degree = 1:10,
+    mse = sapply(1:10, function(degree) {
+      fit <- lm(mpg ~ poly(horsepower, degree), data = train)
+      pred <- predict(fit, newdata = test)
+      mean((test$mpg - pred)^2)
+    })
+  )
+}))
+
+ggplot(split_errors, aes(degree, mse, group = split)) +
+  geom_line(alpha = 0.45) +
+  geom_point(alpha = 0.45)
+```
+
+Repeated splits usually agree that a quadratic model is much better
+than a line, but they need not agree on every detail. This instability
+motivates cross-validation.
+
+## Leave-One-Out Cross-Validation
+
+Leave-one-out cross-validation (LOOCV) uses each observation once as a
+validation point. For observation $i$, fit the model on all observations
+except $i$, predict the held-out response, and compute
+
+$$
+MSE_i = (y_i - \hat y_i)^2.
+$$
+
+The LOOCV estimate averages these $n$ errors:
+
+$$
+CV_{(n)} = \frac{1}{n}\sum_{i=1}^{n} MSE_i.
+$$
+
+The `boot::cv.glm()` function performs LOOCV when `K` is omitted. A
+linear model can be fit with `glm()` using its default Gaussian family.
+
+```r
+loocv_error <- function(degree) {
   fit <- glm(mpg ~ poly(horsepower, degree), data = auto)
   cv.glm(auto, fit)$delta[1]
 }
 
-sapply(1:5, cv_error)
+sapply(1:5, loocv_error)
 ```
 
-The important classroom moment is not the exact numeric winner. It is
-the comparison of model complexity against estimated out-of-sample
-error.
+LOOCV uses nearly all observations for every fit, so it tends to have
+low bias as an estimate of test error. Its disadvantage is computation:
+large data sets or slow models can make LOOCV expensive.
 
-## Bootstrap as Uncertainty Engine
+## k-Fold Cross-Validation
 
-Bootstrap examples often start with estimating the uncertainty of a
-single statistic and then extend naturally to uncertainty in linear
-regression coefficients. The general recipe is:
+k-fold cross-validation divides the data into $k$ roughly equal folds.
+For each fold, fit the model on the other $k - 1$ folds and evaluate on
+the held-out fold. The estimate is
 
-1. define the statistic of interest,
-2. resample rows with replacement,
-3. recompute the statistic many times,
-4. summarize the bootstrap distribution.
+$$
+CV_{(k)} = \frac{1}{k}\sum_{j=1}^{k} MSE_j.
+$$
+
+LOOCV is the special case where $k=n$. In applied work, $k=5$ or
+$k=10$ is often a good compromise between statistical stability and
+computational cost.
+
+```r
+kfold_error <- function(degree, k = 10) {
+  fit <- glm(mpg ~ poly(horsepower, degree), data = auto)
+  cv.glm(auto, fit, K = k)$delta[1]
+}
+
+data.frame(
+  degree = 1:5,
+  loocv = sapply(1:5, loocv_error),
+  ten_fold = sapply(1:5, kfold_error)
+)
+```
+
+The LOOCV and 10-fold estimates should tell the same broad story:
+quadratic curvature matters, while higher-degree terms should be
+justified by their estimated out-of-sample performance rather than by
+training fit alone.
+
+## Comparing Candidate Sales Models
+
+The same logic applies to ordinary regression workflows. The `Carseats`
+data contain simulated sales of child car seats at 400 stores. Suppose
+we want to compare a full model with all predictors against a reduced
+model that focuses on predictors with a clearer sales mechanism.
+
+```r
+carseats <- ISLR::Carseats
+
+set.seed(571)
+train_id <- sample(seq_len(nrow(carseats)), size = 0.8 * nrow(carseats))
+train <- carseats[train_id, ]
+test <- carseats[-train_id, ]
+
+full_fit <- lm(Sales ~ ., data = train)
+reduced_fit <- lm(
+  Sales ~ CompPrice + Income + Advertising + Price + ShelveLoc + Age,
+  data = train
+)
+```
+
+Residual standard error describes in-sample residual size. Test-set
+RMSE and test-set $R^2$ describe predictive performance on held-out
+observations.
+
+```r
+model_metrics <- function(fit, test_data, model_name) {
+  pred <- predict(fit, newdata = test_data)
+  actual <- test_data$Sales
+
+  rmse <- sqrt(mean((actual - pred)^2))
+  test_r2 <- 1 - sum((actual - pred)^2) /
+    sum((actual - mean(actual))^2)
+
+  data.frame(
+    model = model_name,
+    residual_se = sigma(fit),
+    rmse = rmse,
+    test_r2 = test_r2
+  )
+}
+
+rbind(
+  model_metrics(full_fit, test, "Full model"),
+  model_metrics(reduced_fit, test, "Reduced model")
+)
+```
+
+Because the reduced model is nested inside the full model, an ANOVA
+comparison can ask whether the omitted predictors improve the fit after
+the reduced model's predictors are already included.
+
+```r
+anova(reduced_fit, full_fit)
+```
+
+Model comparison should combine statistical evidence, test performance,
+and interpretability. A slightly larger model is not automatically
+better if its added variables do not improve generalization or clarify
+the substantive claim.
+
+Cross-validation lets us compare the same two models without relying on
+one train/test split:
+
+```r
+glm_full <- glm(Sales ~ ., data = carseats)
+glm_reduced <- glm(
+  Sales ~ CompPrice + Income + Advertising + Price + ShelveLoc + Age,
+  data = carseats
+)
+
+data.frame(
+  model = c("Full model", "Reduced model"),
+  cv_5 = c(
+    cv.glm(carseats, glm_full, K = 5)$delta[1],
+    cv.glm(carseats, glm_reduced, K = 5)$delta[1]
+  ),
+  cv_10 = c(
+    cv.glm(carseats, glm_full, K = 10)$delta[1],
+    cv.glm(carseats, glm_reduced, K = 10)$delta[1]
+  ),
+  loocv = c(
+    cv.glm(carseats, glm_full)$delta[1],
+    cv.glm(carseats, glm_reduced)$delta[1]
+  )
+)
+```
+
+## Simulated Nonlinear Data
+
+A simulation makes the role of model complexity visible because we know
+the data were generated from a nonlinear pattern.
+
+```r
+set.seed(571)
+sim <- data.frame(x = runif(100, min = -10, max = 10))
+sim$y <- sin(sim$x) + 0.1 * sim$x^2 + rnorm(100)
+
+plot(y ~ x, data = sim, pch = 19, col = "#2f5f7e")
+```
+
+Fit polynomial models and use 10-fold cross-validation to estimate
+generalization error:
+
+```r
+poly_cv <- sapply(1:15, function(degree) {
+  fit <- glm(y ~ poly(x, degree), data = sim)
+  cv.glm(sim, fit, K = 10)$delta[1]
+})
+
+plot(
+  1:15,
+  poly_cv,
+  type = "b",
+  xlab = "Polynomial degree",
+  ylab = "10-fold CV error"
+)
+```
+
+This exercise separates visual fit from estimated generalization. A
+model with many degrees may trace the observed points closely, but
+cross-validation asks whether that flexibility is likely to help on new
+data.
+
+## Bootstrapping
+
+Cross-validation estimates prediction error. Bootstrapping estimates
+uncertainty. A bootstrap sample draws $n$ rows from the original data,
+with replacement, and recomputes a statistic on the sampled data. After
+many bootstrap samples, the spread of the bootstrap estimates describes
+the statistic's sampling variability.
+
+If $\hat\alpha^{*1}, \ldots, \hat\alpha^{*B}$ are bootstrap estimates,
+the bootstrap standard error is
+
+$$
+SE_B(\hat\alpha)
+= \sqrt{
+\frac{1}{B-1}
+\sum_{r=1}^{B}
+\left(
+\hat\alpha^{*r}
+- \frac{1}{B}\sum_{s=1}^{B}\hat\alpha^{*s}
+\right)^2
+}.
+$$
+
+For the `Portfolio` data, one statistic of interest is the allocation
+that minimizes variance across two assets:
+
+$$
+\hat\alpha =
+\frac{\hat\sigma_Y^2 - \hat\sigma_{XY}}
+{\hat\sigma_X^2 + \hat\sigma_Y^2 - 2\hat\sigma_{XY}}.
+$$
+
+```r
+portfolio <- ISLR::Portfolio
+
+alpha_stat <- function(data, index) {
+  x <- data$X[index]
+  y <- data$Y[index]
+  (var(y) - cov(x, y)) / (var(x) + var(y) - 2 * cov(x, y))
+}
+
+set.seed(571)
+boot(portfolio, alpha_stat, R = 1000)
+```
+
+The same idea applies to regression coefficients. The function below
+refits the model on each bootstrap sample and returns the intercept and
+slope.
 
 ```r
 boot_lm <- function(data, index) {
-  coef(lm(mpg ~ horsepower, data = data[index, ]))
+  coef(lm(mpg ~ horsepower, data = data, subset = index))
 }
 
+set.seed(571)
 boot(auto, boot_lm, R = 1000)
 ```
 
-## Applied Practice
+If a nonlinear mean structure is more appropriate, bootstrap the
+quadratic model instead:
 
-Practice by comparing two candidate regression models with a train/test
-split, then repeat the comparison with k-fold cross-validation and
-leave-one-out cross-validation. For a simulated nonlinear response,
-fit polynomial models of several degrees and explain which degree earns
-the best estimated out-of-sample performance.
+```r
+boot_quad <- function(data, index) {
+  coef(lm(mpg ~ poly(horsepower, 2), data = data, subset = index))
+}
+
+set.seed(571)
+boot(auto, boot_quad, R = 1000)
+```
+
+The bootstrap does not replace model criticism. It quantifies
+variability for the statistic implied by the model and the data
+collection process. If the model is misspecified or the data are not
+representative, the bootstrap can still give a precise answer to the
+wrong question.

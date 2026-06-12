@@ -78,12 +78,12 @@ events. Inspect the confusion matrix, sensitivity, specificity, ROC
 curve, and calibration. Thresholds should reflect the cost of false
 positives and false negatives.
 
-## Worked Example
+## Classification Comparison
 
 Use a binary classification data set to compare logistic regression,
 LDA, and QDA. Emphasize probability estimation before hard class labels.
 
-## Applied Practice
+## Threshold Practice
 
 Practice by fitting logistic regression, LDA, and QDA to the same
 classification data. Compare confusion matrices, error rates, and

@@ -27,7 +27,7 @@ process. This lets students compare linear models, trees, kernels, and
 ensembles using the same questions: What is being estimated? What error
 is being minimized? What assumptions are doing the work?
 
-## Worked Example
+## First Modeling Frame
 
 Use a simple advertising or housing data example to show:
 
@@ -36,7 +36,7 @@ Use a simple advertising or housing data example to show:
 - a baseline model,
 - a first estimate of prediction error.
 
-## Applied Practice
+## Regression Exploration
 
 Practice by inspecting a regression data set before fitting a model.
 Identify the observational unit, response, candidate predictors,

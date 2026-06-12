@@ -27,7 +27,7 @@ The teaching emphasis should be statistical and computational: least
 squares is both an estimating principle and a loss-minimization
 procedure.
 
-## Worked Example
+## Advertising Regression
 
 Use the advertising data to move from simple regression to multiple
 regression and interactions. The finished lecture should show the same
@@ -88,7 +88,7 @@ The goal is not to make every diagnostic "perfect." The goal is to
 teach students how to notice model-data disagreement and decide whether
 the disagreement affects the scientific or predictive claim.
 
-## Applied Practice
+## Regression Practice
 
 Practice by fitting simple and multiple regression models to the
 advertising data. Compare coefficient interpretations, residual
