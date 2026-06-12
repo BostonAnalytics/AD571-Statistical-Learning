@@ -22,14 +22,43 @@ A split creates a contract. The training data are used to estimate
 preprocessing steps, fit models, and tune candidate choices. The test
 data are held back for final evaluation.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(rsample)
+library(AmesHousing)
+library(modeldata)
+
+# To get the processed version:
+ames <- make_ames()
 
 set.seed(571)
-ames_split <- initial_split(ames, prop = 0.8, strata = SalePrice)
+ames_split <- initial_split(ames, prop = 0.8, strata = Sale_Price)
 ames_train <- training(ames_split)
 ames_test <- testing(ames_split)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.model_selection import train_test_split
+
+ames_train, ames_test = train_test_split(
+    ames,
+    train_size=0.8,
+    random_state=571
+)
+```
+
+:::
 
 Stratification keeps the response distribution roughly comparable
 across partitions. This is useful when the response is skewed or when a
@@ -54,16 +83,23 @@ future data.
 
 ## Ames Housing Workflow
 
-For Ames housing, `SalePrice` is the target and many predictors are
+For Ames housing, `Sale_Price` is the target and many predictors are
 categorical, skewed, sparse, or missing. A reproducible feature
 workflow should handle all of these in a fixed order.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(recipes)
 
 ames_recipe <-
-  recipe(SalePrice ~ ., data = ames_train) |>
-  step_log(SalePrice, base = 10, skip = TRUE) |>
+  recipe(Sale_Price ~ ., data = ames_train) |>
+  step_log(Sale_Price, base = 10, skip = TRUE) |>
   step_other(all_nominal_predictors(), threshold = 0.01) |>
   step_dummy(all_nominal_predictors()) |>
   step_zv(all_predictors()) |>
@@ -73,6 +109,45 @@ ames_prep <- prep(ames_recipe, training = ames_train)
 train_ready <- bake(ames_prep, new_data = NULL)
 test_ready <- bake(ames_prep, new_data = ames_test)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+y_train = np.log10(ames_train["Sale_Price"])
+X_train = ames_train.drop(columns=["Sale_Price"])
+X_test = ames_test.drop(columns=["Sale_Price"])
+
+numeric_features = X_train.select_dtypes(include="number").columns
+categorical_features = X_train.select_dtypes(exclude="number").columns
+
+numeric_pipeline = Pipeline([
+    ("impute", SimpleImputer(strategy="median")),
+    ("scale", StandardScaler())
+])
+categorical_pipeline = Pipeline([
+    ("impute", SimpleImputer(strategy="most_frequent")),
+    ("dummy", OneHotEncoder(handle_unknown="ignore"))
+])
+
+preprocess = ColumnTransformer([
+    ("numeric", numeric_pipeline, numeric_features),
+    ("categorical", categorical_pipeline, categorical_features)
+])
+
+train_ready = preprocess.fit_transform(X_train)
+test_ready = preprocess.transform(X_test)
+```
+
+:::
 
 The recipe is estimated on `ames_train`. The test data receive the same
 learned mapping: the same rare-level rules, dummy columns, zero-variance
@@ -84,7 +159,7 @@ Transformations change the representation of predictors or the
 response. They can make simple models more effective, but they also
 change interpretation.
 
-| Transformation | When useful | Interpretation |
+| **Transformation** | **When useful **| **Interpretation** |
 |---|---|---|
 | Log response | Positive, right-skewed outcome | Effects are multiplicative on the original scale |
 | Log predictor | Diminishing returns in a positive predictor | One percent changes become natural |
