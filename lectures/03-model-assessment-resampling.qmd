@@ -39,7 +39,7 @@ on observations not used during fitting.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(ISLR)
 library(boot)
@@ -61,7 +61,7 @@ mean((test$mpg - pred)^2)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -104,7 +104,7 @@ model flexibility.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 ggplot(auto, aes(horsepower, mpg)) +
   geom_point(alpha = 0.65) +
@@ -127,7 +127,7 @@ ggplot(auto, aes(horsepower, mpg)) +
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -149,7 +149,7 @@ through 10:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 train_id <- sample(seq_len(nrow(auto)), size = 0.6 * nrow(auto))
@@ -169,7 +169,7 @@ data.frame(degree = 1:10, mse = validation_error)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import make_pipeline
@@ -202,7 +202,7 @@ when the split changes.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 split_errors <- do.call(rbind, lapply(1:10, function(seed) {
   set.seed(seed)
@@ -230,7 +230,7 @@ ggplot(split_errors, aes(degree, mse, group = split)) +
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 split_records = []
 
@@ -285,7 +285,7 @@ linear model can be fit with `glm()` using its default Gaussian family.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 loocv_error <- function(degree) {
   fit <- glm(mpg ~ poly(horsepower, degree), data = auto)
@@ -299,7 +299,7 @@ sapply(1:5, loocv_error)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.model_selection import LeaveOneOut, cross_val_score
 
@@ -346,7 +346,7 @@ computational cost.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 kfold_error <- function(degree, k = 10) {
   fit <- glm(mpg ~ poly(horsepower, degree), data = auto)
@@ -364,7 +364,7 @@ data.frame(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.model_selection import KFold
 
@@ -409,7 +409,7 @@ model that focuses on predictors with a clearer sales mechanism.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 carseats <- ISLR::Carseats
 
@@ -429,7 +429,7 @@ reduced_fit <- lm(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 rng = np.random.default_rng(571)
 carseats = pd.DataFrame({
@@ -466,7 +466,7 @@ observations.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 model_metrics <- function(fit, test_data, model_name) {
   pred <- predict(fit, newdata = test_data)
@@ -494,7 +494,7 @@ rbind(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 def model_metrics(fit, test_data, model_name):
     pred = fit.predict(test_data)
@@ -526,7 +526,7 @@ the reduced model's predictors are already included.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 anova(reduced_fit, full_fit)
 ```
@@ -535,7 +535,7 @@ anova(reduced_fit, full_fit)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from statsmodels.stats.anova import anova_lm
 
@@ -558,7 +558,7 @@ one train/test split:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 glm_full <- glm(Sales ~ ., data = carseats)
 glm_reduced <- glm(
@@ -587,7 +587,7 @@ data.frame(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import OneHotEncoder
@@ -631,7 +631,7 @@ the data were generated from a nonlinear pattern.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 set.seed(571)
 sim <- data.frame(x = runif(100, min = -10, max = 10))
@@ -644,7 +644,7 @@ plot(y ~ x, data = sim, pch = 19, col = "#2f5f7e")
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 rng = np.random.default_rng(571)
 sim = pd.DataFrame({"x": rng.uniform(-10, 10, 100)})
@@ -667,7 +667,7 @@ generalization error:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 poly_cv <- sapply(1:15, function(degree) {
   fit <- glm(y ~ poly(x, degree), data = sim)
@@ -687,7 +687,7 @@ plot(
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 poly_cv = [
     -cross_val_score(
@@ -751,7 +751,7 @@ $$
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 portfolio <- ISLR::Portfolio
 
@@ -769,7 +769,7 @@ boot(portfolio, alpha_stat, R = 1000)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 rng = np.random.default_rng(571)
 portfolio = pd.DataFrame({
@@ -802,7 +802,7 @@ slope.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 boot_lm <- function(data, index) {
   coef(lm(mpg ~ horsepower, data = data, subset = index))
@@ -816,7 +816,7 @@ boot(auto, boot_lm, R = 1000)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 boot_lm = []
 for _ in range(1000):
@@ -838,7 +838,7 @@ quadratic model instead:
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 boot_quad <- function(data, index) {
   coef(lm(mpg ~ poly(horsepower, 2), data = data, subset = index))
@@ -852,7 +852,7 @@ boot(auto, boot_quad, R = 1000)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 boot_quad = []
 for _ in range(1000):
