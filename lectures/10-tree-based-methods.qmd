@@ -67,7 +67,7 @@ advertising, or competitor price.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(rpart)
 
@@ -81,7 +81,7 @@ text(sales_tree, use.n = TRUE)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -136,7 +136,7 @@ smaller trees.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 best_cp <- sales_tree$cptable[
   which.min(sales_tree$cptable[, "xerror"]),
@@ -149,7 +149,7 @@ pruned_tree <- prune(sales_tree, cp = best_cp)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 tree_model = sales_tree.named_steps["decisiontreeregressor"]
 path = tree_model.cost_complexity_pruning_path(
