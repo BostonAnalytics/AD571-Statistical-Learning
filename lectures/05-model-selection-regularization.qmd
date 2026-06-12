@@ -35,15 +35,55 @@ stepwise selection starts from the intercept-only model and adds one
 predictor at a time. Backward stepwise selection starts from the full
 model and removes one predictor at a time.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(leaps)
 
-subset_fit <- regsubsets(SalePrice ~ ., data = train, nvmax = 20)
+subset_fit <- regsubsets(Sale_Price ~ ., data = train, nvmax = 20)
 subset_summary <- summary(subset_fit)
 
 which.min(subset_summary$bic)
 which.max(subset_summary$adjr2)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import itertools
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+
+predictors = [col for col in train.columns if col != "Sale_Price"]
+records = []
+
+for size in range(1, min(len(predictors), 5) + 1):
+    for cols in itertools.combinations(predictors, size):
+        X = sm.add_constant(pd.get_dummies(train[list(cols)], drop_first=True))
+        fit = sm.OLS(train["Sale_Price"], X).fit()
+        records.append({
+            "size": size,
+            "predictors": cols,
+            "aic": fit.aic,
+            "bic": fit.bic,
+            "adj_r2": fit.rsquared_adj
+        })
+
+subset_summary = pd.DataFrame(records)
+print(subset_summary.sort_values("bic").head())
+print(subset_summary.sort_values("adj_r2", ascending=False).head())
+```
+
+:::
 
 The resulting model path can be compared using:
 
@@ -88,7 +128,14 @@ not set them exactly to zero. Ridge is especially helpful when
 predictors are correlated: it distributes signal across related
 variables and lowers variance.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(glmnet)
 
 x_train <- model.matrix(Apps ~ ., College)[, -1]
@@ -98,6 +145,32 @@ ridge_cv <- cv.glmnet(x_train, y_train, alpha = 0)
 coef(ridge_cv, s = "lambda.min")
 coef(ridge_cv, s = "lambda.1se")
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import RidgeCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+x_train = pd.get_dummies(college.drop(columns=["Apps"]), drop_first=True)
+y_train = college["Apps"]
+
+ridge_cv = make_pipeline(
+    StandardScaler(),
+    RidgeCV(alphas=np.logspace(-3, 3, 100))
+)
+ridge_cv.fit(x_train, y_train)
+
+print(ridge_cv.named_steps["ridgecv"].alpha_)
+```
+
+:::
 
 ## Lasso
 
@@ -113,11 +186,39 @@ both a prediction method and a variable-selection method. When
 predictors are strongly correlated, lasso may choose one representative
 predictor and ignore others with similar information.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 lasso_cv <- cv.glmnet(x_train, y_train, alpha = 1)
 coef(lasso_cv, s = "lambda.min")
 coef(lasso_cv, s = "lambda.1se")
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.linear_model import LassoCV
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+lasso_cv = make_pipeline(
+    StandardScaler(),
+    LassoCV(cv=10, random_state=571, max_iter=10000)
+)
+lasso_cv.fit(x_train, y_train)
+
+print(lasso_cv.named_steps["lassocv"].alpha_)
+```
+
+:::
 
 `lambda.min` gives the value with the lowest cross-validation error.
 `lambda.1se` gives the simplest model whose error is within one
