@@ -58,7 +58,14 @@ Monte Carlo simulation complements predictive modeling by propagating
 uncertainty through a decision model. Instead of reporting one static
 outcome, simulation reports a distribution of possible outcomes.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 simulate_profit <- function(n, price, unit_cost, demand_mean, demand_sd) {
   demand <- pmax(0, rnorm(n, mean = demand_mean, sd = demand_sd))
   revenue <- price * demand
@@ -77,6 +84,34 @@ profit <- simulate_profit(
 
 quantile(profit, c(0.05, 0.5, 0.95))
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+
+def simulate_profit(n, price, unit_cost, demand_mean, demand_sd, seed=571):
+    rng = np.random.default_rng(seed)
+    demand = np.maximum(0, rng.normal(demand_mean, demand_sd, n))
+    revenue = price * demand
+    cost = unit_cost * demand
+    return revenue - cost
+
+profit = simulate_profit(
+    n=10000,
+    price=40,
+    unit_cost=25,
+    demand_mean=1000,
+    demand_sd=150
+)
+
+print(np.quantile(profit, [0.05, 0.5, 0.95]))
+```
+
+:::
 
 Simulation does not remove uncertainty. It makes uncertainty visible
 enough to reason about tradeoffs, tail outcomes, and risk tolerance.
