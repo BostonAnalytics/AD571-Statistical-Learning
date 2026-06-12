@@ -40,7 +40,7 @@ class to have its own covariance matrix.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(MASS)
 
@@ -66,7 +66,7 @@ head(lda_prob)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 import pandas as pd
