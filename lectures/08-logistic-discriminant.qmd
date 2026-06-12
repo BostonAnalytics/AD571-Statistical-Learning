@@ -1,22 +1,23 @@
 ---
-title: "Logistic and Discriminant Methods"
+title: "Classification Model Comparison"
 ---
 
-Classification models estimate class membership. This chapter focuses
-on probability-based classifiers: logistic regression, linear
-discriminant analysis, and quadratic discriminant analysis.
+Classification model comparison asks which probability model is most
+useful for the decision at hand. Logistic regression, LDA, and QDA can
+all return class probabilities, but they make different assumptions and
+can behave differently under imbalance, nonlinear boundaries, and
+threshold changes.
 
 ## Learning Objectives
 
-- Explain why ordinary linear regression is not appropriate for binary
-  outcomes.
-- Fit and interpret logistic regression.
-- Interpret log odds, odds ratios, fitted probabilities, and thresholds.
-- Compare logistic regression with LDA and QDA.
-- Evaluate classifiers with confusion matrices, sensitivity,
-  specificity, ROC curves, AUC, and calibration.
+- Compare logistic regression, LDA, and QDA on the same task.
+- Distinguish probability quality from hard-label accuracy.
+- Explain how thresholds change sensitivity and specificity.
+- Use ROC curves, AUC, and calibration to compare classifiers.
+- Choose a classifier based on the decision context rather than one
+  metric alone.
 
-## Logistic Regression
+## Logistic Regression Baseline
 
 For a binary outcome, logistic regression models
 
@@ -48,7 +49,14 @@ The default data show why probability estimation matters. The response
 is rare, so accuracy can be misleading: a classifier that predicts "no
 default" for everyone may have high accuracy but no practical value.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(ISLR)
 
 default_fit <- glm(
@@ -62,6 +70,31 @@ exp(coef(default_fit))
 Default$prob_default <- predict(default_fit, type = "response")
 ```
 
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+default = default.copy()
+default["default_yes"] = (default["default"] == "Yes").astype(int)
+
+default_fit = smf.logit(
+    "default_yes ~ C(student) + balance + income",
+    data=default
+).fit()
+
+print(default_fit.summary())
+print(np.exp(default_fit.params))
+default["prob_default"] = default_fit.predict(default)
+```
+
+:::
+
 The fitted probabilities can be sorted, binned, and compared with
 observed default rates. This helps students see whether high predicted
 risk actually corresponds to higher observed risk.
@@ -71,17 +104,36 @@ risk actually corresponds to higher observed risk.
 Logistic regression returns probabilities. A threshold turns
 probabilities into class labels:
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 pred_class <- ifelse(Default$prob_default > 0.5, "Yes", "No")
 table(predicted = pred_class, observed = Default$default)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+pred_class = np.where(default["prob_default"] > 0.5, "Yes", "No")
+print(pd.crosstab(pred_class, default["default"]))
+```
+
+:::
 
 The threshold should reflect the decision context. If false negatives
 are expensive, a lower threshold may be appropriate. If false positives
 are expensive, a higher threshold may be appropriate. The statistical
 model estimates risk; the threshold encodes a decision rule.
 
-## Discriminant Analysis
+## LDA and QDA Baselines
 
 Discriminant analysis starts by modeling the distribution of predictors
 within each class. Bayes' rule gives
@@ -101,7 +153,14 @@ distribution with a common covariance matrix. This produces linear
 decision boundaries. QDA allows a different covariance matrix in each
 class, producing quadratic boundaries.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 library(MASS)
 
 lda_fit <- lda(default ~ balance + income + student, data = Default)
@@ -110,6 +169,34 @@ qda_fit <- qda(default ~ balance + income + student, data = Default)
 lda_pred <- predict(lda_fit)$posterior[, "Yes"]
 qda_pred <- predict(qda_fit)$posterior[, "Yes"]
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import make_pipeline
+
+X = default[["balance", "income", "student"]]
+y = default["default"]
+
+preprocess = ColumnTransformer([
+    ("student", OneHotEncoder(drop="first"), ["student"])
+], remainder="passthrough")
+
+lda_fit = make_pipeline(preprocess, LinearDiscriminantAnalysis()).fit(X, y)
+qda_fit = make_pipeline(preprocess, QuadraticDiscriminantAnalysis()).fit(X, y)
+
+lda_pred = lda_fit.predict_proba(X)[:, list(lda_fit.classes_).index("Yes")]
+qda_pred = qda_fit.predict_proba(X)[:, list(qda_fit.classes_).index("Yes")]
+```
+
+:::
 
 LDA can be more stable when data are limited because it estimates fewer
 parameters. QDA can be more flexible when class covariance patterns
