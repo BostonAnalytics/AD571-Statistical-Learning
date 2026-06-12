@@ -45,7 +45,7 @@ location differences; scaling puts variables on comparable units.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 college <- ISLR::College
 x <- model.matrix(Apps ~ ., college)[, -1]
@@ -61,7 +61,7 @@ biplot(pca_scaled, scale = 0)
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import pandas as pd
 from sklearn.decomposition import PCA
@@ -94,7 +94,7 @@ predictors, then regresses the outcome on the first $M$ components.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 library(pls)
 
@@ -113,7 +113,7 @@ validationplot(pcr_fit, val.type = "MSEP")
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 import numpy as np
 from sklearn.decomposition import PCA
@@ -160,7 +160,7 @@ outcome.
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 pls_fit <- plsr(
   Apps ~ .,
@@ -176,7 +176,7 @@ validationplot(pls_fit, val.type = "MSEP")
 
 ```{python}
 #| echo: true
-#| eval: true
+#| eval: false
 #| fig-align: center
 from sklearn.cross_decomposition import PLSRegression
 from sklearn.model_selection import cross_val_score
