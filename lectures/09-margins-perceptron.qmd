@@ -56,13 +56,43 @@ where $\eta$ is a learning rate. The update moves the boundary in a
 direction that makes the current observation more likely to be
 classified correctly.
 
-```r
+:::{.panel-tabset group="language"}
+
+## R
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 set.seed(571)
 x1 <- rnorm(100)
 x2 <- rnorm(100)
 y <- ifelse(x1 + x2 + rnorm(100, sd = 0.5) > 0, 1, -1)
 plot(x1, x2, col = ifelse(y == 1, "steelblue", "firebrick"), pch = 19)
 ```
+
+## Python
+
+```{python}
+#| echo: true
+#| eval: true
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(571)
+x1 = rng.normal(size=100)
+x2 = rng.normal(size=100)
+y = np.where(x1 + x2 + rng.normal(0, 0.5, 100) > 0, 1, -1)
+
+colors = np.where(y == 1, "steelblue", "firebrick")
+plt.scatter(x1, x2, c=colors)
+plt.xlabel("x1")
+plt.ylabel("x2")
+plt.show()
+```
+
+:::
 
 The perceptron is useful because it shows learning as geometry. It is
 not usually the final applied method in this course, but it motivates
