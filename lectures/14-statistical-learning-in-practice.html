@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nakul R. Padalkar">
-<meta name="dcterms.date" content="2026-06-12">
 
-<title>Statistical Learning</title>
+<title>21&nbsp; Statistical Learning in Practice – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,27 +24,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./lectures/01-statistical-learning-foundations.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-02dfee889ffc0625d5c783b91fa547ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bae818416f0b6202fe1636a16061a02a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../lectures/20-applied-statistical-learning-case-studies.html" rel="next">
+<link href="../lectures/13-unsupervised-learning.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-02dfee889ffc0625d5c783b91fa547ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bae818416f0b6202fe1636a16061a02a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -86,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/01-statistical-learning-foundations.html">Chapters</a></li><li class="breadcrumb-item"><a href="../lectures/14-statistical-learning-in-practice.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Statistical Learning in Practice</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -101,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Statistical Learning</a> 
+      <a href="../">Statistical Learning</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -113,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
@@ -128,127 +163,127 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/01-statistical-learning-foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/01-statistical-learning-foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning Foundations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/02-linear-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/02-linear-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/03-interactions-marginal-effects.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/03-interactions-marginal-effects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactions and Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/04-classification-foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/04-classification-foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification Foundations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/05-logistic-regression-roc.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/05-logistic-regression-roc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logistic Regression and ROC Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/06-discriminant-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/06-discriminant-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discriminant Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/03-model-assessment-resampling.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/03-model-assessment-resampling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Assessment and Resampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/04-data-splitting-feature-engineering.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/04-data-splitting-feature-engineering.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Data Splitting and Feature Engineering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/05-model-selection-regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/05-model-selection-regularization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Selection and Regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/06-dimension-reduction.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/06-dimension-reduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/07-bias-variance-nonlinear.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/07-bias-variance-nonlinear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bias, Variance, and Nonlinear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/12-polynomial-regression-step-functions.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/12-polynomial-regression-step-functions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Polynomial Regression and Step Functions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/13-splines-generalized-additive-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/13-splines-generalized-additive-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Splines and Generalized Additive Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/08-logistic-discriminant.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/08-logistic-discriminant.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification Model Comparison</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/09-margins-perceptron.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/09-margins-perceptron.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Margins and Perceptron</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/10-tree-based-methods.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/10-tree-based-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Tree-Based Methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/11-ensemble-methods.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/11-ensemble-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/12-support-vector-machines.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/12-support-vector-machines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/13-unsupervised-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/13-unsupervised-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/14-statistical-learning-in-practice.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/14-statistical-learning-in-practice.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Statistical Learning in Practice</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/20-applied-statistical-learning-case-studies.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/20-applied-statistical-learning-case-studies.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Applied Statistical Learning Case Studies</span></span></a>
   </div>
 </li>
@@ -263,18 +298,24 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul class="collapse">
-  <li><a href="#book-structure" id="toc-book-structure" class="nav-link active" data-scroll-target="#book-structure"><span class="header-section-number">0.1</span> Book Structure</a></li>
-  <li><a href="#course-voice" id="toc-course-voice" class="nav-link" data-scroll-target="#course-voice"><span class="header-section-number">0.2</span> Course Voice</a></li>
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">21.1</span> Learning Objectives</a></li>
+  <li><a href="#the-complete-workflow" id="toc-the-complete-workflow" class="nav-link" data-scroll-target="#the-complete-workflow"><span class="header-section-number">21.2</span> The Complete Workflow</a></li>
+  <li><a href="#choosing-evidence" id="toc-choosing-evidence" class="nav-link" data-scroll-target="#choosing-evidence"><span class="header-section-number">21.3</span> Choosing Evidence</a></li>
+  <li><a href="#simulation-as-practice" id="toc-simulation-as-practice" class="nav-link" data-scroll-target="#simulation-as-practice"><span class="header-section-number">21.4</span> Simulation as Practice</a></li>
+  <li><a href="#reproducible-reporting" id="toc-reproducible-reporting" class="nav-link" data-scroll-target="#reproducible-reporting"><span class="header-section-number">21.5</span> Reproducible Reporting</a></li>
+  <li><a href="#responsible-interpretation" id="toc-responsible-interpretation" class="nav-link" data-scroll-target="#responsible-interpretation"><span class="header-section-number">21.6</span> Responsible Interpretation</a></li>
+  <li><a href="#final-project-structure" id="toc-final-project-structure" class="nav-link" data-scroll-target="#final-project-structure"><span class="header-section-number">21.7</span> Final Project Structure</a></li>
+  <li><a href="#chapter-synthesis" id="toc-chapter-synthesis" class="nav-link" data-scroll-target="#chapter-synthesis"><span class="header-section-number">21.8</span> Chapter Synthesis</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/01-statistical-learning-foundations.html">Chapters</a></li><li class="breadcrumb-item"><a href="../lectures/14-statistical-learning-in-practice.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Statistical Learning in Practice</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Statistical Learning</h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Statistical Learning in Practice</span></h1>
 </div>
 
 
@@ -288,12 +329,6 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">June 12, 2026</p>
-    </div>
-  </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
@@ -309,115 +344,178 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This book is a comprehensive course in statistical machine learning. It is organized as a single sequence that combines concepts, reproducible examples, and guided analysis.</p>
-<p>The course is organized around a practical sequence:</p>
+<p>The final chapter brings the course together around reproducible analysis, communication, model limitations, and responsible use. A good statistical learning project is not a list of fitted models. It is a defensible workflow from question to data to evidence to decision.</p>
+<section id="learning-objectives" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">21.1</span> Learning Objectives</h2>
+<ul>
+<li>Describe a complete statistical learning workflow.</li>
+<li>Communicate model performance, uncertainty, and limitations.</li>
+<li>Identify reproducibility risks in notebooks and ad hoc analyses.</li>
+<li>Compare models using evidence matched to the project goal.</li>
+<li>Connect classical statistical learning habits to modern machine learning practice.</li>
+</ul>
+</section>
+<section id="the-complete-workflow" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="the-complete-workflow"><span class="header-section-number">21.2</span> The Complete Workflow</h2>
+<p>A complete project should make each of these choices visible:</p>
 <ol type="1">
-<li>Build statistical learning intuition from prediction, inference, and model error.</li>
-<li>Use linear models as the first complete workflow for estimation, interpretation, diagnostics, and generalization.</li>
-<li>Extend regression through interactions, classification, logistic regression, discriminant analysis, resampling, feature engineering, model selection, regularization, dimension reduction, nonlinear regression, trees, ensembles, support vector machines, and unsupervised learning.</li>
-<li>End with reproducible model development, applied case studies, and the judgment needed to teach or deploy statistical learning responsibly.</li>
+<li>research or prediction question,</li>
+<li>observational unit and response variable,</li>
+<li>candidate predictors and data exclusions,</li>
+<li>preprocessing and feature engineering,</li>
+<li>train/validation/test design,</li>
+<li>candidate model classes,</li>
+<li>tuning strategy,</li>
+<li>final evaluation,</li>
+<li>interpretation and uncertainty,</li>
+<li>limitations and maintenance plan.</li>
 </ol>
-<section id="book-structure" class="level2" data-number="0.1">
-<h2 data-number="0.1" class="anchored" data-anchor-id="book-structure"><span class="header-section-number">0.1</span> Book Structure</h2>
-<p>The main body is an expanded book of 21 chapters:</p>
+<p>The workflow matters because most modeling failures are not caused by a single bad algorithm. They are caused by unclear targets, leakage, unstable preprocessing, poorly matched evaluation metrics, or overconfident interpretation.</p>
+</section>
+<section id="choosing-evidence" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="choosing-evidence"><span class="header-section-number">21.3</span> Choosing Evidence</h2>
+<p>Different goals require different evidence:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Chapter</th>
-<th>Topic</th>
+<th>Goal</th>
+<th>Evidence to emphasize</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td><a href="./lectures/01-statistical-learning-foundations.html">Statistical Learning Foundations</a></td>
+<td>Accurate prediction</td>
+<td>Held-out error, calibration, robustness</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td><a href="./lectures/02-linear-regression.html">Linear Regression</a></td>
+<td>Explanation</td>
+<td>Coefficients, uncertainty, diagnostics, design limitations</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">3</td>
-<td><a href="./lectures/03-interactions-marginal-effects.html">Interactions and Marginal Effects</a></td>
+<td>Screening</td>
+<td>Sensitivity, specificity, threshold costs</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4</td>
-<td><a href="./lectures/04-classification-foundations.html">Classification Foundations</a></td>
+<td>Ranking</td>
+<td>ROC/AUC, precision-recall, lift</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">5</td>
-<td><a href="./lectures/05-logistic-regression-roc.html">Logistic Regression and ROC Analysis</a></td>
+<td>Segmentation</td>
+<td>Cluster stability, profiles, external validity</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">6</td>
-<td><a href="./lectures/06-discriminant-analysis.html">Discriminant Analysis</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td><a href="./lectures/03-model-assessment-resampling.html">Model Assessment and Resampling</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td><a href="./lectures/04-data-splitting-feature-engineering.html">Data Splitting and Feature Engineering</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">9</td>
-<td><a href="./lectures/05-model-selection-regularization.html">Model Selection and Regularization</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td><a href="./lectures/06-dimension-reduction.html">Dimension Reduction</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-<td><a href="./lectures/07-bias-variance-nonlinear.html">Bias, Variance, and Nonlinear Models</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td><a href="./lectures/12-polynomial-regression-step-functions.html">Polynomial Regression and Step Functions</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">13</td>
-<td><a href="./lectures/13-splines-generalized-additive-models.html">Splines and Generalized Additive Models</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td><a href="./lectures/08-logistic-discriminant.html">Classification Model Comparison</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
-<td><a href="./lectures/09-margins-perceptron.html">Margins and Perceptron</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">16</td>
-<td><a href="./lectures/10-tree-based-methods.html">Tree-Based Methods</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">17</td>
-<td><a href="./lectures/11-ensemble-methods.html">Ensemble Methods</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">18</td>
-<td><a href="./lectures/12-support-vector-machines.html">Support Vector Machines</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">19</td>
-<td><a href="./lectures/13-unsupervised-learning.html">Unsupervised Learning</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">20</td>
-<td><a href="./lectures/14-statistical-learning-in-practice.html">Statistical Learning in Practice</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">21</td>
-<td><a href="./lectures/20-applied-statistical-learning-case-studies.html">Applied Statistical Learning Case Studies</a></td>
+<td>Communication</td>
+<td>Simplicity, visuals, reproducibility</td>
 </tr>
 </tbody>
 </table>
+<p>The final model should be justified using the evidence that matches the goal, not the metric that makes the model look best.</p>
 </section>
-<section id="course-voice" class="level2" data-number="0.2">
-<h2 data-number="0.2" class="anchored" data-anchor-id="course-voice"><span class="header-section-number">0.2</span> Course Voice</h2>
-<p>The chapters use neutral course language rather than references to a specific university, term, or software stack. Each chapter emphasizes concepts, reproducible code, and statistical judgment.</p>
+<section id="simulation-as-practice" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="simulation-as-practice"><span class="header-section-number">21.4</span> Simulation as Practice</h2>
+<p>Monte Carlo simulation complements predictive modeling by propagating uncertainty through a decision model. Instead of reporting one static outcome, simulation reports a distribution of possible outcomes.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>simulate_profit <span class="ot">&lt;-</span> <span class="cf">function</span>(n, price, unit_cost, demand_mean, demand_sd) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  demand <span class="ot">&lt;-</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="fu">rnorm</span>(n, <span class="at">mean =</span> demand_mean, <span class="at">sd =</span> demand_sd))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  revenue <span class="ot">&lt;-</span> price <span class="sc">*</span> demand</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  cost <span class="ot">&lt;-</span> unit_cost <span class="sc">*</span> demand</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  revenue <span class="sc">-</span> cost</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">571</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>profit <span class="ot">&lt;-</span> <span class="fu">simulate_profit</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">10000</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">price =</span> <span class="dv">40</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit_cost =</span> <span class="dv">25</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">demand_mean =</span> <span class="dv">1000</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">demand_sd =</span> <span class="dv">150</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(profit, <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_profit(n, price, unit_cost, demand_mean, demand_sd, seed<span class="op">=</span><span class="dv">571</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    demand <span class="op">=</span> np.maximum(<span class="dv">0</span>, rng.normal(demand_mean, demand_sd, n))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    revenue <span class="op">=</span> price <span class="op">*</span> demand</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    cost <span class="op">=</span> unit_cost <span class="op">*</span> demand</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> revenue <span class="op">-</span> cost</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>profit <span class="op">=</span> simulate_profit(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span><span class="dv">10000</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    price<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    unit_cost<span class="op">=</span><span class="dv">25</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    demand_mean<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    demand_sd<span class="op">=</span><span class="dv">150</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.quantile(profit, [<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>Simulation does not remove uncertainty. It makes uncertainty visible enough to reason about tradeoffs, tail outcomes, and risk tolerance.</p>
+</section>
+<section id="reproducible-reporting" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="reproducible-reporting"><span class="header-section-number">21.5</span> Reproducible Reporting</h2>
+<p>A reproducible report should allow another analyst to rerun the work and understand the decisions. It should include:</p>
+<ul>
+<li>package versions or computing environment,</li>
+<li>data source and cleaning rules,</li>
+<li>random seeds for resampling,</li>
+<li>train/test split definition,</li>
+<li>model formulas or tuning grids,</li>
+<li>final evaluation code,</li>
+<li>clear tables and figures,</li>
+<li>limitations written in ordinary language.</li>
+</ul>
+<p>Reproducibility is also a communication practice. A reader should be able to distinguish observed data patterns, modeling assumptions, validation evidence, and recommendations.</p>
+</section>
+<section id="responsible-interpretation" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="responsible-interpretation"><span class="header-section-number">21.6</span> Responsible Interpretation</h2>
+<p>Models can encode bias, fail under distribution shift, and invite overconfident decisions. A final report should state:</p>
+<ul>
+<li>what population the data represent,</li>
+<li>what cases are excluded or underrepresented,</li>
+<li>whether the task is predictive or causal,</li>
+<li>which errors are most costly,</li>
+<li>where the model should not be used,</li>
+<li>how performance should be monitored over time.</li>
+</ul>
+<p>Responsible statistical learning means treating a model as an evidence-producing tool, not as an authority.</p>
+</section>
+<section id="final-project-structure" class="level2" data-number="21.7">
+<h2 data-number="21.7" class="anchored" data-anchor-id="final-project-structure"><span class="header-section-number">21.7</span> Final Project Structure</h2>
+<p>A strong final project uses the following structure:</p>
+<ol type="1">
+<li>question and motivation,</li>
+<li>data description,</li>
+<li>exploratory analysis,</li>
+<li>preprocessing and splitting,</li>
+<li>candidate models,</li>
+<li>validation results,</li>
+<li>final model and held-out evaluation,</li>
+<li>interpretation,</li>
+<li>limitations,</li>
+<li>conclusion.</li>
+</ol>
+<p>The conclusion should be short and specific: what was learned, how strong the evidence is, and what decision or next analysis follows.</p>
+</section>
+<section id="chapter-synthesis" class="level2" data-number="21.8">
+<h2 data-number="21.8" class="anchored" data-anchor-id="chapter-synthesis"><span class="header-section-number">21.8</span> Chapter Synthesis</h2>
+<p>Revise a complete modeling project into a reproducible report. Make the target, data construction, preprocessing, model comparison, final evaluation, and limitations explicit. The final product should read as a coherent analysis rather than a transcript of code execution.</p>
 
 
 </section>
@@ -825,10 +923,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../lectures/13-unsupervised-learning.html" class="pagination-link" aria-label="Unsupervised Learning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./lectures/01-statistical-learning-foundations.html" class="pagination-link" aria-label="Statistical Learning Foundations">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning Foundations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../lectures/20-applied-statistical-learning-case-studies.html" class="pagination-link" aria-label="Applied Statistical Learning Case Studies">
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Applied Statistical Learning Case Studies</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

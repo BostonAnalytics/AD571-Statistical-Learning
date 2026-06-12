@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nakul R. Padalkar">
-<meta name="dcterms.date" content="2026-06-12">
 
-<title>Statistical Learning</title>
+<title>18&nbsp; Ensemble Methods – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,27 +24,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./lectures/01-statistical-learning-foundations.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-02dfee889ffc0625d5c783b91fa547ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bae818416f0b6202fe1636a16061a02a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../lectures/12-support-vector-machines.html" rel="next">
+<link href="../lectures/10-tree-based-methods.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-02dfee889ffc0625d5c783b91fa547ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bae818416f0b6202fe1636a16061a02a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -74,6 +109,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -86,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/01-statistical-learning-foundations.html">Chapters</a></li><li class="breadcrumb-item"><a href="../lectures/11-ensemble-methods.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Methods</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -101,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Statistical Learning</a> 
+      <a href="../">Statistical Learning</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -113,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
@@ -128,127 +206,127 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/01-statistical-learning-foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/01-statistical-learning-foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning Foundations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/02-linear-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/02-linear-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/03-interactions-marginal-effects.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/03-interactions-marginal-effects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactions and Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/04-classification-foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/04-classification-foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification Foundations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/05-logistic-regression-roc.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/05-logistic-regression-roc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logistic Regression and ROC Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/06-discriminant-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/06-discriminant-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discriminant Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/03-model-assessment-resampling.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/03-model-assessment-resampling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Assessment and Resampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/04-data-splitting-feature-engineering.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/04-data-splitting-feature-engineering.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Data Splitting and Feature Engineering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/05-model-selection-regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/05-model-selection-regularization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Selection and Regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/06-dimension-reduction.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/06-dimension-reduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/07-bias-variance-nonlinear.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/07-bias-variance-nonlinear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bias, Variance, and Nonlinear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/12-polynomial-regression-step-functions.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/12-polynomial-regression-step-functions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Polynomial Regression and Step Functions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/13-splines-generalized-additive-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/13-splines-generalized-additive-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Splines and Generalized Additive Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/08-logistic-discriminant.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/08-logistic-discriminant.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification Model Comparison</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/09-margins-perceptron.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/09-margins-perceptron.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Margins and Perceptron</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/10-tree-based-methods.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/10-tree-based-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Tree-Based Methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/11-ensemble-methods.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/11-ensemble-methods.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/12-support-vector-machines.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/12-support-vector-machines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/13-unsupervised-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/13-unsupervised-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/14-statistical-learning-in-practice.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/14-statistical-learning-in-practice.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Statistical Learning in Practice</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/20-applied-statistical-learning-case-studies.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/20-applied-statistical-learning-case-studies.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Applied Statistical Learning Case Studies</span></span></a>
   </div>
 </li>
@@ -263,18 +341,24 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul class="collapse">
-  <li><a href="#book-structure" id="toc-book-structure" class="nav-link active" data-scroll-target="#book-structure"><span class="header-section-number">0.1</span> Book Structure</a></li>
-  <li><a href="#course-voice" id="toc-course-voice" class="nav-link" data-scroll-target="#course-voice"><span class="header-section-number">0.2</span> Course Voice</a></li>
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">18.1</span> Learning Objectives</a></li>
+  <li><a href="#averaging-and-variance-reduction" id="toc-averaging-and-variance-reduction" class="nav-link" data-scroll-target="#averaging-and-variance-reduction"><span class="header-section-number">18.2</span> Averaging and Variance Reduction</a></li>
+  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"><span class="header-section-number">18.3</span> Bagging</a></li>
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">18.4</span> Random Forests</a></li>
+  <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting"><span class="header-section-number">18.5</span> Boosting</a></li>
+  <li><a href="#comparing-tree-ensembles" id="toc-comparing-tree-ensembles" class="nav-link" data-scroll-target="#comparing-tree-ensembles"><span class="header-section-number">18.6</span> Comparing Tree Ensembles</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">18.7</span> Interpretation</a></li>
+  <li><a href="#chapter-synthesis" id="toc-chapter-synthesis" class="nav-link" data-scroll-target="#chapter-synthesis"><span class="header-section-number">18.8</span> Chapter Synthesis</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/01-statistical-learning-foundations.html">Chapters</a></li><li class="breadcrumb-item"><a href="../lectures/11-ensemble-methods.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Methods</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Statistical Learning</h1>
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Methods</span></h1>
 </div>
 
 
@@ -288,12 +372,6 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">June 12, 2026</p>
-    </div>
-  </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
@@ -309,115 +387,191 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This book is a comprehensive course in statistical machine learning. It is organized as a single sequence that combines concepts, reproducible examples, and guided analysis.</p>
-<p>The course is organized around a practical sequence:</p>
-<ol type="1">
-<li>Build statistical learning intuition from prediction, inference, and model error.</li>
-<li>Use linear models as the first complete workflow for estimation, interpretation, diagnostics, and generalization.</li>
-<li>Extend regression through interactions, classification, logistic regression, discriminant analysis, resampling, feature engineering, model selection, regularization, dimension reduction, nonlinear regression, trees, ensembles, support vector machines, and unsupervised learning.</li>
-<li>End with reproducible model development, applied case studies, and the judgment needed to teach or deploy statistical learning responsibly.</li>
-</ol>
-<section id="book-structure" class="level2" data-number="0.1">
-<h2 data-number="0.1" class="anchored" data-anchor-id="book-structure"><span class="header-section-number">0.1</span> Book Structure</h2>
-<p>The main body is an expanded book of 21 chapters:</p>
+<p>Ensembles improve prediction by combining many models. A single tree can have high variance; bagging, random forests, and boosting use many trees to produce more accurate and stable predictions.</p>
+<section id="learning-objectives" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">18.1</span> Learning Objectives</h2>
+<ul>
+<li>Explain why averaging many models can reduce variance.</li>
+<li>Compare bagging, random forests, and boosting.</li>
+<li>Tune ensemble models using resampling.</li>
+<li>Interpret variable importance and partial dependence with caution.</li>
+<li>Evaluate whether extra accuracy is worth lower transparency.</li>
+</ul>
+</section>
+<section id="averaging-and-variance-reduction" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="averaging-and-variance-reduction"><span class="header-section-number">18.2</span> Averaging and Variance Reduction</h2>
+<p>If several predictors are unbiased and not perfectly correlated, averaging them can reduce variance. Bagging applies this idea to trees: fit many trees on bootstrap samples and average their predictions.</p>
+<p>For regression,</p>
+<p><span class="math display">
+\hat f_{\text{bag}}(x)
+= \frac{1}{B}\sum_{b=1}^{B}\hat f^{*b}(x).
+</span></p>
+<p>For classification, trees can vote or average class probabilities.</p>
+</section>
+<section id="bagging" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="bagging"><span class="header-section-number">18.3</span> Bagging</h2>
+<p>Bagging uses bootstrap samples to create many training sets. Each tree is usually grown deeply, so individual trees are flexible and unstable. The average is more stable than any one tree.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bag_fit <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  High <span class="sc">~</span> .,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">ncol</span>(train) <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">importance =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>bag_fit <span class="op">=</span> RandomForestClassifier(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    max_features<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">571</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>bag_fit.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>When <code>mtry</code> equals the number of predictors, each split can consider all variables. This is bagging for tree models.</p>
+</section>
+<section id="random-forests" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">18.4</span> Random Forests</h2>
+<p>Random forests modify bagging by allowing each split to consider only a random subset of predictors. This decorrelates the trees. If one predictor is very strong, ordinary bagging may use it near the top of many trees, making the trees similar. Random predictor selection gives other variables a chance to define different partitions.</p>
+<p>Important tuning parameters include:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Chapter</th>
-<th>Topic</th>
+<th>Parameter</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td><a href="./lectures/01-statistical-learning-foundations.html">Statistical Learning Foundations</a></td>
+<td>Number of trees</td>
+<td>More trees stabilize the average</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td><a href="./lectures/02-linear-regression.html">Linear Regression</a></td>
+<td><code>mtry</code></td>
+<td>Smaller values decorrelate trees more strongly</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">3</td>
-<td><a href="./lectures/03-interactions-marginal-effects.html">Interactions and Marginal Effects</a></td>
+<td>Node size</td>
+<td>Controls depth and local flexibility</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4</td>
-<td><a href="./lectures/04-classification-foundations.html">Classification Foundations</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td><a href="./lectures/05-logistic-regression-roc.html">Logistic Regression and ROC Analysis</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td><a href="./lectures/06-discriminant-analysis.html">Discriminant Analysis</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td><a href="./lectures/03-model-assessment-resampling.html">Model Assessment and Resampling</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td><a href="./lectures/04-data-splitting-feature-engineering.html">Data Splitting and Feature Engineering</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">9</td>
-<td><a href="./lectures/05-model-selection-regularization.html">Model Selection and Regularization</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td><a href="./lectures/06-dimension-reduction.html">Dimension Reduction</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-<td><a href="./lectures/07-bias-variance-nonlinear.html">Bias, Variance, and Nonlinear Models</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td><a href="./lectures/12-polynomial-regression-step-functions.html">Polynomial Regression and Step Functions</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">13</td>
-<td><a href="./lectures/13-splines-generalized-additive-models.html">Splines and Generalized Additive Models</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td><a href="./lectures/08-logistic-discriminant.html">Classification Model Comparison</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
-<td><a href="./lectures/09-margins-perceptron.html">Margins and Perceptron</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">16</td>
-<td><a href="./lectures/10-tree-based-methods.html">Tree-Based Methods</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">17</td>
-<td><a href="./lectures/11-ensemble-methods.html">Ensemble Methods</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">18</td>
-<td><a href="./lectures/12-support-vector-machines.html">Support Vector Machines</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">19</td>
-<td><a href="./lectures/13-unsupervised-learning.html">Unsupervised Learning</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">20</td>
-<td><a href="./lectures/14-statistical-learning-in-practice.html">Statistical Learning in Practice</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">21</td>
-<td><a href="./lectures/20-applied-statistical-learning-case-studies.html">Applied Statistical Learning Case Studies</a></td>
+<td>Sampling scheme</td>
+<td>Affects class balance and bootstrap variation</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="course-voice" class="level2" data-number="0.2">
-<h2 data-number="0.2" class="anchored" data-anchor-id="course-voice"><span class="header-section-number">0.2</span> Course Voice</h2>
-<p>The chapters use neutral course language rather than references to a specific university, term, or software stack. Each chapter emphasizes concepts, reproducible code, and statistical judgment.</p>
+<section id="boosting" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="boosting"><span class="header-section-number">18.5</span> Boosting</h2>
+<p>Boosting builds an additive model sequentially:</p>
+<p><span class="math display">
+\hat f(x) = \sum_{b=1}^{B}\lambda \hat f_b(x).
+</span></p>
+<p>Each new tree focuses on structure that the current ensemble has not captured well. The learning rate <span class="math inline">\lambda</span> controls how much each tree contributes. Smaller learning rates usually require more trees but can generalize better.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gbm)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>boost_fit <span class="ot">&lt;-</span> <span class="fu">gbm</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  Sales <span class="sc">~</span> .,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">distribution =</span> <span class="st">"gaussian"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.trees =</span> <span class="dv">3000</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">interaction.depth =</span> <span class="dv">3</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">shrinkage =</span> <span class="fl">0.01</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">cv.folds =</span> <span class="dv">5</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingRegressor</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>boost_fit <span class="op">=</span> GradientBoostingRegressor(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">3000</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    learning_rate<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    max_depth<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">571</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>boost_fit.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>Boosting is powerful, but it has more tuning choices: number of trees, learning rate, interaction depth, and minimum observations in terminal nodes.</p>
+</section>
+<section id="comparing-tree-ensembles" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="comparing-tree-ensembles"><span class="header-section-number">18.6</span> Comparing Tree Ensembles</h2>
+<p>A disciplined comparison uses the same split or resampling plan for all models:</p>
+<ol type="1">
+<li>fit a pruned single tree,</li>
+<li>fit a bagged tree ensemble,</li>
+<li>fit a random forest,</li>
+<li>fit a boosted tree model,</li>
+<li>tune only inside training folds,</li>
+<li>evaluate the selected models on held-out data.</li>
+</ol>
+<p>The comparison should include both predictive performance and the cost of complexity.</p>
+</section>
+<section id="interpretation" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">18.7</span> Interpretation</h2>
+<p>Ensembles are less transparent than single trees, but several summaries help:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Use</th>
+<th>Caution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variable importance</td>
+<td>Ranks influential predictors</td>
+<td>Can be biased by scale or cardinality</td>
+</tr>
+<tr class="even">
+<td>Partial dependence</td>
+<td>Shows average fitted effect</td>
+<td>Can be misleading with strong interactions</td>
+</tr>
+<tr class="odd">
+<td>Individual conditional curves</td>
+<td>Shows heterogeneity across observations</td>
+<td>Can be crowded and noisy</td>
+</tr>
+<tr class="even">
+<td>Test performance</td>
+<td>Measures generalization</td>
+<td>Does not explain the model alone</td>
+</tr>
+</tbody>
+</table>
+<p>Interpretation should be tied to the fitted model and the data distribution, not treated as a causal explanation.</p>
+</section>
+<section id="chapter-synthesis" class="level2" data-number="18.8">
+<h2 data-number="18.8" class="anchored" data-anchor-id="chapter-synthesis"><span class="header-section-number">18.8</span> Chapter Synthesis</h2>
+<p>Compare a pruned tree, bagged trees, a random forest, and boosted trees on the same prediction task. Report tuning choices, cross-validation error, held-out error, and variable importance. Conclude whether the ensemble’s performance gain justifies its loss of simplicity.</p>
 
 
 </section>
@@ -825,10 +979,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../lectures/10-tree-based-methods.html" class="pagination-link" aria-label="Tree-Based Methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Tree-Based Methods</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./lectures/01-statistical-learning-foundations.html" class="pagination-link" aria-label="Statistical Learning Foundations">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning Foundations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../lectures/12-support-vector-machines.html" class="pagination-link" aria-label="Support Vector Machines">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

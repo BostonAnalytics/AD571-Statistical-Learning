@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nakul R. Padalkar">
-<meta name="dcterms.date" content="2026-06-12">
 
-<title>Statistical Learning</title>
+<title>16&nbsp; Margins and Perceptron – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,27 +24,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./lectures/01-statistical-learning-foundations.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-02dfee889ffc0625d5c783b91fa547ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bae818416f0b6202fe1636a16061a02a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../lectures/10-tree-based-methods.html" rel="next">
+<link href="../lectures/08-logistic-discriminant.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-02dfee889ffc0625d5c783b91fa547ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bae818416f0b6202fe1636a16061a02a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -74,6 +109,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -86,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/01-statistical-learning-foundations.html">Chapters</a></li><li class="breadcrumb-item"><a href="../lectures/09-margins-perceptron.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Margins and Perceptron</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -101,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Statistical Learning</a> 
+      <a href="../">Statistical Learning</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -113,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
@@ -128,127 +206,127 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/01-statistical-learning-foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/01-statistical-learning-foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning Foundations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/02-linear-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/02-linear-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/03-interactions-marginal-effects.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/03-interactions-marginal-effects.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactions and Marginal Effects</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/04-classification-foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/04-classification-foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification Foundations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/05-logistic-regression-roc.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/05-logistic-regression-roc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logistic Regression and ROC Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/06-discriminant-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/06-discriminant-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discriminant Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/03-model-assessment-resampling.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/03-model-assessment-resampling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Model Assessment and Resampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/04-data-splitting-feature-engineering.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/04-data-splitting-feature-engineering.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Data Splitting and Feature Engineering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/05-model-selection-regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/05-model-selection-regularization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Selection and Regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/06-dimension-reduction.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/06-dimension-reduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/07-bias-variance-nonlinear.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/07-bias-variance-nonlinear.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bias, Variance, and Nonlinear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/12-polynomial-regression-step-functions.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/12-polynomial-regression-step-functions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Polynomial Regression and Step Functions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/13-splines-generalized-additive-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/13-splines-generalized-additive-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Splines and Generalized Additive Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/08-logistic-discriminant.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/08-logistic-discriminant.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification Model Comparison</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/09-margins-perceptron.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/09-margins-perceptron.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Margins and Perceptron</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/10-tree-based-methods.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/10-tree-based-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Tree-Based Methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/11-ensemble-methods.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/11-ensemble-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/12-support-vector-machines.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/12-support-vector-machines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Support Vector Machines</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/13-unsupervised-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/13-unsupervised-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/14-statistical-learning-in-practice.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/14-statistical-learning-in-practice.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Statistical Learning in Practice</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lectures/20-applied-statistical-learning-case-studies.html" class="sidebar-item-text sidebar-link">
+  <a href="../lectures/20-applied-statistical-learning-case-studies.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Applied Statistical Learning Case Studies</span></span></a>
   </div>
 </li>
@@ -263,18 +341,23 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul class="collapse">
-  <li><a href="#book-structure" id="toc-book-structure" class="nav-link active" data-scroll-target="#book-structure"><span class="header-section-number">0.1</span> Book Structure</a></li>
-  <li><a href="#course-voice" id="toc-course-voice" class="nav-link" data-scroll-target="#course-voice"><span class="header-section-number">0.2</span> Course Voice</a></li>
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">16.1</span> Learning Objectives</a></li>
+  <li><a href="#linear-decision-boundaries" id="toc-linear-decision-boundaries" class="nav-link" data-scroll-target="#linear-decision-boundaries"><span class="header-section-number">16.2</span> Linear Decision Boundaries</a></li>
+  <li><a href="#perceptron-learning" id="toc-perceptron-learning" class="nav-link" data-scroll-target="#perceptron-learning"><span class="header-section-number">16.3</span> Perceptron Learning</a></li>
+  <li><a href="#margins" id="toc-margins" class="nav-link" data-scroll-target="#margins"><span class="header-section-number">16.4</span> Margins</a></li>
+  <li><a href="#from-mistakes-to-loss-functions" id="toc-from-mistakes-to-loss-functions" class="nav-link" data-scroll-target="#from-mistakes-to-loss-functions"><span class="header-section-number">16.5</span> From Mistakes to Loss Functions</a></li>
+  <li><a href="#boundary-comparison" id="toc-boundary-comparison" class="nav-link" data-scroll-target="#boundary-comparison"><span class="header-section-number">16.6</span> Boundary Comparison</a></li>
+  <li><a href="#chapter-synthesis" id="toc-chapter-synthesis" class="nav-link" data-scroll-target="#chapter-synthesis"><span class="header-section-number">16.7</span> Chapter Synthesis</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/01-statistical-learning-foundations.html">Chapters</a></li><li class="breadcrumb-item"><a href="../lectures/09-margins-perceptron.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Margins and Perceptron</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Statistical Learning</h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Margins and Perceptron</span></h1>
 </div>
 
 
@@ -288,12 +371,6 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">June 12, 2026</p>
-    </div>
-  </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
@@ -309,115 +386,109 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This book is a comprehensive course in statistical machine learning. It is organized as a single sequence that combines concepts, reproducible examples, and guided analysis.</p>
-<p>The course is organized around a practical sequence:</p>
-<ol type="1">
-<li>Build statistical learning intuition from prediction, inference, and model error.</li>
-<li>Use linear models as the first complete workflow for estimation, interpretation, diagnostics, and generalization.</li>
-<li>Extend regression through interactions, classification, logistic regression, discriminant analysis, resampling, feature engineering, model selection, regularization, dimension reduction, nonlinear regression, trees, ensembles, support vector machines, and unsupervised learning.</li>
-<li>End with reproducible model development, applied case studies, and the judgment needed to teach or deploy statistical learning responsibly.</li>
-</ol>
-<section id="book-structure" class="level2" data-number="0.1">
-<h2 data-number="0.1" class="anchored" data-anchor-id="book-structure"><span class="header-section-number">0.1</span> Book Structure</h2>
-<p>The main body is an expanded book of 21 chapters:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: right;">Chapter</th>
-<th>Topic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td><a href="./lectures/01-statistical-learning-foundations.html">Statistical Learning Foundations</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td><a href="./lectures/02-linear-regression.html">Linear Regression</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td><a href="./lectures/03-interactions-marginal-effects.html">Interactions and Marginal Effects</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td><a href="./lectures/04-classification-foundations.html">Classification Foundations</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td><a href="./lectures/05-logistic-regression-roc.html">Logistic Regression and ROC Analysis</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td><a href="./lectures/06-discriminant-analysis.html">Discriminant Analysis</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td><a href="./lectures/03-model-assessment-resampling.html">Model Assessment and Resampling</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td><a href="./lectures/04-data-splitting-feature-engineering.html">Data Splitting and Feature Engineering</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">9</td>
-<td><a href="./lectures/05-model-selection-regularization.html">Model Selection and Regularization</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td><a href="./lectures/06-dimension-reduction.html">Dimension Reduction</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-<td><a href="./lectures/07-bias-variance-nonlinear.html">Bias, Variance, and Nonlinear Models</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td><a href="./lectures/12-polynomial-regression-step-functions.html">Polynomial Regression and Step Functions</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">13</td>
-<td><a href="./lectures/13-splines-generalized-additive-models.html">Splines and Generalized Additive Models</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td><a href="./lectures/08-logistic-discriminant.html">Classification Model Comparison</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
-<td><a href="./lectures/09-margins-perceptron.html">Margins and Perceptron</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">16</td>
-<td><a href="./lectures/10-tree-based-methods.html">Tree-Based Methods</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">17</td>
-<td><a href="./lectures/11-ensemble-methods.html">Ensemble Methods</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">18</td>
-<td><a href="./lectures/12-support-vector-machines.html">Support Vector Machines</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">19</td>
-<td><a href="./lectures/13-unsupervised-learning.html">Unsupervised Learning</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">20</td>
-<td><a href="./lectures/14-statistical-learning-in-practice.html">Statistical Learning in Practice</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">21</td>
-<td><a href="./lectures/20-applied-statistical-learning-case-studies.html">Applied Statistical Learning Case Studies</a></td>
-</tr>
-</tbody>
-</table>
+<p>This chapter prepares for support vector machines by focusing on the geometry of linear classification. The central object is a decision boundary: a line, plane, or hyperplane that separates predicted classes.</p>
+<section id="learning-objectives" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">16.1</span> Learning Objectives</h2>
+<ul>
+<li>Describe a linear classifier as a separating hyperplane.</li>
+<li>Explain the perceptron update rule.</li>
+<li>Define functional and geometric margins.</li>
+<li>Connect margins to robustness and support vector machines.</li>
+<li>Compare perceptron learning with logistic regression and linear margin-based classification.</li>
+</ul>
 </section>
-<section id="course-voice" class="level2" data-number="0.2">
-<h2 data-number="0.2" class="anchored" data-anchor-id="course-voice"><span class="header-section-number">0.2</span> Course Voice</h2>
-<p>The chapters use neutral course language rather than references to a specific university, term, or software stack. Each chapter emphasizes concepts, reproducible code, and statistical judgment.</p>
+<section id="linear-decision-boundaries" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="linear-decision-boundaries"><span class="header-section-number">16.2</span> Linear Decision Boundaries</h2>
+<p>For labels <span class="math inline">y_i \in \{-1,1\}</span>, a linear classifier predicts with</p>
+<p><span class="math display">
+\hat y_i = \operatorname{sign}(\beta_0 + x_i^\top\beta).
+</span></p>
+<p>The boundary is the set of points where</p>
+<p><span class="math display">
+\beta_0 + x^\top\beta = 0.
+</span></p>
+<p>In two dimensions this is a line; in three dimensions it is a plane; in more dimensions it is a hyperplane. The coefficients determine the orientation of the boundary, and the intercept shifts it.</p>
+</section>
+<section id="perceptron-learning" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="perceptron-learning"><span class="header-section-number">16.3</span> Perceptron Learning</h2>
+<p>The perceptron updates the boundary whenever it misclassifies an observation. Starting from initial weights <span class="math inline">w</span> and intercept <span class="math inline">b</span>, the prediction is</p>
+<p><span class="math display">
+\hat y_i = \operatorname{sign}(w^\top x_i + b).
+</span></p>
+<p>If observation <span class="math inline">i</span> is misclassified, update</p>
+<p><span class="math display">
+w \leftarrow w + \eta y_i x_i,
+\qquad
+b \leftarrow b + \eta y_i,
+</span></p>
+<p>where <span class="math inline">\eta</span> is a learning rate. The update moves the boundary in a direction that makes the current observation more likely to be classified correctly.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">571</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(x1 <span class="sc">+</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="fl">0.5</span>) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x1, x2, <span class="at">col =</span> <span class="fu">ifelse</span>(y <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"steelblue"</span>, <span class="st">"firebrick"</span>), <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">571</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> rng.normal(size<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> rng.normal(size<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.where(x1 <span class="op">+</span> x2 <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">100</span>) <span class="op">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(y <span class="op">==</span> <span class="dv">1</span>, <span class="st">"steelblue"</span>, <span class="st">"firebrick"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.scatter(x1, x2, c<span class="op">=</span>colors)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x1"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"x2"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>The perceptron is useful because it shows learning as geometry. It is not usually the final applied method in this course, but it motivates modern linear classifiers.</p>
+</section>
+<section id="margins" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="margins"><span class="header-section-number">16.4</span> Margins</h2>
+<p>The margin measures how far an observation is from the decision boundary. Points near the boundary are fragile: a small perturbation can change their predicted class. Points far from the boundary are more stable.</p>
+<p>The functional margin is</p>
+<p><span class="math display">
+y_i(\beta_0 + x_i^\top\beta).
+</span></p>
+<p>The geometric margin rescales by the coefficient norm:</p>
+<p><span class="math display">
+\frac{y_i(\beta_0 + x_i^\top\beta)}{\|\beta\|}.
+</span></p>
+<p>Maximizing the smallest geometric margin produces a classifier that separates the classes with the widest possible gap when perfect separation is available.</p>
+</section>
+<section id="from-mistakes-to-loss-functions" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="from-mistakes-to-loss-functions"><span class="header-section-number">16.5</span> From Mistakes to Loss Functions</h2>
+<p>The perceptron responds only to mistakes. Logistic regression minimizes log loss and estimates probabilities. Support vector machines minimize hinge loss, which penalizes points inside the margin even when they are correctly classified:</p>
+<p><span class="math display">
+\max\{0, 1 - y_i(\beta_0 + x_i^\top\beta)\}.
+</span></p>
+<p>This loss encourages a boundary that is not merely correct, but correct with margin.</p>
+</section>
+<section id="boundary-comparison" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="boundary-comparison"><span class="header-section-number">16.6</span> Boundary Comparison</h2>
+<p>A useful two-dimensional analysis compares three fitted boundaries:</p>
+<ol type="1">
+<li>perceptron boundary from iterative updates,</li>
+<li>logistic regression boundary from probability modeling,</li>
+<li>margin-based boundary from a linear support vector classifier.</li>
+</ol>
+<p>The comparison should focus on the points closest to the boundary. Those points drive the distinction between a classifier that separates the data and a classifier that separates them robustly.</p>
+</section>
+<section id="chapter-synthesis" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="chapter-synthesis"><span class="header-section-number">16.7</span> Chapter Synthesis</h2>
+<p>Create a two-dimensional classification data set, draw a linear boundary, identify misclassified observations, and mark the points closest to the boundary. Explain how a perceptron update changes the boundary and why maximizing the margin leads naturally to support vector machines.</p>
 
 
 </section>
@@ -825,10 +896,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../lectures/08-logistic-discriminant.html" class="pagination-link" aria-label="Classification Model Comparison">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Classification Model Comparison</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./lectures/01-statistical-learning-foundations.html" class="pagination-link" aria-label="Statistical Learning Foundations">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical Learning Foundations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../lectures/10-tree-based-methods.html" class="pagination-link" aria-label="Tree-Based Methods">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Tree-Based Methods</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
