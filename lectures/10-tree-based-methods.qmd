@@ -179,11 +179,3 @@ Their main weakness is variance. A small change in the training data
 can produce a different first split, which changes the whole tree. A
 single tree is therefore useful for interpretation and exploration, but
 not always the most accurate predictor.
-
-## Chapter Synthesis
-
-Fit a classification or regression tree, visualize the tree, explain
-the first three splits, prune it with cross-validation, and compare
-held-out performance with a linear or logistic regression baseline.
-Decide whether the tree's interpretability compensates for any loss in
-accuracy.

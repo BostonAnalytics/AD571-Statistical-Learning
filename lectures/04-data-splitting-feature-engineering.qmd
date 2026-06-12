@@ -197,12 +197,3 @@ distance matters. Rare-level lumping assumes sparse categories should
 share information. Dummy encoding chooses a reference structure.
 Feature engineering is therefore part of the model, and it must be
 reported with the same care as the final algorithm.
-
-## Chapter Synthesis
-
-Start with a raw regression or classification data set. Create the
-split first, then build a preprocessing recipe that handles missing
-values, categorical variables, skewed variables, rare levels, and
-scaling. Fit the same baseline model before and after feature
-engineering, compare held-out error, and identify which steps would
-have caused leakage if performed before the split.

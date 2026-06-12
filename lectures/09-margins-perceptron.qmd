@@ -146,11 +146,3 @@ A useful two-dimensional analysis compares three fitted boundaries:
 The comparison should focus on the points closest to the boundary. Those
 points drive the distinction between a classifier that separates the
 data and a classifier that separates them robustly.
-
-## Chapter Synthesis
-
-Create a two-dimensional classification data set, draw a linear
-boundary, identify misclassified observations, and mark the points
-closest to the boundary. Explain how a perceptron update changes the
-boundary and why maximizing the margin leads naturally to support
-vector machines.

@@ -198,11 +198,3 @@ print(profiles)
 Profiles should be written in the original measurement units when
 possible. A cluster label is not an explanation; it is a concise name
 for a pattern that must be interpreted in context.
-
-## Chapter Synthesis
-
-Scale a numeric data set, visualize the first two principal component
-scores, run k-means for several values of $K$, and compare with
-hierarchical clustering under at least two linkage rules. Report
-cluster profiles, stability checks, and a cautious interpretation of
-what the groups do and do not imply.

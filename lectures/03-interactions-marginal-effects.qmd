@@ -158,11 +158,3 @@ $$
 The uncertainty can be narrow in some regions of $Z$ and wide in
 others. This is why marginal-effect plots are often more honest than a
 single starred interaction coefficient.
-
-## Chapter Synthesis
-
-Fit an interaction model, compute predicted values for meaningful
-combinations of the interacting variables, and explain the result in
-terms of conditional effects. Avoid saying that a main effect is
-"positive" or "negative" without stating the value of the interacting
-variable.

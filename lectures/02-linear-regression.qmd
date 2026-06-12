@@ -265,11 +265,3 @@ unit of TV advertising budget is associated with an estimated increase
 of $\hat\beta_1$ sales units. This is an association from an
 observational regression, not by itself proof that changing TV spending
 would cause the same change in sales.
-
-## Chapter Synthesis
-
-Fit simple, multiple, and interaction regression models to the same
-data set. Compare coefficient interpretations, residual standard error,
-test RMSE, and a predicted-versus-actual plot. End with a paragraph
-explaining which predictors matter, whether the interaction is useful,
-and whether the model is more valuable for prediction or inference.

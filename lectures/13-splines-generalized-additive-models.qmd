@@ -112,10 +112,3 @@ print(gam_like_fit.summary())
 
 The fitted smooth term should be interpreted with predicted values and
 uncertainty, not as a single slope.
-
-## Chapter Synthesis
-
-Fit a regression spline, a natural spline, and an additive smooth model
-to the same data. Compare validation error and the shape of fitted
-curves. Explain whether the additional flexibility clarifies the
-relationship or merely follows noise.

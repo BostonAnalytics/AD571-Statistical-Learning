@@ -119,9 +119,3 @@ If false negatives are costly, lower the threshold to catch more
 positives. If false positives are costly, raise the threshold. The
 model estimates probability; the threshold translates probability into
 an action.
-
-## Chapter Synthesis
-
-Fit a simple classifier, produce predicted probabilities, compare at
-least two thresholds, and report the resulting confusion matrices. End
-by explaining which error type matters most for the decision.

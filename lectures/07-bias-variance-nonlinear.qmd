@@ -268,10 +268,3 @@ cross-validation:
 3. compute held-out error,
 4. choose a flexible model only if it earns better generalization,
 5. explain the fitted shape with prediction plots.
-
-## Chapter Synthesis
-
-Model one nonlinear relationship using a linear term, polynomial terms,
-step functions, regression splines, and a generalized additive model.
-Compare validation error and fitted curves. Explain which model offers
-the best balance of accuracy, smoothness, and interpretability.

@@ -238,11 +238,3 @@ After penalized regression, coefficient interpretation should be
 careful. Shrinkage intentionally biases coefficients toward zero to
 reduce variance. Penalized coefficients are not ordinary least-squares
 estimates with ordinary standard errors.
-
-## Chapter Synthesis
-
-Analyze one data set with best subset selection, forward selection,
-backward selection, ridge, and lasso. Compare selected predictors,
-cross-validation error, held-out error, and interpretability. Explain
-whether the final choice is driven more by prediction accuracy,
-stability, sparsity, or communication.

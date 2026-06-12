@@ -177,10 +177,3 @@ help:
 
 Interpretation should be tied to the fitted model and the data
 distribution, not treated as a causal explanation.
-
-## Chapter Synthesis
-
-Compare a pruned tree, bagged trees, a random forest, and boosted trees
-on the same prediction task. Report tuning choices, cross-validation
-error, held-out error, and variable importance. Conclude whether the
-ensemble's performance gain justifies its loss of simplicity.

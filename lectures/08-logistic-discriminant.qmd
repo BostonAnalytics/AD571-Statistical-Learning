@@ -218,11 +218,3 @@ Classification evaluation should include more than one number:
 ROC curves evaluate ranking across thresholds. Calibration evaluates
 probability quality. A model can rank well and still produce poorly
 calibrated probabilities.
-
-## Chapter Synthesis
-
-Fit logistic regression, LDA, and QDA to the same binary classification
-problem. Compare fitted probabilities, confusion matrices at multiple
-thresholds, ROC curves, AUC, and calibration. State which model is best
-for probability estimation and which threshold is appropriate for the
-decision context.

@@ -130,10 +130,3 @@ print(np.quantile(share_small, [0.05, 0.5, 0.95]))
 The simulation does not settle the policy question by itself. It makes
 the consequences of assumptions visible and gives the analyst a way to
 describe uncertainty in the decision quantity.
-
-## Chapter Synthesis
-
-Choose an applied question and write a reproducible modeling brief:
-question, data construction, exploratory summaries, model choice,
-validation or uncertainty, results, limitations, and decision-relevant
-interpretation.

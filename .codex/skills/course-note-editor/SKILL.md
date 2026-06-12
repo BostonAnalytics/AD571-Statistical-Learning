@@ -11,6 +11,12 @@ Treat lecture chapters as student-facing course material. Do not expose
 agent thoughts, migration history, source-mining notes, TODO chatter, or
 private editorial reasoning in chapter prose.
 
+Do not put editorial voice guidance into rendered course pages. Headings
+such as "Course Voice" and generic template endings such as "Chapter
+Synthesis" are maintainer scaffolding, not book content. Remove generic
+end-of-chapter prompts unless they have been deliberately authored as
+course assignments with context, data, deliverables, and grading purpose.
+
 ## Editing Workflow
 
 1. Separate audiences before editing:
@@ -23,6 +29,10 @@ private editorial reasoning in chapter prose.
    - Good: "Monte Carlo simulation propagates uncertainty through a
      decision model."
 3. Remove process language from chapters:
+   - "Course Voice"
+   - "Chapter Synthesis"
+   - generic final prompts that begin "Fit...", "Analyze...",
+     "Compare...", or "Choose..." without a named context
    - "retired draft"
    - "merged"
    - "next pass"
@@ -35,7 +45,8 @@ private editorial reasoning in chapter prose.
 4. Keep future-work notes out of lectures unless they are framed as
    learning objectives or exercises.
 5. Before finishing, search changed course files for process language
-   and clean any hits that are not intentionally in maintainer docs.
+   and template headings. Clean any hits that are not intentionally in
+   maintainer docs.
 
 ## Acceptable Locations
 
@@ -50,6 +61,7 @@ Run a text scan equivalent to:
 
 ```powershell
 rg -n "retired|draft|merged|next pass|placeholder|source notes|build status|book version|student-facing|maintainer|local path" lectures docs index.qmd
+rg -n "Course Voice|Chapter Synthesis|student-facing course language|specific university|software stack|statistical judgment" index.qmd lectures
 ```
 
 Only `docs/` should normally contain these terms.

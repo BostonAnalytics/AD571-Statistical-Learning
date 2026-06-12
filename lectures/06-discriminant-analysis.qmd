@@ -102,10 +102,3 @@ requires more data because it estimates separate covariance structures.
 Logistic regression and LDA can produce similar boundaries when class
 conditional distributions are close to normal with common covariance.
 QDA can bend the boundary when covariance differs across classes.
-
-## Chapter Synthesis
-
-Fit LDA and QDA to the same binary classification task. Compare class
-probabilities, confusion matrices, and ranking behavior. Explain
-whether the additional flexibility of QDA is justified by performance
-and sample size.

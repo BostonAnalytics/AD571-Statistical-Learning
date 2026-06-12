@@ -194,10 +194,3 @@ print(roc_points.head())
 ROC curves describe ranking performance, not calibration. A model can
 rank cases well while producing probabilities that are too high or too
 low.
-
-## Chapter Synthesis
-
-Fit a logistic model, interpret odds ratios, inspect binned default
-rates, evaluate thresholds with confusion matrices, and use ROC/AUC to
-describe ranking performance. State the final threshold as a decision
-choice tied to error costs.

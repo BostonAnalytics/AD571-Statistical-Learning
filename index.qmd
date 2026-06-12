@@ -58,9 +58,3 @@ The main body is an expanded book of 21 chapters:
 | 19 | [Unsupervised Learning](lectures/13-unsupervised-learning.qmd) |
 | 20 | [Statistical Learning in Practice](lectures/14-statistical-learning-in-practice.qmd) |
 | 21 | [Applied Statistical Learning Case Studies](lectures/20-applied-statistical-learning-case-studies.qmd) |
-
-## Course Voice
-
-The chapters use neutral course language rather than references to a
-specific university, term, or software stack. Each chapter emphasizes
-concepts, reproducible code, and statistical judgment.

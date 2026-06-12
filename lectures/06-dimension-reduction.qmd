@@ -228,11 +228,3 @@ The analysis sequence is:
 This example also shows that interpretability changes. Instead of
 interpreting one coefficient per wavelength, students interpret
 component loadings and prediction performance together.
-
-## Chapter Synthesis
-
-Fit PCA, PCR, and PLS to a data set with many correlated predictors.
-Report the variance explained by the first components, interpret the
-first two loading patterns, choose the number of components by
-cross-validation, and compare PCR or PLS with a penalized regression
-baseline.

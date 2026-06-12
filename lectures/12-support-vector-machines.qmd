@@ -171,12 +171,3 @@ The usual tuning sequence is:
 4. tune cost and kernel-specific parameters by cross-validation,
 5. evaluate the selected model on held-out data,
 6. inspect support vectors and decision surfaces where possible.
-
-## Chapter Synthesis
-
-Fit linear, polynomial, and radial SVMs to the same classification
-problem after proper scaling. Tune cost and kernel parameters by
-cross-validation, compare held-out performance, and visualize decision
-boundaries for a two-predictor version of the data. Explain which
-observations act as support vectors and how the cost parameter changes
-the margin.

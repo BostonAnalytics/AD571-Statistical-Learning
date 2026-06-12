@@ -166,10 +166,3 @@ A strong final project uses the following structure:
 
 The conclusion should be short and specific: what was learned, how
 strong the evidence is, and what decision or next analysis follows.
-
-## Chapter Synthesis
-
-Revise a complete modeling project into a reproducible report. Make the
-target, data construction, preprocessing, model comparison, final
-evaluation, and limitations explicit. The final product should read as
-a coherent analysis rather than a transcript of code execution.

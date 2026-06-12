@@ -119,10 +119,3 @@ print(step_fit.summary())
 Step functions are easy to explain but can create artificial jumps at
 cut points. They are useful when thresholds are substantively
 meaningful or when interpretability matters more than smoothness.
-
-## Chapter Synthesis
-
-Fit linear, polynomial, and step-function models to the same nonlinear
-relationship. Compare validation error and prediction plots. Explain
-whether smoothness, interpretability, or predictive accuracy should
-drive the final choice.
