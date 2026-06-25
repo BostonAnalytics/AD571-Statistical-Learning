@@ -255,25 +255,49 @@ Before fitting a model, answer five questions:
 #| echo: true
 #| eval: true
 #| fig-align: center
-#| output: asis
 library(ggplot2)
 library(tidyverse)
 library(reticulate)
-use_python("D:/Repositories/AD571-Statistical-Learning/.venv/Scripts/python.exe", required=TRUE)
+reticulate::py_install("pandas")
+reticulate::py_install("scikit-learn")
+reticulate::py_install("scipy")
 
 boston <- read.csv("../datasets/Boston.csv")
+```
 
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
 str(boston)
 summary(boston)
+```
 
-ggplot(boston, aes(lstat, medv)) +
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| fig-cap: "A simple baseline relationship between percent lower status population and median home value."
+#| fig-alt: "A scatterplot of median home value against percent lower status population, with a fitted line showing a negative relationship."
+#| label: fig-baseline
+baseline_g <- ggplot(boston, aes(lstat, medv)) +
   geom_point(alpha = 0.65) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "Percent lower status population",
     y = "Median home value",
     title = "A simple baseline relationship"
-  )
+  );
+
+baseline_g
+
+```
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| output: asis
 
 baseline <- lm(medv ~ lstat, data = boston)
 expanded <- lm(medv ~ lstat + rm, data = boston)
@@ -366,7 +390,7 @@ pred = fit.predict(test)
 rmse = mean_squared_error(test["medv"], pred) ** 0.5
 test_r2 = r2_score(test["medv"], pred)
 
-print({"rmse": rmse, "test_r2": test_r2})
+print({"rmse": round(rmse,4), "test_r2": round(test_r2,4)})
 ```
 
 :::

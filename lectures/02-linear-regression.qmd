@@ -22,17 +22,21 @@ to introduce most habits used throughout the course.
 The multiple linear regression model has the form
 
 $$
+\begin{align}
 Y_i = \beta_0 + \beta_1X_{i1} + \cdots + \beta_pX_{ip}
 + \epsilon_i.
+\end{align}
 $$
 
 Ordinary least squares chooses coefficients that minimize residual sum
 of squares:
 
 $$
+\begin{align}
 \hat{\beta} =
 \arg\min_{\beta}
 \sum_{i=1}^{n}(y_i - x_i^\top\beta)^2.
+\end{align}
 $$
 
 The fitted value is $\hat y_i = x_i^\top\hat\beta$, and the residual is
@@ -53,7 +57,7 @@ regression to multiple regression. Suppose `sales` is the response and
 
 ```{r}
 #| echo: true
-#| eval: false
+#| eval: true
 #| fig-align: center
 set.seed(571)
 advertising <- data.frame(
@@ -80,7 +84,7 @@ summary(interaction_fit)
 
 ```{python}
 #| echo: true
-#| eval: false
+#| eval: true
 #| fig-align: center
 import numpy as np
 import pandas as pd
@@ -131,7 +135,7 @@ candidate models:
 
 ```{r}
 #| echo: true
-#| eval: false
+#| eval: true
 #| fig-align: center
 set.seed(571)
 id <- sample(seq_len(nrow(advertising)), size = 0.8 * nrow(advertising))
@@ -150,7 +154,7 @@ test_r2 <- 1 - sum((test$sales - pred)^2) /
 
 ```{python}
 #| echo: true
-#| eval: false
+#| eval: true
 #| fig-align: center
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
@@ -217,7 +221,7 @@ Diagnostics convert assumptions into visible questions:
 
 ```{r}
 #| echo: true
-#| eval: false
+#| eval: true
 #| fig-align: center
 par(mfrow = c(2, 2))
 plot(fit)
@@ -227,7 +231,7 @@ plot(fit)
 
 ```{python}
 #| echo: true
-#| eval: false
+#| eval: true
 #| fig-align: center
 import matplotlib.pyplot as plt
 import scipy.stats as stats
